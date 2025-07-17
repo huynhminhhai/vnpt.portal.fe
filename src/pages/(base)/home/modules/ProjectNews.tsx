@@ -30,102 +30,102 @@ const ProjectNews = () => {
       size="small"
       title={t('page.home.projectNews.title')}
       variant="borderless"
-      extra={[
-        <AButton
-          key="reset"
-          type="text"
-          onClick={reset}
-        >
-          重置
-        </AButton>,
-        <AButton
-          key="reverse"
-          type="text"
-          onClick={reverse}
-        >
-          反转
-        </AButton>,
-        <AButton
-          key="sort"
-          type="text"
-          onClick={sortByTimeDesc}
-        >
-          以时间排序
-        </AButton>,
-        <AButton
-          key="unshift"
-          type="text"
-          onClick={() => unshift({ content: '我是第一个', id: 1, time: '2021-11-07 22:45:32' })}
-        >
-          从头添加
-        </AButton>,
-        <AButton
-          key="shift"
-          type="text"
-          onClick={shift}
-        >
-          删除头部
-        </AButton>,
-        <AButton
-          key="PUSH"
-          type="text"
-          onClick={() => push({ content: '我是第六个', id: 6, time: '2021-11-07 22:45:32' })}
-        >
-          尾部添加
-        </AButton>,
-        <AButton
-          key="pop"
-          type="text"
-          onClick={pop}
-        >
-          删除尾部
-        </AButton>,
-        <a
-          className="ml-8px text-primary"
-          key="a"
-        >
-          {t('page.home.projectNews.moreNews')}
-        </a>
-      ]}
+      // extra={[
+      //   <AButton
+      //     key="reset"
+      //     type="text"
+      //     onClick={reset}
+      //   >
+      //     Cài lại
+      //   </AButton>,
+      //   <AButton
+      //     key="reverse"
+      //     type="text"
+      //     onClick={reverse}
+      //   >
+      //    Đảo ngược
+      //   </AButton>,
+      //   <AButton
+      //     key="sort"
+      //     type="text"
+      //     onClick={sortByTimeDesc}
+      //   >
+      //     Sắp xếp theo thời gian
+      //   </AButton>,
+      //   <AButton
+      //     key="unshift"
+      //     type="text"
+      //     onClick={() => unshift({ content: '我是第一个', id: 1, time: '2021-11-07 22:45:32' })}
+      //   >
+      //     Thêm từ đầu
+      //   </AButton>,
+      //   <AButton
+      //     key="shift"
+      //     type="text"
+      //     onClick={shift}
+      //   >
+      //     Xóa tiêu đề
+      //   </AButton>,
+      //   <AButton
+      //     key="PUSH"
+      //     type="text"
+      //     onClick={() => push({ content: '我是第六个', id: 6, time: '2021-11-07 22:45:32' })}
+      //   >
+      //     Thêm tiêu đề
+      //   </AButton>,
+      //   <AButton
+      //     key="pop"
+      //     type="text"
+      //     onClick={pop}
+      //   >
+      //     Xóa đuôi
+      //   </AButton>,
+      //   <a
+      //     className="ml-8px text-primary"
+      //     key="a"
+      //   >
+      //     {t('page.home.projectNews.moreNews')}
+      //   </a>
+      // ]}
     >
       <AnimatePresence mode="popLayout">
         <AList
           dataSource={newses}
           renderItem={item => (
             <motion.div
-              layout // 处理上移、下移等排序动画
-              animate="visible" // 动画目标状态
-              exit="exit" // 退出时动画
-              initial="hidden" // 初始状态
+              layout // Xử lý hiệu ứng sắp xếp như di chuyển lên, di chuyển xuống
+              animate="visible" // Trạng thái mục tiêu của hiệu ứng động
+              exit="exit" // Hiệu ứng động khi thoát
+              initial="hidden" // Trạng thái ban đầu
               key={item.id}
-              variants={variants} // 应用定义的动画 variants
+              variants={variants} // Áp dụng các biến thể hiệu ứng động đã định nghĩa
             >
               <AList.Item
-                actions={[
-                  <AButton
-                    key="up"
-                    size="small"
-                    onClick={() => up(item.id)}
-                  >
-                    上移
-                  </AButton>,
+                // actions={[
+                //   <AButton
+                //     key="up"
+                //     size="small"
+                //     onClick={() => up(item.id)}
+                //   >
+                //     Di chuyển lên
+                //   </AButton>,
 
-                  <AButton
-                    danger
-                    key="del"
-                    size="small"
-                    onClick={() => remove(item.id)}
-                  >
-                    删除
-                  </AButton>,
-                  <AButton
-                    key="down"
-                    size="small"
-                    onClick={() => down(item.id)}
-                  >
-                    下移
-                  </AButton>
-                ]}
+                //   <AButton
+                //     danger
+                //     key="del"
+                //     size="small"
+                //     onClick={() => remove(item.id)}
+                //   >
+                //     Xóa
+                //   </AButton>,
+                //   <AButton
+                //     key="down"
+                //     size="small"
+                //     onClick={() => down(item.id)}
+                //   >
+                //     Di chuyển xuống
+                //   </AButton>
+                // ]}
               >
                 <AList.Item.Meta
                   avatar={<SoybeanAvatar className="size-48px!" />}

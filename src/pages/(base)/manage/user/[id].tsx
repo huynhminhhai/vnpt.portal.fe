@@ -19,10 +19,6 @@ function transformDataToItem<T extends string, U extends Values>(
     label: tuple[0]
   };
 }
-
-// 这个页面仅仅是为了展示 react-router-dom 的 loader 的强大能力，数据是随机的对不上很正常
-// This page is solely for demonstrating the powerful capabilities of react-router-dom's loader. The data is random and may not match.
-
 const Component = () => {
   const data = useLoaderData() as Api.SystemManage.User | undefined;
 

@@ -29,6 +29,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_projects_[pid]_edit': 'Multi-level Dynamic Route Edit',
   '(base)_projects_[pid]_edit_[id]': 'Multi-level Dynamic Route Edit Details',
   '(base)_user-center': 'User Center',
+  '(viewadmincanlua)_danhsachsudung': 'Usage List',
   '(blank)_login': 'Login',
   '(blank)_login_code-login': 'Code Login',
   '(blank)_login_register': 'Register Account',

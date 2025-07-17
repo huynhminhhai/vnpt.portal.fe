@@ -74,9 +74,11 @@ const page: App.I18n.Schema['translation']['page'] = {
     study: 'Học tập',
     todo: 'Cần làm',
     turnover: 'Doanh thu',
-    visitCount: 'Số lượt truy cập',
+    visitCount: 'Số lượt sử dụng',
     weatherDesc: 'Hôm nay nhiều mây chuyển nắng, 20℃ - 25℃!',
-    work: 'Công việc'
+    work: 'Công việc',
+    freeCount: 'Số lượt sử dụng miễn phí',
+    paidCount: 'Số lượt sử dụng trả phí',
   },
   login: {
     bindWeChat: {
@@ -244,8 +246,8 @@ const page: App.I18n.Schema['translation']['page'] = {
       userGender: 'Giới tính',
       userName: 'Tên người dùng',
       userPhone: 'Số điện thoại',
-      userRole: 'Vai trò người dùng',
-      userStatus: 'Trạng thái người dùng'
+      userRole: 'Vai trò',
+      userStatus: 'Trạng thái'
     },
     userDetail: {
       content: `loader sẽ làm cho network request và file lazy load gần như cùng phát ra request, sau đó vừa parse file lazy load vừa chờ network request. Khi network request hoàn thành, trang sẽ hiển thị cùng lúc. Kết hợp với kiến trúc fiber của react, có thể làm được việc nếu user cảm thấy thời gian chờ quá lâu, trong thời gian chờ user có thể chuyển đổi các trang khác nhau. Đây là ưu điểm của react framework và react-router data router, không cần phải đợi đến khi trang hiển thị, thay vì cách thông thường: request file lazy load - parse - request file lazy load - mount sau đó mới phát network request - rồi render trang - render hoàn thành còn phải tự thêm loading effect`,

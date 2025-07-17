@@ -50,7 +50,7 @@ const ConfigOperation = () => {
         {t('theme.configOperation.resetConfig')}
       </AButton>
       <div ref={domRef}>
-        <AButton type="primary">{t('theme.configOperation.copyConfig')}</AButton>
+        <AButton type="primary">{t('theme.configOperation.saveConfig')}</AButton>
       </div>
     </div>
   );

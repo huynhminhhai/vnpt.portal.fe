@@ -436,6 +436,8 @@ declare namespace App {
             visitCount: string;
             weatherDesc: string;
             work: string;
+            freeCount: string;
+            paidCount: string;
           };
           login: {
             bindWeChat: {
@@ -640,6 +642,7 @@ declare namespace App {
             copySuccessMsg: string;
             resetConfig: string;
             resetSuccessMsg: string;
+            saveConfig: string;
           };
           fixedHeaderAndTab: string;
           footer: {

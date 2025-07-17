@@ -48,8 +48,8 @@ function useGetCardData() {
         start: '#56cdf3'
       },
       icon: 'carbon:document-download',
-      key: 'downloadCount',
-      title: t('page.home.downloadCount'),
+      key: 'freeCount',
+      title: t('page.home.freeCount'),
       unit: '',
       value: 970925
     },
@@ -59,8 +59,8 @@ function useGetCardData() {
         start: '#fcbc25'
       },
       icon: 'ant-design:trademark-circle-outlined',
-      key: 'dealCount',
-      title: t('page.home.dealCount'),
+      key: 'paidCount',
+      title: t('page.home.paidCount'),
       unit: '',
       value: 9527
     }

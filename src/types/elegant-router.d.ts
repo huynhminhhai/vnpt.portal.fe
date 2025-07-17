@@ -48,22 +48,13 @@ declare module "@soybean-react/vite-plugin-react-router" {
     "(base)_manage_role_[...slug]": "/manage/role/*";
     "(base)_manage_user": "/manage/user";
     "(base)_manage_user_[id]": "/manage/user/:id";
-    "(base)_multi-menu": "/multi-menu";
-    "(base)_multi-menu_first": "/multi-menu/first";
-    "(base)_multi-menu_first_child": "/multi-menu/first/child";
-    "(base)_multi-menu_second": "/multi-menu/second";
-    "(base)_multi-menu_second_child": "/multi-menu/second/child";
-    "(base)_multi-menu_second_child_home": "/multi-menu/second/child/home";
-    "(base)_projects": "/projects";
-    "(base)_projects_[pid]": "/projects/:pid";
-    "(base)_projects_[pid]_edit": "/projects/:pid/edit";
-    "(base)_projects_[pid]_edit_[id]": "/projects/:pid/edit/:id";
     "(base)_user-center": "/user-center";
     "(blank)_login": "/login";
     "(blank)_login_code-login": "/login/code-login";
     "(blank)_login_register": "/login/register";
     "(blank)_login_reset-pwd": "/login/reset-pwd";
     "(blank)_login-out": "/login-out";
+    "(viewadmincanlua)_danhsachsudung": "/danhsachsudung";
     "403": "/403";
     "404": "/404";
     "500": "/500";
@@ -114,6 +105,7 @@ declare module "@soybean-react/vite-plugin-react-router" {
     RouteKey,
     | "(base)"
     | "(blank)"
+    | "(viewadmincanlua)"
     | "403"
     | "404"
     | "500"
@@ -136,6 +128,8 @@ declare module "@soybean-react/vite-plugin-react-router" {
    */
   export type LastLevelRouteKey = Extract<
     RouteKey,
+    | "(viewadmincanlua)_danhsachsudung"
+    | "(viewadmincanlua)"
     | "(base)_about"
     | "(base)_function_event-bus"
     | "(base)_function_hide-child"
@@ -156,16 +150,6 @@ declare module "@soybean-react/vite-plugin-react-router" {
     | "(base)_manage_role"
     | "(base)_manage_user_[id]"
     | "(base)_manage_user"
-    | "(base)_multi-menu_first_child"
-    | "(base)_multi-menu_first"
-    | "(base)_multi-menu"
-    | "(base)_multi-menu_second_child_home"
-    | "(base)_multi-menu_second_child"
-    | "(base)_multi-menu_second"
-    | "(base)_projects_[pid]_edit_[id]"
-    | "(base)_projects_[pid]_edit"
-    | "(base)_projects_[pid]"
-    | "(base)_projects"
     | "(base)_user-center"
     | "(blank)"
     | "(blank)_login-out"

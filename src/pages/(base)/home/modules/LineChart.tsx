@@ -13,7 +13,7 @@ const LineChart = () => {
       right: '4%'
     },
     legend: {
-      data: [t('page.home.downloadCount'), t('page.home.registerCount')]
+      data: [t('page.home.freeCount'), t('page.home.paidCount')]
     },
     series: [
       {
@@ -41,7 +41,7 @@ const LineChart = () => {
         emphasis: {
           focus: 'series'
         },
-        name: t('page.home.downloadCount'),
+        name: t('page.home.freeCount'),
         smooth: true,
         stack: 'Total',
         type: 'line'
@@ -71,7 +71,7 @@ const LineChart = () => {
         emphasis: {
           focus: 'series'
         },
-        name: t('page.home.registerCount'),
+        name: t('page.home.paidCount'),
         smooth: true,
         stack: 'Total',
         type: 'line'

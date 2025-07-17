@@ -76,7 +76,9 @@ const page: App.I18n.Schema['translation']['page'] = {
     turnover: 'Turnover',
     visitCount: 'Visit Count',
     weatherDesc: 'Today is cloudy to clear, 20℃ - 25℃!',
-    work: 'Work'
+    work: 'Work',
+    freeCount: 'Free Count',
+    paidCount: 'Paid Count'
   },
   login: {
     bindWeChat: {

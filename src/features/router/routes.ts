@@ -106,7 +106,7 @@ export function getFlatBaseRoutes(routes: FlatRoute[], t: TFunction) {
 }
 
 export function getBaseChildrenRoutes(routes: RouteObject[]) {
-  const baseRoutes = routes[0].children?.find(item => item.id === '(base)')?.children;
-
-  return baseRoutes || [];
+  const baseRoutes = routes[0].children?.find(item => item.id === '(base)')?.children || [];
+  
+  return baseRoutes;
 }

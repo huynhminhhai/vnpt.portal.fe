@@ -4,7 +4,8 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     copyConfig: 'Sao chép cấu hình',
     copySuccessMsg: 'Sao chép thành công, vui lòng thay thế biến themeSettings trong src/theme/settings.ts',
     resetConfig: 'Đặt lại cấu hình',
-    resetSuccessMsg: 'Đặt lại thành công'
+    resetSuccessMsg: 'Đặt lại thành công',
+    saveConfig: 'Lưu cấu hình'
   },
   fixedHeaderAndTab: 'Cố định header và tab',
   footer: {

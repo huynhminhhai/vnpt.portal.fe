@@ -4,7 +4,8 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     copyConfig: 'Copy Config',
     copySuccessMsg: 'Copy Success, Please replace the variable "themeSettings" in "src/theme/settings.ts"',
     resetConfig: 'Reset Config',
-    resetSuccessMsg: 'Reset Success'
+    resetSuccessMsg: 'Reset Success',
+    saveConfig: 'Save Config'
   },
   fixedHeaderAndTab: 'Fixed Header And Tab',
   footer: {

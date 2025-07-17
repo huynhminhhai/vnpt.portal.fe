@@ -17,17 +17,17 @@ class GlobalConfig {
   private _defaultDarkMode = localStg.get('darkMode') || false;
 
   /** - 默认语言 */
-  private _defaultLang = localStg.get('lang') || 'zh-CN';
+  private _defaultLang = localStg.get('lang') || 'vi-VN';
 
   /** - 默认语言选项 */
   private _defaultLangOptions: App.I18n.LangOption[] = [
     {
-      key: 'zh-CN',
-      label: '中文'
-    },
-    {
       key: 'en-US',
       label: 'English'
+    },
+    {
+      key: 'vi-VN',
+      label: 'Tiếng Việt'
     }
   ];
 

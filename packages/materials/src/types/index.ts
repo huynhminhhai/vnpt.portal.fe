@@ -81,7 +81,7 @@ interface AdminLayoutSiderConfig {
   /**
    * Sider width when collapse is false
    *
-   * @default '220px'
+   * @default '250px'
    */
   siderWidth?: number;
 }

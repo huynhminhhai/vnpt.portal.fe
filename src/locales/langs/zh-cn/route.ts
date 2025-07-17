@@ -29,6 +29,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_projects_[pid]_edit': '多级动态路由编辑',
   '(base)_projects_[pid]_edit_[id]': '多级动态路由编辑详情',
   '(base)_user-center': '个人中心',
+  '(viewadmincanlua)_danhsachsudung': 'Danh sách sử dụng',
   '(blank)_login': '登录',
   '(blank)_login_code-login': '验证码登录',
   '(blank)_login_register': ' 注册账号',

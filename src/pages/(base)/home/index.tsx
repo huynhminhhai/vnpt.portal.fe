@@ -12,7 +12,7 @@ const Home = () => {
       direction="vertical"
       size={[16, 16]}
     >
-      <HeaderBanner />
+      {/* <HeaderBanner /> */}
 
       <CardData />
 
