@@ -331,6 +331,7 @@ declare namespace App {
             no: string;
             yes: string;
           };
+          detail: string;
         };
         datatable: {
           itemCount: string;

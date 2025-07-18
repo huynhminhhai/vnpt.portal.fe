@@ -30,18 +30,6 @@ declare module "@soybean-react/vite-plugin-react-router" {
     "document_antd": "/document/antd";
     "document_ui": "/document/ui";
     "(base)_about": "/about";
-    "(base)_function": "/function";
-    "(base)_function_event-bus": "/function/event-bus";
-    "(base)_function_hide-child": "/function/hide-child";
-    "(base)_function_hide-child_one": "/function/hide-child/one";
-    "(base)_function_hide-child_three": "/function/hide-child/three";
-    "(base)_function_hide-child_two": "/function/hide-child/two";
-    "(base)_function_multi-tab": "/function/multi-tab";
-    "(base)_function_request": "/function/request";
-    "(base)_function_super-page": "/function/super-page";
-    "(base)_function_tab": "/function/tab";
-    "(base)_function_toggle-auth": "/function/toggle-auth";
-    "(base)_function_use-request": "/function/use-request";
     "(base)_home": "/home";
     "(base)_manage": "/manage";
     "(base)_manage_role": "/manage/role";
@@ -49,12 +37,13 @@ declare module "@soybean-react/vite-plugin-react-router" {
     "(base)_manage_user": "/manage/user";
     "(base)_manage_user_[id]": "/manage/user/:id";
     "(base)_user-center": "/user-center";
+    "(base)_viewadminmanager": "/viewadminmanager";
+    "(base)_viewadminmanager_listuse": "/viewadminmanager/listuse";
     "(blank)_login": "/login";
     "(blank)_login_code-login": "/login/code-login";
     "(blank)_login_register": "/login/register";
     "(blank)_login_reset-pwd": "/login/reset-pwd";
     "(blank)_login-out": "/login-out";
-    "(viewadmincanlua)_danhsachsudung": "/danhsachsudung";
     "403": "/403";
     "404": "/404";
     "500": "/500";
@@ -105,7 +94,6 @@ declare module "@soybean-react/vite-plugin-react-router" {
     RouteKey,
     | "(base)"
     | "(blank)"
-    | "(viewadmincanlua)"
     | "403"
     | "404"
     | "500"
@@ -128,21 +116,7 @@ declare module "@soybean-react/vite-plugin-react-router" {
    */
   export type LastLevelRouteKey = Extract<
     RouteKey,
-    | "(viewadmincanlua)_danhsachsudung"
-    | "(viewadmincanlua)"
     | "(base)_about"
-    | "(base)_function_event-bus"
-    | "(base)_function_hide-child"
-    | "(base)_function_hide-child_one"
-    | "(base)_function_hide-child_three"
-    | "(base)_function_hide-child_two"
-    | "(base)_function"
-    | "(base)_function_multi-tab"
-    | "(base)_function_request"
-    | "(base)_function_super-page"
-    | "(base)_function_tab"
-    | "(base)_function_toggle-auth"
-    | "(base)_function_use-request"
     | "(base)_home"
     | "(base)"
     | "(base)_manage"
@@ -151,6 +125,7 @@ declare module "@soybean-react/vite-plugin-react-router" {
     | "(base)_manage_user_[id]"
     | "(base)_manage_user"
     | "(base)_user-center"
+    | "(base)_viewadminmanager_listuse"
     | "(blank)"
     | "(blank)_login-out"
     | "(blank)_login_code-login"

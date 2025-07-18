@@ -12,7 +12,8 @@ export default defineConfig(configEnv => {
 
   const buildTime = getBuildTime();
 
-  const enableProxy = configEnv.command === 'serve' && !configEnv.isPreview;
+  // Tắt proxy
+  const enableProxy = false; // Thay đổi từ: configEnv.command === 'serve' && !configEnv.isPreview
   return {
     base: viteEnv.VITE_BASE_URL,
     build: {

@@ -10,7 +10,6 @@
 
 
 export const layouts: Record<string, () => Promise<any>> = {
-"(viewadmincanlua)": () => import("@/pages/(ViewAdminCanLua)/layout.tsx"),
 "(base)": () => import("@/pages/(base)/layout.tsx"),
 "(blank)": () => import("@/pages/(blank)/layout.tsx"),
 "(blank)_login": () => import("@/pages/(blank)/login/layout.tsx"),
@@ -18,20 +17,7 @@ export const layouts: Record<string, () => Promise<any>> = {
 };
 
 export const pages: Record<string, () => Promise<any>> = {
-"(viewadmincanlua)_danhsachsudung": () => import("@/pages/(ViewAdminCanLua)/DanhSachSuDung/index.tsx"),
 "(base)_about": () => import("@/pages/(base)/about/index.tsx"),
-"(base)_function_event-bus": () => import("@/pages/(base)/function/event-bus/index.tsx"),
-"(base)_function_hide-child": () => import("@/pages/(base)/function/hide-child/index.tsx"),
-"(base)_function_hide-child_one": () => import("@/pages/(base)/function/hide-child/one/index.tsx"),
-"(base)_function_hide-child_three": () => import("@/pages/(base)/function/hide-child/three/index.tsx"),
-"(base)_function_hide-child_two": () => import("@/pages/(base)/function/hide-child/two/index.tsx"),
-"(base)_function": () => import("@/pages/(base)/function/index.tsx"),
-"(base)_function_multi-tab": () => import("@/pages/(base)/function/multi-tab/index.tsx"),
-"(base)_function_request": () => import("@/pages/(base)/function/request/index.tsx"),
-"(base)_function_super-page": () => import("@/pages/(base)/function/super-page/index.tsx"),
-"(base)_function_tab": () => import("@/pages/(base)/function/tab/index.tsx"),
-"(base)_function_toggle-auth": () => import("@/pages/(base)/function/toggle-auth/index.tsx"),
-"(base)_function_use-request": () => import("@/pages/(base)/function/use-request/index.tsx"),
 "(base)_home": () => import("@/pages/(base)/home/index.tsx"),
 "(base)_manage": () => import("@/pages/(base)/manage/index.tsx"),
 "(base)_manage_role_[...slug]": () => import("@/pages/(base)/manage/role/[...slug].tsx"),
@@ -39,6 +25,7 @@ export const pages: Record<string, () => Promise<any>> = {
 "(base)_manage_user_[id]": () => import("@/pages/(base)/manage/user/[id].tsx"),
 "(base)_manage_user": () => import("@/pages/(base)/manage/user/index.tsx"),
 "(base)_user-center": () => import("@/pages/(base)/user-center/index.tsx"),
+"(base)_viewadminmanager_listuse": () => import("@/pages/(base)/viewadminmanager/listUse/index.tsx"),
 "(blank)_login-out": () => import("@/pages/(blank)/login-out/index.tsx"),
 "(blank)_login_code-login": () => import("@/pages/(blank)/login/code-login/index.tsx"),
 "(blank)_login": () => import("@/pages/(blank)/login/index.tsx"),

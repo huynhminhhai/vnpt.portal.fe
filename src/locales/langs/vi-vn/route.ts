@@ -1,17 +1,5 @@
 const route: App.I18n.Schema['translation']['route'] = {
   '(base)_about': 'Giới thiệu',
-  '(base)_function': 'Chức năng',
-  '(base)_function_event-bus': 'Demo Event Bus',
-  '(base)_function_hide-child': 'Ẩn menu con',
-  '(base)_function_hide-child_one': 'Ẩn menu con',
-  '(base)_function_hide-child_three': 'Menu ba',
-  '(base)_function_hide-child_two': 'Menu hai',
-  '(base)_function_multi-tab': 'Nhiều tab',
-  '(base)_function_request': 'Yêu cầu',
-  '(base)_function_super-page': 'Chỉ Super Admin thấy',
-  '(base)_function_tab': 'Tab',
-  '(base)_function_toggle-auth': 'Chuyển đổi quyền',
-  '(base)_function_use-request': 'Demo useRequest',
   '(base)_home': 'Trang chủ',
   '(base)_manage': 'Quản lý hệ thống',
   '(base)_manage_role': 'Quản lý vai trò',
@@ -19,7 +7,6 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_manage_user': 'Quản lý người dùng',
   '(base)_manage_user_[id]': 'Chi tiết người dùng',
   '(base)_user-center': 'Trung tâm người dùng',
-  '(viewadmincanlua)_danhsachsudung': 'Danh sách sử dụng',
   '(blank)_login': 'Đăng nhập',
   '(blank)_login_code-login': 'Đăng nhập bằng mã',
   '(blank)_login_register': 'Đăng ký tài khoản',
@@ -43,7 +30,9 @@ const route: App.I18n.Schema['translation']['route'] = {
   exception_500: '500',
   'iframe-page': 'Trang liên kết ngoài',
   notFound: 'Trang không tồn tại',
-  root: 'Trang chủ'
+  root: 'Trang chủ',
+  '(base)_viewadminmanager': 'Quản lý',
+  '(base)_viewadminmanager_listuse': 'Danh sách sử dụng'
 };
 
 export default route; 

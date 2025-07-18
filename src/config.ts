@@ -8,7 +8,8 @@ import { localStg } from './utils/storage';
 
 const isDev = import.meta.env.DEV;
 
-const isHttpProxy = isDev && import.meta.env.VITE_HTTP_PROXY === 'Y';
+// Tắt proxy mặc định
+const isHttpProxy = false; // Thay đổi từ: isDev && import.meta.env.VITE_HTTP_PROXY === 'Y'
 
 const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
 

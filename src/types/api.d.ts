@@ -30,6 +30,8 @@ declare namespace Api {
      */
     type EnableStatus = '1' | '2';
 
+    type TrangThai = '1' | '2' | '0';
+
     /** common record */
     type CommonRecord<T = any> = {
       /** record creator */
@@ -148,6 +150,7 @@ declare namespace Api {
         CommonSearchParams
     >;
 
+
     /** user list */
     type UserList = Common.PaginatingQueryRecord<User>;
 
@@ -170,6 +173,11 @@ declare namespace Api {
       desc: string;
     };
 
+    type phantrang = {
+      Sorting: number;
+      SkipCount: number;
+      MaxResultCount: number;
+    };
     /**
      * icon type
      *
@@ -225,5 +233,45 @@ declare namespace Api {
       label: string;
       pId: number;
     };
+    type paramsPhanTrang = {
+      Sorting: string | null;
+      SkipCount: number;
+      MaxResultCount: string;
+    }
+    type responePhanTrang = {
+      items: any[];
+      totalCount: number;
+    }
+
+    /** API response format mới đơn giản */
+    type ApiResponse<T = any> = {
+      result: {
+        totalCount: number;
+        items: T[];
+      };
+      targetUrl: string | null;
+      success: boolean;
+      error: string | null;
+      unAuthorizedRequest: boolean;
+      __abp: boolean;
+    };
+
+    /** User data từ API mới */
+    type UserWithTenant = {
+      id: number;
+      userName: string;
+      name: string;
+      emailAddress: string;
+      tenantId: number;
+      tenancyName: string;
+      tenantName: string;
+      goiSuDungId: number;
+      tenGoiSuDung: string;
+      ngayKeThuc: string; // Format: "2027-08-01T00:00:00"
+    };
+
+    /** Response type cho GetAllUserWithTenant */
+    type GetAllUserWithTenantResponse = ApiResponse<UserWithTenant>;
   }
 }
+

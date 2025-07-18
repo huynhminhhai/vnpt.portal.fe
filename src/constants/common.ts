@@ -14,6 +14,16 @@ export const ATG_MAP: Record<Api.Common.EnableStatus, string> = {
   2: 'warning'
 };
 
+export const TRANG_THAI_MAP: Record<Api.Common.TrangThai, string> = {
+  1: 'Đang sử dụng',
+  2: 'Hết hạn',
+  0: 'Sử dụng miễn phí'
+};
+export const TRANG_THAI_COLOR_MAP: Record<Api.Common.TrangThai, string> = {
+  1: 'success',
+  2: 'warning',
+  0: 'default'
+};
 export const YesOrNo_Map: Record<CommonType.YesOrNo, string> = {
   N: 'default',
   Y: 'error'

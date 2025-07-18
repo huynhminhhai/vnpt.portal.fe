@@ -38,6 +38,7 @@ const common: App.I18n.Schema['translation']['common'] = {
   updateSuccess: 'Cập nhật thành công',
   userCenter: 'Trung tâm người dùng',
   warning: 'Cảnh báo',
+  detail: 'Chi tiết',
   yesOrNo: {
     no: 'Không',
     yes: 'Có'

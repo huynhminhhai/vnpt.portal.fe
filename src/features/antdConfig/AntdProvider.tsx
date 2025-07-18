@@ -24,9 +24,6 @@ function useAntdTheme() {
     setupThemeVarsToHtml(colors, themeSettings.tokens, themeSettings.recommendColor);
     localStg.set('themeColor', colors.primary);
   }, [colors, themeSettings]);
-
-  console.info(`%c${info}`, `color: ${colors.primary}`);
-
   return { antdTheme, watermarkText: themeSettings.watermark.text, watermarkVisible: themeSettings.watermark.visible };
 }
 

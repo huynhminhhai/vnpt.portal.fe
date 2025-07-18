@@ -6,6 +6,7 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const AAlert: typeof import('antd')['Alert']
   const AButton: typeof import('antd')['Button']
   const ACard: typeof import('antd')['Card']
   const ACheckbox: typeof import('antd')['Checkbox']
@@ -27,6 +28,7 @@ declare global {
   const APopconfirm: typeof import('antd')['Popconfirm']
   const APopover: typeof import('antd')['Popover']
   const ARadio: typeof import('antd')['Radio']
+  const ARangePicker: typeof import('antd')['RangePicker']
   const ARow: typeof import('antd')['Row']
   const ASegmented: typeof import('antd')['Segmented']
   const ASelect: typeof import('antd')['Select']
@@ -34,6 +36,7 @@ declare global {
   const ASpin: typeof import('antd')['Spin']
   const AStatistic: typeof import('antd')['Statistic']
   const ASwitch: typeof import('antd')['Switch']
+  const ATG_MAP: typeof import('antd')['TG_MAP']
   const ATable: typeof import('antd')['Table']
   const ATag: typeof import('antd')['Tag']
   const ATooltip: typeof import('antd')['Tooltip']

@@ -79,3 +79,43 @@ export const demoRequest = createRequest<App.Service.DemoResponse>(
     }
   }
 );
+
+// Request mới cho API format với response.data
+export const newRequest = createFlatRequest<Api.SystemManage.ApiResponse, RequestInstanceState>(
+  {
+    baseURL: globalConfig.serviceBaseURL,
+    headers: {
+      apifoxToken: 'XL299LiMEDZ0H5h3A29PxwQXdMJqWyY2'
+    }
+  },
+  {
+    isBackendSuccess(response) {
+      // Kiểm tra success field từ response.data
+      const responseData = response.data as any;
+      return responseData.success === true || 
+             (responseData.result && Object.keys(responseData.result).length > 0);
+    },
+    async onBackendFail(response, instance) {
+      // Xử lý lỗi riêng cho API format mới
+      const responseData = response.data as any;
+      console.error('API Error:', responseData.error?.message);
+      window.$message?.error(responseData.error?.message || 'Request failed');
+    },
+    onError(error) {
+      // Xử lý lỗi network
+      console.error('Network Error:', error);
+      window.$message?.error(error.message || 'Network error');
+    },
+    async onRequest(config) {
+      const Authorization = getAuthorization();
+      Object.assign(config.headers, { Authorization });
+
+      return config;
+    },
+    transformBackendResponse(response) {
+      // Trả về response.data trực tiếp (bao gồm result, success, error, etc.)
+      const responseData = response.data as any;
+      return responseData;
+    }
+  }
+);

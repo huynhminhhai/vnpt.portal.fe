@@ -34,140 +34,6 @@ export const generatedRoutes: ElegantConstRoute[] = [
             }
           },
           {
-            matchedFiles: [null, '/src/pages/(base)/function/index.tsx', null, null],
-            name: '(base)_function',
-            path: '/function',
-            handle: {
-              i18nKey: 'route.(base)_function',
-              icon: 'icon-park-outline:all-application',
-              order: 6,
-              title: 'function'
-            },
-            children: [
-              {
-                matchedFiles: [null, '/src/pages/(base)/function/event-bus/index.tsx', null, null],
-                name: '(base)_function_event-bus',
-                path: '/function/event-bus',
-                handle: {
-                  i18nKey: 'route.(base)_function_event-bus',
-                  icon: 'ant-design:send-outlined',
-                  title: 'function_event-bus'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/function/hide-child/index.tsx', null, null],
-                name: '(base)_function_hide-child',
-                path: '/function/hide-child',
-                handle: {
-                  i18nKey: 'route.(base)_function_hide-child',
-                  icon: 'material-symbols:filter-list-off',
-                  order: 2,
-                  title: 'function_hide-child'
-                },
-                children: [
-                  {
-                    matchedFiles: [null, '/src/pages/(base)/function/hide-child/one/index.tsx', null, null],
-                    name: '(base)_function_hide-child_one',
-                    path: '/function/hide-child/one',
-                    handle: {
-                      activeMenu: '/function/hide-child',
-                      hideInMenu: true,
-                      i18nKey: 'route.(base)_function_hide-child_one',
-                      title: 'function_hide-child_one'
-                    }
-                  },
-                  {
-                    matchedFiles: [null, '/src/pages/(base)/function/hide-child/three/index.tsx', null, null],
-                    name: '(base)_function_hide-child_three',
-                    path: '/function/hide-child/three',
-                    handle: {
-                      activeMenu: '/function/hide-child',
-                      hideInMenu: true,
-                      i18nKey: 'route.(base)_function_hide-child_three',
-                      title: 'function_hide-child_three'
-                    }
-                  },
-                  {
-                    matchedFiles: [null, '/src/pages/(base)/function/hide-child/two/index.tsx', null, null],
-                    name: '(base)_function_hide-child_two',
-                    path: '/function/hide-child/two',
-                    handle: {
-                      activeMenu: '/function/hide-child',
-                      hideInMenu: true,
-                      i18nKey: 'route.(base)_function_hide-child_two',
-                      title: 'function_hide-child_two'
-                    }
-                  }
-                ]
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/function/multi-tab/index.tsx', null, null],
-                name: '(base)_function_multi-tab',
-                path: '/function/multi-tab',
-                handle: {
-                  activeMenu: '/function/tab',
-                  hideInMenu: true,
-                  i18nKey: 'route.(base)_function_multi-tab',
-                  icon: 'ic:round-tab',
-                  multiTab: true,
-                  title: 'function_multi-tab'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/function/request/index.tsx', null, null],
-                name: '(base)_function_request',
-                path: '/function/request',
-                handle: {
-                  i18nKey: 'route.(base)_function_request',
-                  icon: 'carbon:network-overlay',
-                  order: 3,
-                  title: 'function_request'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/function/super-page/index.tsx', null, null],
-                name: '(base)_function_super-page',
-                path: '/function/super-page',
-                handle: {
-                  i18nKey: 'route.(base)_function_super-page',
-                  icon: 'ic:round-supervisor-account',
-                  order: 5,
-                  roles: ['R_SUPER'],
-                  title: 'function_super-page'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/function/tab/index.tsx', null, null],
-                name: '(base)_function_tab',
-                path: '/function/tab',
-                handle: {
-                  i18nKey: 'route.(base)_function_tab',
-                  icon: 'ic:round-tab',
-                  keepAlive: true,
-                  order: 1,
-                  title: 'function_tab'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/function/toggle-auth/index.tsx', null, null],
-                name: '(base)_function_toggle-auth',
-                path: '/function/toggle-auth',
-                handle: {
-                  i18nKey: 'route.(base)_function_toggle-auth',
-                  icon: 'ic:round-construction',
-                  order: 4,
-                  title: 'function_toggle-auth'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/function/use-request/index.tsx', null, null],
-                name: '(base)_function_use-request',
-                path: '/function/use-request',
-                handle: { i18nKey: 'route.(base)_function_use-request', title: '(base)_function_use-request' }
-              }
-            ]
-          },
-          {
             matchedFiles: [null, '/src/pages/(base)/home/index.tsx', null, null],
             name: '(base)_home',
             path: '/home',
@@ -242,6 +108,20 @@ export const generatedRoutes: ElegantConstRoute[] = [
             name: '(base)_user-center',
             path: '/user-center',
             handle: { hideInMenu: true, i18nKey: 'route.(base)_user-center', title: 'user-center' }
+          },
+          {
+            matchedFiles: [null, null, null, null],
+            name: '(base)_viewadminmanager',
+            path: '/viewadminmanager',
+            handle: { i18nKey: 'route.(base)_viewadminmanager', title: '(base)_viewadminmanager' },
+            children: [
+              {
+                matchedFiles: [null, '/src/pages/(base)/viewadminmanager/listUse/index.tsx', null, null],
+                name: '(base)_viewadminmanager_listuse',
+                path: '/viewadminmanager/listuse',
+                handle: { i18nKey: 'route.(base)_viewadminmanager_listuse', title: '(base)_viewadminmanager_listuse' }
+              }
+            ]
           }
         ],
         path: null
@@ -281,25 +161,6 @@ export const generatedRoutes: ElegantConstRoute[] = [
             name: '(blank)_login-out',
             path: '/login-out',
             handle: { i18nKey: 'route.(blank)_login-out', title: '(blank)_login-out', constant: true }
-          }
-        ],
-        path: null
-      },
-      {
-        matchedFiles: ['(viewadmincanlua)', null, null, null],
-        name: '(viewadmincanlua)',
-        children: [
-          {
-            matchedFiles: [null, '/src/pages/(ViewAdminCanLua)/DanhSachSuDung/index.tsx', null, null],
-            name: '(viewadmincanlua)_danhsachsudung',
-            path: '/danhsachsudung',
-            handle: {
-              i18nKey: 'route.(viewadmincanlua)_danhsachsudung',
-              title: '(viewadmincanlua)_danhsachsudung',
-              icon: 'carbon:cloud-service-management',
-              order: 8,
-              roles: ['R_ADMIN']
-            }
           }
         ],
         path: null
