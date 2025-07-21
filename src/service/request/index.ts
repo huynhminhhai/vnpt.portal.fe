@@ -90,21 +90,53 @@ export const newRequest = createFlatRequest<Api.SystemManage.ApiResponse, Reques
   },
   {
     isBackendSuccess(response) {
-      // Kiểm tra success field từ response.data
-      const responseData = response.data as any;
-      return responseData.success === true || 
-             (responseData.result && Object.keys(responseData.result).length > 0);
+      // Validate response structure first
+      const responseData = response.data as Api.SystemManage.ApiResponse;
+      
+      if (!responseData || typeof responseData.success !== 'boolean') {
+        console.warn('Invalid response structure:', responseData);
+        return false;
+      }
+      
+      // Chỉ check success field - đơn giản và reliable nhất
+      return responseData.success === true;
     },
     async onBackendFail(response, instance) {
-      // Xử lý lỗi riêng cho API format mới
-      const responseData = response.data as any;
-      console.error('API Error:', responseData.error?.message);
-      window.$message?.error(responseData.error?.message || 'Request failed');
+      // Xử lý lỗi riêng cho API format mới với type safety
+      const responseData = response.data as Api.SystemManage.ApiResponse;
+      
+      const errorMessage = responseData.error
+      
+      console.error('API Error:', {
+        message: errorMessage,
+        error: responseData.error,
+        success: responseData.success,
+        result: responseData.result
+      });
+      
+      window.$message?.error(errorMessage);
     },
     onError(error) {
-      // Xử lý lỗi network
-      console.error('Network Error:', error);
-      window.$message?.error(error.message || 'Network error');
+      // Xử lý lỗi network với thông tin chi tiết hơn
+      console.error('Network Error:', {
+        message: error.message,
+        code: error.code,
+        status: error.response?.status,
+        data: error.response?.data
+      });
+      
+      let message = error.message || 'Network error';
+      
+      // Xử lý các loại lỗi network phổ biến
+      if (error.code === 'NETWORK_ERROR') {
+        message = 'Không thể kết nối đến server';
+      } else if (error.response?.status === 500) {
+        message = 'Lỗi server nội bộ';
+      } else if (error.response?.status === 404) {
+        message = 'API không tìm thấy';
+      }
+      
+      window.$message?.error(message);
     },
     async onRequest(config) {
       const Authorization = getAuthorization();
@@ -113,8 +145,8 @@ export const newRequest = createFlatRequest<Api.SystemManage.ApiResponse, Reques
       return config;
     },
     transformBackendResponse(response) {
-      // Trả về response.data trực tiếp (bao gồm result, success, error, etc.)
-      const responseData = response.data as any;
+      // Trả về response.data trực tiếp với type safety
+      const responseData = response.data as Api.SystemManage.ApiResponse;
       return responseData;
     }
   }

@@ -50,11 +50,11 @@ export function useInitAuth() {
     if (loading) return;
 
     startLoading();
-    const { data: loginToken, error } = await fetchLogin(userName, password);
-
-    if (!error) {
-      localStg.set('token', loginToken.token);
-      localStg.set('refreshToken', loginToken.refreshToken);
+    const loginToken = await fetchLogin(userName, password);
+    console.log(loginToken);
+    if (loginToken) {
+      localStg.set('token', loginToken.result.accessToken);
+      localStg.set('refreshToken', loginToken.result.encryptedAccessToken);
 
       const { data: info, error: userInfoError } = await fetchGetUserInfo();
 
@@ -62,7 +62,7 @@ export function useInitAuth() {
         // 2. store user info
         localStg.set('userInfo', info);
 
-        dispatch(setToken(loginToken.token));
+        dispatch(setToken(loginToken.result.accessToken));
         dispatch(setUserInfo(info));
 
         if (redirect) {
@@ -72,12 +72,13 @@ export function useInitAuth() {
             replace(globalConfig.homePath);
           }
         }
-
-        window.$notification?.success({
-          description: t('page.login.common.welcomeBack', { userName: info.userName }),
-          message: t('page.login.common.loginSuccess')
-        });
+       
+        
       }
+      window.$notification?.success({
+        description: t('page.login.common.welcomeBack'),
+        message: t('page.login.common.loginSuccess')
+      });
     }
 
     endLoading();

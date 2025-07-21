@@ -613,6 +613,10 @@ declare namespace App {
               content: string;
               explain: string;
             };
+            DateItem: {
+              CreateDate: string;
+              EndDate: string;
+            }
           };
         };
         request: {

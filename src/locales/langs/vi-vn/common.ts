@@ -9,7 +9,7 @@ const common: App.I18n.Schema['translation']['common'] = {
   close: 'Đóng',
   columnSetting: 'Cài đặt cột',
   config: 'Cấu hình',
-  confirm: 'Xác nhận',
+  confirm: 'Đăng nhập',
   confirmDelete: 'Bạn có chắc chắn muốn xóa?',
   delete: 'Xóa',
   deleteSuccess: 'Xóa thành công',

@@ -1,15 +1,12 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { ATG_MAP, TRANG_THAI_COLOR_MAP, TRANG_THAI_MAP } from "@/constants/common";
-import { TableHeaderOperation, useTable, useTableOperate, useTableScroll } from "@/features/table";
-import { fetchGetUserList, GetAllUserWithTenant } from "@/service/api";
-import { DatePicker } from 'antd';
+import { TableHeaderOperation, useTableScroll } from "@/features/table";
+import { GetAllUserWithTenant } from "@/service/api";
+import { Button, DatePicker } from 'antd';
 import { StatisticalUse } from '@/types/statistical';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Form, Row, Col, Input, Button, Flex, Collapse, Card, Table, Popconfirm } from 'antd';
-import IconMdiRefresh from '@/components/SvgIcon';
-import IconUilSearch from '@/components/SvgIcon';
 import { useMobile } from '@/hooks/common/mobile';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
@@ -38,7 +35,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
             label={t('page.manage.user.userPhone')}
             name="userPhone"
           >
-            <Input placeholder={t('page.manage.user.form.userPhone')} />
+            <AInput placeholder={t('page.manage.user.form.userPhone')} />
           </AForm.Item>
         </ACol>
         <ACol
@@ -49,6 +46,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
           <AForm.Item
             className="m-0"
             label={'Ngày tạo'}
+            name="dateRange"
           >
             <DatePicker.RangePicker />
           </AForm.Item>
@@ -64,17 +62,17 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
             gap={16}
             justify="flex-end"
           >
-            <AButton onClick={reset} icon={<IconIcRoundRefresh />}>
+            <AButton onClick={reset} icon={<IconMdiRefresh />}>
               {t('common.reset')}
             </AButton>
-            {/* <Button
+            <AButton
               ghost
               type="primary"
               onClick={search}
-              icon={<IconIcRoundSearch />}
+              icon={<IconUilSearch />}
             >
               {t('common.search')}
-            </Button> */}
+            </AButton>
           </AFlex>
         </ACol>
       </ARow>
@@ -84,22 +82,19 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
 
 const UserOperateDrawer = lazy(() => import('@/pages/(base)/manage/user/modules/UserOperateDrawer'));
 
-const tagUserGenderMap: Record<Api.SystemManage.UserGender, string> = {
-  1: 'processing',
-  2: 'error'
-};
-
 const ListUse = () => {
   const { t } = useTranslation();
   const { scrollConfig, tableWrapperRef } = useTableScroll();
   const nav = useNavigate();
   const [datas, setDatas] = useState<StatisticalUse[]>([]);
+  const [loading, setLoading] = useState(false);
   const isMobile = useMobile();
-  // Thêm state cho form
-  const [form] = Form.useForm();
+  
+  // Form state
+  const [form] = AForm.useForm();
   const [searchParams, setSearchParams] = useState({});
   
-  // Thêm state cho tuỳ biến cột
+  // Column visibility state
   const [columnChecks, setColumnChecks] = useState<AntDesign.TableColumnCheck[]>([
     { checked: true, key: 'index', title: t('common.index') },
     { checked: true, key: 'userName', title: t('page.manage.user.userName') },
@@ -108,44 +103,56 @@ const ListUse = () => {
     { checked: true, key: 'operate', title: t('common.operate') }
   ]);
   
+  // Search functions
   const reset = () => {
     form.resetFields();
     setSearchParams({});
-  };
-  const search = () => {
-    setSearchParams(form.getFieldsValue());
-    // Gọi fetchData nếu cần
+    fetchData(); // Reload data after reset
   };
   
-  // Sửa hàm fetchData đóng ngoặc đúng
-  const fetchData = async () => {
+  const search = () => {
+    const values = form.getFieldsValue();
+    setSearchParams(values);
+    fetchData(values); // Fetch data with search params
+  };
+  
+  // Fetch data function
+  const fetchData = async (params = {}) => {
+    setLoading(true);
     try {
-      const res = await GetAllUserWithTenant({
+      const apiParams = {
         Sorting: null,
         SkipCount: 0,
-        MaxResultCount: '10'
-      });
-      console.log("res",res);
+        MaxResultCount: '10',
+        ...params
+      };
+      
+      const res = await GetAllUserWithTenant(apiParams);
+      console.log("res", res);
+      
       const resData = res.data as any;
-      // Bây giờ res đã là response.data trực tiếp từ transformBackendResponse
+      
       if (resData && resData.result && resData.result.items && Array.isArray(resData.result.items)) {
         const data = resData.result as { items: Api.SystemManage.UserWithTenant[]; totalCount: number };
         setDatas(data.items);
       } else {
-        // Fallback data nếu API chưa trả về đúng format
         console.warn('API response format không đúng, sử dụng fallback data');
-       
+        setDatas([]); // Set empty array if no data
       }
     } catch (error) {
       console.error('Error fetching data:', error);
+      setDatas([]); // Set empty array on error
+    } finally {
+      setLoading(false);
     }
   };
   
+  // Initial data fetch
   useEffect(() => {
     fetchData();
   }, []);
   
-  // Sửa columns đúng kiểu
+  // Column definitions
   const columns: any[] = [
     {
       align: 'center' as const,
@@ -172,14 +179,13 @@ const ListUse = () => {
       align: 'center' as const,
       key: 'ngayKeThuc',
       title: 'Ngày kết thúc',
-
       render: (_: any, record: StatisticalUse) => record.ngayKeThuc || '-'
     },
     {
       align: 'center' as const,
       key: 'operate',
       render: (_: any, record: StatisticalUse) => (
-        <div className="flex-center gap-8px p-4px">
+        <div className="flex-center gap-8px">
           <AButton
             ghost
             size="small"
@@ -191,33 +197,60 @@ const ListUse = () => {
           <AButton
             size="small"
             onClick={() => nav(`/manage/user/${record.id}`)}
-            >
-              {t('common.detail')}
+          >
+            {t('common.detail')}
           </AButton>
+          <APopconfirm
+            title={t('common.confirmDelete')}
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <AButton
+              danger
+              size="small"
+            >
+              {t('common.delete')}
+            </AButton>
+          </APopconfirm>
         </div>
       ),
       title: t('common.operate'),
-      width: 220
+      width: 260
     }
   ];
   
-  // Lọc columns dựa trên columnChecks
+  // Filter columns based on visibility
   const filteredColumns = columns.filter(col => 
     columnChecks.find(check => check.key === col.key)?.checked
   );
   
-  // Hàm xử lý thay đổi column checks
+  // Column visibility handler
   const handleSetColumnChecks = (checks: AntDesign.TableColumnCheck[]) => {
-    console.log("checks",checks);
+    console.log("checks", checks);
     setColumnChecks(checks);
   };
   
-  const handleDelete = (id: number) => {
-    // request
-    console.log(id);
+  // Action handlers
+  const handleDelete = async (id: number) => {
+    try {
+      // TODO: Implement delete API call
+      console.log('Deleting:', id);
+      // await deleteUser(id);
+      fetchData(); // Refresh data after delete
+    } catch (error) {
+      console.error('Error deleting:', error);
+    }
   };
+  
   const edit = (id: number) => {
-    console.log(id);
+    console.log('Editing:', id);
+    // TODO: Implement edit functionality
+    // nav(`/manage/user/edit/${id}`);
+  };
+  
+  const handleAdd = () => {
+    console.log('Adding new user');
+    // TODO: Implement add functionality
+    // nav('/manage/user/add');
   };
   
   return (
@@ -234,6 +267,7 @@ const ListUse = () => {
           }
         ]}
       />
+      
       <ACard
         className="flex-col-stretch sm:flex-1-hidden card-wrapper"
         ref={tableWrapperRef}
@@ -241,13 +275,15 @@ const ListUse = () => {
         variant="borderless"
         extra={
           <TableHeaderOperation
-            columns={columns}
-            disabledDelete={false}
-            loading={false}
-            refresh={fetchData}
+            columns={columnChecks}
+            disabledDelete={true}
+            loading={loading}
+            refresh={() => fetchData()}
             setColumnChecks={handleSetColumnChecks}
             onDelete={() => {}}
-            add={() => {}}
+            add={handleAdd}
+            isShowAdd={false}
+            isShowDelete={false}
           />
         }
       >
@@ -257,10 +293,17 @@ const ListUse = () => {
           dataSource={datas}
           columns={filteredColumns}
           bordered
+          loading={loading}
+          rowKey="id"
+          pagination={{
+            showSizeChanger: true,
+            showQuickJumper: true,
+            showTotal: (total: number, range: number[]) => 
+              `${range[0]}-${range[1]} of ${total} items`,
+            defaultPageSize: 10,
+            pageSizeOptions: ['10', '20', '50', '100']
+          }}
         />
-        {/* <Suspense>
-          <UserOperateDrawer {...generalPopupOperation} />
-        </Suspense> */}
       </ACard>
     </div>
   );

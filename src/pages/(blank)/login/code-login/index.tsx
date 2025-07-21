@@ -27,7 +27,7 @@ const CodeLogin = () => {
 
   return (
     <>
-      <h3 className="text-18px text-primary font-medium">{t('page.login.codeLogin.title')}</h3>
+      {/* <h3 className="text-18px text-primary font-medium">{t('page.login.codeLogin.title')}</h3> */}
       <Form
         className="pt-24px"
         form={form}

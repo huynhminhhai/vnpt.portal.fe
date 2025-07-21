@@ -32,7 +32,8 @@ const route: App.I18n.Schema['translation']['route'] = {
   notFound: 'Trang không tồn tại',
   root: 'Trang chủ',
   '(base)_viewadminmanager': 'Quản lý',
-  '(base)_viewadminmanager_listuse': 'Danh sách sử dụng'
+  '(base)_viewadminmanager_listuse': 'Danh sách sử dụng',
+  '(base)_viewadminmanager_dangkysudung': 'Đăng ký nâng cấp'
 };
 
 export default route; 

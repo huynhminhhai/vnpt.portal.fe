@@ -15,8 +15,8 @@ interface Account {
 type LoginParams = Pick<Account, 'password' | 'userName'>;
 
 const INITIAL_VALUES = {
-  password: '123456',
-  userName: 'Soybean'
+  password: 'Vnpt#2022',
+  userName: 'admin'
 };
 
 const PwdLogin = () => {
@@ -120,7 +120,7 @@ const PwdLogin = () => {
           >
             {t('common.confirm')}
           </SubmitEnterButton>
-          <div className="flex-y-center justify-between gap-12px">
+          {/* <div className="flex-y-center justify-between gap-12px">
             <Button
               block
               className="flex-1"
@@ -135,9 +135,9 @@ const PwdLogin = () => {
             >
               {t(loginModuleRecord.register)}
             </Button>
-          </div>
-          <Divider className="!m-0 !text-14px !text-#666">{t('page.login.pwdLogin.otherAccountLogin')}</Divider>
-          <div className="flex-center gap-12px">
+          </div> */}
+          {/* <Divider className="!m-0 !text-14px !text-#666">{t('page.login.pwdLogin.otherAccountLogin')}</Divider> */}
+          {/* <div className="flex-center gap-12px flex-wrap">
             {accounts.map(item => {
               return (
                 <Button
@@ -149,7 +149,7 @@ const PwdLogin = () => {
                 </Button>
               );
             })}
-          </div>
+          </div> */}
         </Space>
       </AForm>
     </>

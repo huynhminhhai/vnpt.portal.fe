@@ -14,6 +14,7 @@ declare global {
   const ACollapse: typeof import('antd')['Collapse']
   const AColorPicker: typeof import('antd')['ColorPicker']
   const AConfigProvider: typeof import('antd')['ConfigProvider']
+  const ADatePicker: typeof import('antd')['DatePicker']
   const ADescriptions: typeof import('antd')['Descriptions']
   const ADivider: typeof import('antd')['Divider']
   const ADrawer: typeof import('antd')['Drawer']

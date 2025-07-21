@@ -59,6 +59,19 @@ declare namespace Api {
       refreshToken: string;
       token: string;
     }
+    interface LoginTokenResponse {
+      result: {
+        accessToken: string;
+        encryptedAccessToken: string;
+        expireInSeconds: number;
+        userId: number;
+      };
+      targetUrl: string | null;
+      success: boolean;
+      error: string | null;
+      unAuthorizedRequest: boolean;
+      __abp: boolean;
+    }
 
     interface UserInfo {
       buttons: string[];
@@ -245,10 +258,7 @@ declare namespace Api {
 
     /** API response format mới đơn giản */
     type ApiResponse<T = any> = {
-      result: {
-        totalCount: number;
-        items: T[];
-      };
+      result: any;
       targetUrl: string | null;
       success: boolean;
       error: string | null;

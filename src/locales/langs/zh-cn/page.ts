@@ -75,6 +75,8 @@ const page: App.I18n.Schema['translation']['page'] = {
     todo: '待办',
     turnover: '成交额',
     visitCount: '访问量',
+    freeCount: '免费数量',
+    paidCount: '付费数量',
     weatherDesc: '今日多云转晴，20℃ - 25℃!',
     work: '工作'
   },
@@ -255,6 +257,10 @@ const page: App.I18n.Schema['translation']['page'] = {
         请求懒加载的文件 - 解析 - 请求懒加载的文件 - 挂载之后去发出网络请求 - 然后渲染页面 - 渲染完成
         还要自己加loading效果`,
       explain: '这个页面仅仅是为了展示 react-router-dom 的 loader 的强大能力，数据是随机的对不上很正常'
+    },
+    DateItem :{
+      CreateDate: '创建日期',
+      EndDate: '结束日期',
     }
   }
 };

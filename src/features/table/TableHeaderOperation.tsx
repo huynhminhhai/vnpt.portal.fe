@@ -18,6 +18,8 @@ interface Props {
   refresh: () => void;
   setColumnChecks: (checks: AntDesign.TableColumnCheck[]) => void;
   suffix?: React.ReactNode;
+  isShowAdd?: boolean;
+  isShowDelete?: boolean;
 }
 
 const TableHeaderOperation: FC<Props> = ({
@@ -31,10 +33,12 @@ const TableHeaderOperation: FC<Props> = ({
   prefix,
   refresh,
   setColumnChecks,
-  suffix
+  suffix,
+  isShowAdd = true,
+  isShowDelete = true
 }) => {
   const { t } = useTranslation();
-
+  console.log("children",children);
   return (
     <Space
       wrap
@@ -44,6 +48,7 @@ const TableHeaderOperation: FC<Props> = ({
       {prefix}
       {children || (
         <>
+          {isShowAdd && (
           <Button
             ghost
             icon={<IconIcRoundPlus className="text-icon" />}
@@ -53,6 +58,8 @@ const TableHeaderOperation: FC<Props> = ({
           >
             {t('common.add')}
           </Button>
+          )}
+          {isShowDelete && (
           <Popconfirm
             title={t('common.confirmDelete')}
             onConfirm={onDelete}
@@ -67,6 +74,7 @@ const TableHeaderOperation: FC<Props> = ({
               {t('common.batchDelete')}
             </Button>
           </Popconfirm>
+          )}
         </>
       )}
       <Button

@@ -113,13 +113,32 @@ export const generatedRoutes: ElegantConstRoute[] = [
             matchedFiles: [null, null, null, null],
             name: '(base)_viewadminmanager',
             path: '/viewadminmanager',
-            handle: { i18nKey: 'route.(base)_viewadminmanager', title: '(base)_viewadminmanager' },
+            handle: {
+              i18nKey: 'route.(base)_viewadminmanager',
+              order: 2,
+              title: '(base)_viewadminmanager',
+              icon: 'carbon:cloud-service-management'
+            },
             children: [
+              {
+                matchedFiles: [null, '/src/pages/(base)/viewadminmanager/DangKySuDung/index.tsx', null, null],
+                name: '(base)_viewadminmanager_dangkysudung',
+                path: '/viewadminmanager/dangkysudung',
+                handle: {
+                  i18nKey: 'route.(base)_viewadminmanager_dangkysudung',
+                  title: '(base)_viewadminmanager_dangkysudung',
+                  icon: 'carbon:intent-request-upgrade'
+                }
+              },
               {
                 matchedFiles: [null, '/src/pages/(base)/viewadminmanager/listUse/index.tsx', null, null],
                 name: '(base)_viewadminmanager_listuse',
                 path: '/viewadminmanager/listuse',
-                handle: { i18nKey: 'route.(base)_viewadminmanager_listuse', title: '(base)_viewadminmanager_listuse' }
+                handle: {
+                  i18nKey: 'route.(base)_viewadminmanager_listuse',
+                  title: '(base)_viewadminmanager_listuse',
+                  icon: 'carbon:user-certification'
+                }
               }
             ]
           }

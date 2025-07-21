@@ -95,7 +95,7 @@ const page: App.I18n.Schema['translation']['page'] = {
       back: 'Quay lại',
       codeLogin: 'Đăng nhập bằng mã',
       codePlaceholder: 'Vui lòng nhập mã xác thực',
-      confirm: 'Xác nhận',
+      confirm: 'Đăng nhập',
       confirmPasswordPlaceholder: 'Vui lòng nhập lại mật khẩu',
       loginOrRegister: 'Đăng nhập / Đăng ký',
       loginSuccess: 'Đăng nhập thành công',
@@ -111,7 +111,7 @@ const page: App.I18n.Schema['translation']['page'] = {
       otherAccountLogin: 'Đăng nhập tài khoản khác',
       otherLoginMode: 'Phương thức đăng nhập khác',
       register: 'Đăng ký tài khoản',
-      rememberMe: 'Ghi nhớ tôi',
+      rememberMe: 'Nhớ mật khẩu',
       superAdmin: 'Siêu quản trị viên',
       title: 'Đăng nhập bằng mật khẩu',
       user: 'Người dùng thường'
@@ -252,6 +252,10 @@ const page: App.I18n.Schema['translation']['page'] = {
     userDetail: {
       content: `loader sẽ làm cho network request và file lazy load gần như cùng phát ra request, sau đó vừa parse file lazy load vừa chờ network request. Khi network request hoàn thành, trang sẽ hiển thị cùng lúc. Kết hợp với kiến trúc fiber của react, có thể làm được việc nếu user cảm thấy thời gian chờ quá lâu, trong thời gian chờ user có thể chuyển đổi các trang khác nhau. Đây là ưu điểm của react framework và react-router data router, không cần phải đợi đến khi trang hiển thị, thay vì cách thông thường: request file lazy load - parse - request file lazy load - mount sau đó mới phát network request - rồi render trang - render hoàn thành còn phải tự thêm loading effect`,
       explain: 'Trang này chỉ để hiển thị khả năng mạnh mẽ của loader của react-router-dom, dữ liệu là ngẫu nhiên nên không khớp là bình thường'
+    },
+    DateItem :{
+      CreateDate: 'Ngày tạo',
+      EndDate: 'Ngày kết thúc',
     }
   }
 };

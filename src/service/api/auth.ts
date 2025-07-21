@@ -1,4 +1,4 @@
-import { request } from '../request';
+import { newRequest, request } from '../request';
 
 /**
  * Login
@@ -6,15 +6,20 @@ import { request } from '../request';
  * @param userName User name
  * @param password Password
  */
-export function fetchLogin(userName: string, password: string) {
-  return request<Api.Auth.LoginToken>({
-    data: {
-      password,
-      userName
-    },
+export async function fetchLogin(userName: string, password: string) {
+
+  const data ={
+    userNameOrEmailAddress: userName,
+    password: password,
+    rememberClient: true,
+    tenant: "string"
+  }
+  const res = await newRequest<Api.Auth.LoginTokenResponse>({
+    data,
     method: 'post',
-    url: '/auth/login'
+    url: '/api/TokenAuth/Authenticate'
   });
+  return res.data;
 }
 
 /** Get user info */
