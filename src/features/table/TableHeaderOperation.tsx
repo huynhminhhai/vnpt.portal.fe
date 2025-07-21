@@ -11,6 +11,9 @@ interface Props {
   children?: React.ReactNode;
   columns: AntDesign.TableColumnCheck[];
   disabledDelete?: boolean;
+  isShowAdd?: boolean;
+  isShowColumnChecks?: boolean;
+  isShowDelete?: boolean;
   itemAlign?: SpaceProps['align'];
   loading?: boolean;
   onDelete: () => void;
@@ -18,8 +21,6 @@ interface Props {
   refresh: () => void;
   setColumnChecks: (checks: AntDesign.TableColumnCheck[]) => void;
   suffix?: React.ReactNode;
-  isShowAdd?: boolean;
-  isShowDelete?: boolean;
 }
 
 const TableHeaderOperation: FC<Props> = ({
@@ -27,18 +28,18 @@ const TableHeaderOperation: FC<Props> = ({
   children,
   columns,
   disabledDelete,
+  isShowAdd = true,
+  isShowColumnChecks = false,
+  isShowDelete = true,
   itemAlign,
   loading,
   onDelete,
   prefix,
   refresh,
   setColumnChecks,
-  suffix,
-  isShowAdd = true,
-  isShowDelete = true
+  suffix
 }) => {
   const { t } = useTranslation();
-  console.log("children",children);
   return (
     <Space
       wrap
@@ -49,31 +50,31 @@ const TableHeaderOperation: FC<Props> = ({
       {children || (
         <>
           {isShowAdd && (
-          <Button
-            ghost
-            icon={<IconIcRoundPlus className="text-icon" />}
-            size="small"
-            type="primary"
-            onClick={add}
-          >
-            {t('common.add')}
-          </Button>
+            <Button
+              ghost
+              icon={<IconIcRoundPlus className="text-icon" />}
+              size="small"
+              type="primary"
+              onClick={add}
+            >
+              {t('common.add')}
+            </Button>
           )}
           {isShowDelete && (
-          <Popconfirm
-            title={t('common.confirmDelete')}
-            onConfirm={onDelete}
-          >
-            <Button
-              danger
-              ghost
-              disabled={disabledDelete}
-              icon={<IconIcRoundDelete className="text-icon" />}
-              size="small"
+            <Popconfirm
+              title={t('common.confirmDelete')}
+              onConfirm={onDelete}
             >
-              {t('common.batchDelete')}
-            </Button>
-          </Popconfirm>
+              <Button
+                danger
+                ghost
+                disabled={disabledDelete}
+                icon={<IconIcRoundDelete className="text-icon" />}
+                size="small"
+              >
+                {t('common.batchDelete')}
+              </Button>
+            </Popconfirm>
           )}
         </>
       )}
@@ -85,23 +86,25 @@ const TableHeaderOperation: FC<Props> = ({
         {t('common.refresh')}
       </Button>
 
-      <APopover
-        placement="bottomRight"
-        trigger="click"
-        content={
-          <DragContent
-            columns={columns}
-            setColumnChecks={setColumnChecks}
-          />
-        }
-      >
-        <Button
-          icon={<IconAntDesignSettingOutlined />}
-          size="small"
+      {isShowColumnChecks && (
+        <APopover
+          placement="bottomRight"
+          trigger="click"
+          content={
+            <DragContent
+              columns={columns}
+              setColumnChecks={setColumnChecks}
+            />
+          }
         >
-          {t('common.columnSetting')}
-        </Button>
-      </APopover>
+          <Button
+            icon={<IconAntDesignSettingOutlined />}
+            size="small"
+          >
+            {t('common.columnSetting')}
+          </Button>
+        </APopover>
+      )}
 
       {suffix}
     </Space>

@@ -13,7 +13,7 @@ interface CardDataProps {
 }
 
 function getGradientColor(color: CardDataProps['color']) {
-  return `linear-gradient(to bottom right, ${color.start}, ${color.end})`;
+  return `linear-gradient(135deg, ${color.start}, ${color.end})`;
 }
 
 function useGetCardData() {
@@ -22,8 +22,8 @@ function useGetCardData() {
   const cardData: CardDataProps[] = [
     {
       color: {
-        end: '#0059a9',
-        start: '#3b82f6'
+        end: '#417BFB',
+        start: '#60A9FF'
       },
       icon: 'ant-design:bar-chart-outlined',
       key: 'visitCount',
@@ -33,8 +33,8 @@ function useGetCardData() {
     },
     {
       color: {
-        end: '#0059a9',
-        start: '#3b82f6'
+        end: '#417BFB',
+        start: '#60A9FF'
       },
       icon: 'ant-design:money-collect-outlined',
       key: 'turnover',
@@ -44,8 +44,8 @@ function useGetCardData() {
     },
     {
       color: {
-        end: '#0059a9',
-        start: '#3b82f6'
+        end: '#417BFB',
+        start: '#60A9FF'
       },
       icon: 'carbon:document-download',
       key: 'freeCount',
@@ -55,8 +55,8 @@ function useGetCardData() {
     },
     {
       color: {
-        end: '#0059a9',
-        start: '#3b82f6'
+        end: '#417BFB',
+        start: '#60A9FF'
       },
       icon: 'ant-design:trademark-circle-outlined',
       key: 'paidCount',
@@ -83,10 +83,12 @@ const CardItem = (data: CardDataProps) => {
       >
         <h3 className="text-16px">{data.title}</h3>
         <div className="flex justify-between pt-12px">
-          <SvgIcon
-            className="text-32px"
-            icon={data.icon}
-          />
+          <div className="h-fit rounded-xl bg-white p-2">
+            <SvgIcon
+              className="text-24px text-primary"
+              icon={data.icon}
+            />
+          </div>
           <NumberTicker
             className="text-30px"
             prefix={data.unit}
