@@ -3,12 +3,12 @@ import { useLoading } from '@sa/hooks';
 import { globalConfig } from '@/config';
 import { getIsLogin, selectUserInfo } from '@/features/auth/authStore';
 import { usePreviousRoute, useRouter } from '@/features/router';
-import { fetchGetUserInfo, fetchLogin } from '@/service/api';
+import { fetchLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
 
 import { useCacheTabs } from '../tab/tabHooks';
 
-import { resetAuth as resetAuthAction, setToken, setUserInfo } from './authStore';
+import { resetAuth as resetAuthAction, setToken } from './authStore';
 import { clearAuthStorage } from './shared';
 
 export function useAuth() {
@@ -51,30 +51,42 @@ export function useInitAuth() {
 
     startLoading();
     const loginToken = await fetchLogin(userName, password);
+
     console.log(loginToken);
+
     if (loginToken) {
       localStg.set('token', loginToken.result.accessToken);
       localStg.set('refreshToken', loginToken.result.encryptedAccessToken);
 
-      const { data: info, error: userInfoError } = await fetchGetUserInfo();
+      dispatch(setToken(loginToken.result.accessToken));
 
-      if (!userInfoError) {
-        // 2. store user info
-        localStg.set('userInfo', info);
-
-        dispatch(setToken(loginToken.result.accessToken));
-        dispatch(setUserInfo(info));
-
-        if (redirect) {
-          if (redirectUrl) {
-            replace(redirectUrl);
-          } else {
-            replace(globalConfig.homePath);
-          }
+      if (redirect) {
+        if (redirectUrl) {
+          replace(redirectUrl);
+        } else {
+          replace(globalConfig.homePath);
         }
-       
-        
       }
+
+      // const { data: info, error: userInfoError } = await fetchGetUserInfo();
+
+      // if (!userInfoError) {
+      //   // 2. store user info
+      //   localStg.set('userInfo', info);
+
+      //   dispatch(setToken(loginToken.result.accessToken));
+      //   dispatch(setUserInfo(info));
+
+      //   if (redirect) {
+      //     if (redirectUrl) {
+      //       replace(redirectUrl);
+      //     } else {
+      //       replace(globalConfig.homePath);
+      //     }
+      //   }
+
+      // }
+
       window.$notification?.success({
         description: t('page.login.common.welcomeBack'),
         message: t('page.login.common.loginSuccess')

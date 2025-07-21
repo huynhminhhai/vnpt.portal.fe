@@ -1,6 +1,6 @@
-import { Button, Checkbox, Divider, Input, Space } from 'antd';
+import { Button, Checkbox, Input, Space } from 'antd';
 
-import { loginModuleRecord } from '@/constants/app';
+// import { loginModuleRecord } from '@/constants/app';
 import { useInitAuth } from '@/features/auth/auth';
 import { SubmitEnterButton, useFormRules } from '@/features/form';
 
@@ -32,43 +32,43 @@ const PwdLogin = () => {
     formRules: { pwd, userName: userNameRules }
   } = useFormRules();
 
-  const accounts: Account[] = [
-    {
-      key: 'super',
-      label: t('page.login.pwdLogin.superAdmin'),
-      password: '123456',
-      userName: 'Super'
-    },
-    {
-      key: 'admin',
-      label: t('page.login.pwdLogin.admin'),
-      password: '123456',
-      userName: 'Admin'
-    },
-    {
-      key: 'user',
-      label: t('page.login.pwdLogin.user'),
-      password: '123456',
-      userName: 'User'
-    }
-  ];
+  // const accounts: Account[] = [
+  //   {
+  //     key: 'super',
+  //     label: t('page.login.pwdLogin.superAdmin'),
+  //     password: '123456',
+  //     userName: 'Super'
+  //   },
+  //   {
+  //     key: 'admin',
+  //     label: t('page.login.pwdLogin.admin'),
+  //     password: '123456',
+  //     userName: 'Admin'
+  //   },
+  //   {
+  //     key: 'user',
+  //     label: t('page.login.pwdLogin.user'),
+  //     password: '123456',
+  //     userName: 'User'
+  //   }
+  // ];
 
   async function handleSubmit() {
     const params = await form.validateFields();
     toLogin(params);
   }
 
-  function handleAccountLogin(account: Account) {
-    toLogin(account);
-  }
+  // function handleAccountLogin(account: Account) {
+  //   toLogin(account);
+  // }
 
-  function goCodeLogin() {
-    navigate('code-login');
-  }
+  // function goCodeLogin() {
+  //   navigate('code-login');
+  // }
 
-  function goRegister() {
-    navigate('register');
-  }
+  // function goRegister() {
+  //   navigate('register');
+  // }
 
   function goResetPwd() {
     navigate('reset-pwd');
@@ -137,7 +137,7 @@ const PwdLogin = () => {
             </Button>
           </div> */}
           {/* <Divider className="!m-0 !text-14px !text-#666">{t('page.login.pwdLogin.otherAccountLogin')}</Divider> */}
-          {/* <div className="flex-center gap-12px flex-wrap">
+          {/* <div className="flex-center flex-wrap gap-12px">
             {accounts.map(item => {
               return (
                 <Button

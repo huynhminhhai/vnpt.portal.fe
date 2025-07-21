@@ -7,13 +7,13 @@ import { newRequest, request } from '../request';
  * @param password Password
  */
 export async function fetchLogin(userName: string, password: string) {
-
-  const data ={
-    userNameOrEmailAddress: userName,
-    password: password,
+  const data = {
+    password,
     rememberClient: true,
-    tenant: "string"
-  }
+    tenant: 'string',
+    userNameOrEmailAddress: userName
+  };
+
   const res = await newRequest<Api.Auth.LoginTokenResponse>({
     data,
     method: 'post',
