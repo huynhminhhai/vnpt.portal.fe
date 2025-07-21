@@ -16,7 +16,7 @@ const PieChart = () => {
     series: [
       {
         avoidLabelOverlap: false,
-        color: ['#5da8ff', '#8e9dff', '#fedc69', '#26deca'],
+        color: ['#5da8ff', '#2196F3', '#1976D2	', '#0D47A1'],
         data: [] as { name: string; value: number }[],
         emphasis: {
           label: {

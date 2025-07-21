@@ -88,7 +88,6 @@ const PwdLogin = () => {
         >
           <Input />
         </AForm.Item>
-
         <AForm.Item
           name="password"
           rules={pwd}

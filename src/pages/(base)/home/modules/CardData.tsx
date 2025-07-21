@@ -22,19 +22,19 @@ function useGetCardData() {
   const cardData: CardDataProps[] = [
     {
       color: {
-        end: '#b955a4',
-        start: '#ec4786'
+        end: '#0059a9',
+        start: '#3b82f6'
       },
       icon: 'ant-design:bar-chart-outlined',
       key: 'visitCount',
       title: t('page.home.visitCount'),
       unit: '',
-      value: 9725
+      value: 725
     },
     {
       color: {
-        end: '#5144b4',
-        start: '#865ec0'
+        end: '#0059a9',
+        start: '#3b82f6'
       },
       icon: 'ant-design:money-collect-outlined',
       key: 'turnover',
@@ -44,25 +44,25 @@ function useGetCardData() {
     },
     {
       color: {
-        end: '#719de3',
-        start: '#56cdf3'
+        end: '#0059a9',
+        start: '#3b82f6'
       },
       icon: 'carbon:document-download',
       key: 'freeCount',
       title: t('page.home.freeCount'),
       unit: '',
-      value: 970925
+      value: 525
     },
     {
       color: {
-        end: '#f68057',
-        start: '#fcbc25'
+        end: '#0059a9',
+        start: '#3b82f6'
       },
       icon: 'ant-design:trademark-circle-outlined',
       key: 'paidCount',
       title: t('page.home.paidCount'),
       unit: '',
-      value: 9527
+      value: 227
     }
   ];
 

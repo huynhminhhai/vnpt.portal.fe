@@ -4,7 +4,8 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     copyConfig: '复制配置',
     copySuccessMsg: '复制成功，请替换 src/theme/settings.ts 中的变量 themeSettings',
     resetConfig: '重置配置',
-    resetSuccessMsg: '重置成功'
+    resetSuccessMsg: '重置成功',
+    saveConfig: ''
   },
   fixedHeaderAndTab: '固定头部和标签栏',
   footer: {

@@ -56,8 +56,10 @@ const page: App.I18n.Schema['translation']['page'] = {
     dealCount: 'Số lượng giao dịch',
     downloadCount: 'Số lượt tải',
     entertainment: 'Giải trí',
-    greeting: 'Chào buổi sáng, {{userName}}, hôm nay lại là một ngày tràn đầy năng lượng!',
+    freeCount: 'Số lượt sử dụng miễn phí',
+    greeting: 'Chào buổi sáng, hôm nay lại là một ngày tràn đầy năng lượng!',
     message: 'Tin nhắn',
+    paidCount: 'Số lượt sử dụng trả phí',
     projectCount: 'Số dự án',
     projectNews: {
       desc1: 'Soybean đã tạo dự án mã nguồn mở soybean-admin vào ngày 28/5/2021!',
@@ -76,9 +78,7 @@ const page: App.I18n.Schema['translation']['page'] = {
     turnover: 'Doanh thu',
     visitCount: 'Số lượt sử dụng',
     weatherDesc: 'Hôm nay nhiều mây chuyển nắng, 20℃ - 25℃!',
-    work: 'Công việc',
-    freeCount: 'Số lượt sử dụng miễn phí',
-    paidCount: 'Số lượt sử dụng trả phí',
+    work: 'Công việc'
   },
   login: {
     bindWeChat: {
@@ -103,7 +103,7 @@ const page: App.I18n.Schema['translation']['page'] = {
       phonePlaceholder: 'Vui lòng nhập số điện thoại',
       userNamePlaceholder: 'Vui lòng nhập tên người dùng',
       validateSuccess: 'Xác thực thành công',
-      welcomeBack: 'Chào mừng trở lại, {{userName}}!'
+      welcomeBack: 'Chào mừng trở lại!'
     },
     pwdLogin: {
       admin: 'Quản trị viên',
@@ -132,6 +132,10 @@ const page: App.I18n.Schema['translation']['page'] = {
         disable: 'Vô hiệu hóa',
         enable: 'Kích hoạt'
       }
+    },
+    DateItem: {
+      CreateDate: 'Ngày tạo',
+      EndDate: 'Ngày kết thúc'
     },
     menu: {
       activeMenu: 'Menu được highlight',
@@ -222,7 +226,8 @@ const page: App.I18n.Schema['translation']['page'] = {
     },
     roleDetail: {
       content: 'Trang này chỉ để hiển thị việc khớp với tất cả route động đa cấp',
-      explain: '[...slug] là cú pháp khớp tất cả route động đa cấp theo định dạng [...any], dữ liệu khớp sẽ tồn tại trong params của useRoute dưới dạng mảng'
+      explain:
+        '[...slug] là cú pháp khớp tất cả route động đa cấp theo định dạng [...any], dữ liệu khớp sẽ tồn tại trong params của useRoute dưới dạng mảng'
     },
     user: {
       addUser: 'Thêm người dùng',
@@ -251,13 +256,10 @@ const page: App.I18n.Schema['translation']['page'] = {
     },
     userDetail: {
       content: `loader sẽ làm cho network request và file lazy load gần như cùng phát ra request, sau đó vừa parse file lazy load vừa chờ network request. Khi network request hoàn thành, trang sẽ hiển thị cùng lúc. Kết hợp với kiến trúc fiber của react, có thể làm được việc nếu user cảm thấy thời gian chờ quá lâu, trong thời gian chờ user có thể chuyển đổi các trang khác nhau. Đây là ưu điểm của react framework và react-router data router, không cần phải đợi đến khi trang hiển thị, thay vì cách thông thường: request file lazy load - parse - request file lazy load - mount sau đó mới phát network request - rồi render trang - render hoàn thành còn phải tự thêm loading effect`,
-      explain: 'Trang này chỉ để hiển thị khả năng mạnh mẽ của loader của react-router-dom, dữ liệu là ngẫu nhiên nên không khớp là bình thường'
-    },
-    DateItem :{
-      CreateDate: 'Ngày tạo',
-      EndDate: 'Ngày kết thúc',
+      explain:
+        'Trang này chỉ để hiển thị khả năng mạnh mẽ của loader của react-router-dom, dữ liệu là ngẫu nhiên nên không khớp là bình thường'
     }
   }
 };
 
-export default page; 
+export default page;

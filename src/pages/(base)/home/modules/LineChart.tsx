@@ -21,7 +21,7 @@ const LineChart = () => {
           color: {
             colorStops: [
               {
-                color: '#8e9dff',
+                color: '#2f97ff',
                 offset: 0.25
               },
               {
@@ -36,7 +36,7 @@ const LineChart = () => {
             y2: 1
           }
         },
-        color: '#8e9dff',
+        color: '#2f97ff',
         data: [] as number[],
         emphasis: {
           focus: 'series'
@@ -51,7 +51,7 @@ const LineChart = () => {
           color: {
             colorStops: [
               {
-                color: '#26deca',
+                color: '#bbd9fb',
                 offset: 0.25
               },
               {
@@ -66,7 +66,7 @@ const LineChart = () => {
             y2: 1
           }
         },
-        color: '#26deca',
+        color: '#bbd9fb',
         data: [],
         emphasis: {
           focus: 'series'

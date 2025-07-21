@@ -17,7 +17,7 @@ const GlobalLogo: FC<Props> = memo(({ className, showTitle = true, ...props }) =
       to={import.meta.env.VITE_ROUTE_HOME}
       {...props}
     >
-      <SystemLogo className="text-32px text-primary" />
+      <SystemLogo className="h-auto w-[20px] text-32px text-primary" />
       <h2
         className="pl-8px text-16px text-primary font-bold transition duration-300 ease-in-out"
         style={{ display: showTitle ? 'block' : 'none' }}
