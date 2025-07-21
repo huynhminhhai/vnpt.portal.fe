@@ -252,7 +252,7 @@ const DanhSachDangKySuDung = () => {
       <ACard
         className="flex-col-stretch sm:flex-1-hidden card-wrapper"
         ref={tableWrapperRef}
-        title={t('page.manage.user.title')}
+        title="Danh sách gói nâng cấp"
         variant="borderless"
         extra={
           <TableHeaderOperation

@@ -11,7 +11,7 @@ const DeleteButton = ({ onClick }: DeleteButtonProps) => {
       onConfirm={onClick}
     >
       <AButton
-        className="hover:scale-[1.04] !border-orange-500 !bg-orange-100"
+        className="hover:scale-[1.04] !border-0 !bg-orange-100"
         size="small"
         title="Xóa"
       >

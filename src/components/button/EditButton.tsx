@@ -7,7 +7,7 @@ type EditButtonProps = {
 const EditButton = ({ onClick }: EditButtonProps) => {
   return (
     <AButton
-      className="hover:scale-[1.04] !border-green-500 !bg-green-50"
+      className="hover:scale-[1.04] !border-0 !bg-green-100"
       size="small"
       title="Chỉnh sửa"
       onClick={onClick}
