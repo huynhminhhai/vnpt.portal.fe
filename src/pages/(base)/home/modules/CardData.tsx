@@ -1,3 +1,7 @@
+import { motion } from 'framer-motion';
+
+import wave2 from '@/assets/imgs/wave-2.webp';
+import wave3 from '@/assets/imgs/wave-3.png';
 import NumberTicker from '@/components/NumberTicker';
 
 interface CardDataProps {
@@ -6,15 +10,16 @@ interface CardDataProps {
     start: string;
   };
   icon: string;
+  image?: string;
   key: string;
   title: string;
   unit: string;
   value: number;
 }
 
-function getGradientColor(color: CardDataProps['color']) {
-  return `linear-gradient(135deg, ${color.start}, ${color.end})`;
-}
+// function getGradientColor(color: CardDataProps['color']) {
+//   return `linear-gradient(135deg, ${color.start}, ${color.end})`;
+// }
 
 function useGetCardData() {
   const { t } = useTranslation();
@@ -22,10 +27,11 @@ function useGetCardData() {
   const cardData: CardDataProps[] = [
     {
       color: {
-        end: '#417BFB',
-        start: '#60A9FF'
+        end: '#f1f2f7',
+        start: '#f1f2f7'
       },
       icon: 'ant-design:bar-chart-outlined',
+      image: wave3,
       key: 'visitCount',
       title: t('page.home.visitCount'),
       unit: '',
@@ -33,21 +39,23 @@ function useGetCardData() {
     },
     {
       color: {
-        end: '#417BFB',
-        start: '#60A9FF'
+        end: '#f1f2f7',
+        start: '#f1f2f7'
       },
       icon: 'ant-design:money-collect-outlined',
+      image: wave2,
       key: 'turnover',
       title: t('page.home.turnover'),
-      unit: '$',
-      value: 1026
+      unit: 'đ',
+      value: 10260000
     },
     {
       color: {
-        end: '#417BFB',
-        start: '#60A9FF'
+        end: '#f1f2f7',
+        start: '#f1f2f7'
       },
       icon: 'carbon:document-download',
+      image: wave3,
       key: 'freeCount',
       title: t('page.home.freeCount'),
       unit: '',
@@ -55,10 +63,11 @@ function useGetCardData() {
     },
     {
       color: {
-        end: '#417BFB',
-        start: '#60A9FF'
+        end: '#f1f2f7',
+        start: '#f1f2f7'
       },
       icon: 'ant-design:trademark-circle-outlined',
+      image: wave2,
       key: 'paidCount',
       title: t('page.home.paidCount'),
       unit: '',
@@ -77,23 +86,45 @@ const CardItem = (data: CardDataProps) => {
       md={12}
       span={24}
     >
-      <div
-        className="flex-1 rd-8px px-16px pb-4px pt-8px text-white"
+      {/* <div
+        className="flex-1 rd-8px px-16px pb-4px pt-8px text-white shadow-md"
         style={{ backgroundImage: getGradientColor(data.color) }}
       >
-        <h3 className="text-16px">{data.title}</h3>
+        <h3 className="text-16px text-primary font-medium">{data.title}</h3>
         <div className="flex justify-between pt-12px">
-          <div className="h-fit rounded-xl bg-white p-2">
+          <div className="h-fit rounded-2xl bg-white p-2">
             <SvgIcon
               className="text-24px text-primary"
               icon={data.icon}
             />
           </div>
           <NumberTicker
-            className="text-30px"
+            className="text-30px text-primary font-medium"
             prefix={data.unit}
             value={data.value}
           />
+        </div>
+      </div> */}
+      <div className="relative w-[100%] overflow-hidden rounded-xl bg-blue-50 p-3 py-4 shadow-sm">
+        <div className="absolute top-[60%] w-[100%] translate-y-[-50%] transform -left-[-18%]">
+          <motion.img
+            alt="shape"
+            animate={{ opacity: 0.8, WebkitMaskSize: '100% 100%' }}
+            className="rotate-[-25deg] scale-[1]"
+            initial={{ opacity: 0, WebkitMaskSize: '0% 100%' }}
+            src={data.image}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
+          />
+        </div>
+        <div className="flex items-center gap-1">
+          <div>
+            <h5 className="text-[16px] text-primary font-semibold">{data.title}</h5>
+            <NumberTicker
+              className="text-30px text-primary font-semibold"
+              suffix={data.unit}
+              value={data.value}
+            />
+          </div>
         </div>
       </div>
     </ACol>

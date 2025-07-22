@@ -56,10 +56,10 @@ const page: App.I18n.Schema['translation']['page'] = {
     dealCount: 'Số lượng giao dịch',
     downloadCount: 'Số lượt tải',
     entertainment: 'Giải trí',
-    freeCount: 'Số lượt sử dụng miễn phí',
+    freeCount: 'Tài khoản miễn phí',
     greeting: 'Chào buổi sáng, hôm nay lại là một ngày tràn đầy năng lượng!',
     message: 'Tin nhắn',
-    paidCount: 'Số lượt sử dụng trả phí',
+    paidCount: 'Tài khoản trả phí',
     projectCount: 'Số dự án',
     projectNews: {
       desc1: 'Soybean đã tạo dự án mã nguồn mở soybean-admin vào ngày 28/5/2021!',
