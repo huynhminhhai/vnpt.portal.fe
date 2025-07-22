@@ -109,7 +109,7 @@ const CardItem = (data: CardDataProps) => {
         <div className="absolute top-[60%] w-[100%] translate-y-[-50%] transform -left-[-18%]">
           <motion.img
             alt="shape"
-            animate={{ opacity: 0.8, WebkitMaskSize: '100% 100%' }}
+            animate={{ opacity: 0.4, WebkitMaskSize: '100% 100%' }}
             className="rotate-[-25deg] scale-[1]"
             initial={{ opacity: 0, WebkitMaskSize: '0% 100%' }}
             src={data.image}
