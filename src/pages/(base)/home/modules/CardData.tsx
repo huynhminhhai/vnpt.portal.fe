@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import wave2 from '@/assets/imgs/wave-2.webp';
 import wave3 from '@/assets/imgs/wave-3.png';
 import NumberTicker from '@/components/NumberTicker';
+import { ThemeContext } from '@/features/theme';
 
 interface CardDataProps {
   color: {
@@ -79,6 +80,8 @@ function useGetCardData() {
 }
 
 const CardItem = (data: CardDataProps) => {
+  const { darkMode } = useContext(ThemeContext);
+
   return (
     <ACol
       key={data.key}
@@ -105,7 +108,13 @@ const CardItem = (data: CardDataProps) => {
           />
         </div>
       </div> */}
-      <div className="relative w-[100%] overflow-hidden rounded-xl bg-blue-50 p-3 py-4 shadow-sm">
+      <div
+        className="relative w-[100%] overflow-hidden rounded-xl bg-blue-50 p-3 py-6"
+        style={{
+          backgroundColor: darkMode ? '#292929' : '#f6f9fe',
+          boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px'
+        }}
+      >
         <div className="absolute top-[60%] w-[100%] translate-y-[-50%] transform -left-[-18%]">
           <motion.img
             alt="shape"
@@ -118,9 +127,15 @@ const CardItem = (data: CardDataProps) => {
         </div>
         <div className="flex items-center gap-1">
           <div>
-            <h5 className="text-[16px] text-primary font-semibold">{data.title}</h5>
+            <h5
+              className="text-[16px] text-primary font-semibold"
+              style={{ color: darkMode ? '#ffffffd9' : '#0059a9' }}
+            >
+              {data.title}
+            </h5>
             <NumberTicker
-              className="text-30px text-primary font-semibold"
+              className="text-30px font-semibold"
+              style={{ color: darkMode ? '#ffffffd9' : '#0059a9' }}
               suffix={data.unit}
               value={data.value}
             />
