@@ -43,18 +43,6 @@ function useGetCardData() {
         end: '#f1f2f7',
         start: '#f1f2f7'
       },
-      icon: 'ant-design:money-collect-outlined',
-      image: wave2,
-      key: 'turnover',
-      title: t('page.home.turnover'),
-      unit: 'đ',
-      value: 10260000
-    },
-    {
-      color: {
-        end: '#f1f2f7',
-        start: '#f1f2f7'
-      },
       icon: 'carbon:document-download',
       image: wave3,
       key: 'freeCount',
@@ -73,6 +61,18 @@ function useGetCardData() {
       title: t('page.home.paidCount'),
       unit: '',
       value: 227
+    },
+    {
+      color: {
+        end: '#f1f2f7',
+        start: '#f1f2f7'
+      },
+      icon: 'ant-design:money-collect-outlined',
+      image: wave2,
+      key: 'turnover',
+      title: t('page.home.turnover'),
+      unit: 'đ',
+      value: 10260000
     }
   ];
 
@@ -111,7 +111,7 @@ const CardItem = (data: CardDataProps) => {
       <div
         className="relative w-[100%] overflow-hidden rounded-xl bg-blue-50 p-3 py-6"
         style={{
-          backgroundColor: darkMode ? '#292929' : '#f6f9fe',
+          backgroundColor: darkMode ? '#292929' : '#fcfdfe',
           boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px'
         }}
       >
@@ -134,7 +134,7 @@ const CardItem = (data: CardDataProps) => {
               {data.title}
             </h5>
             <NumberTicker
-              className="text-30px font-semibold"
+              className="text-26px font-semibold"
               style={{ color: darkMode ? '#ffffffd9' : '#0059a9' }}
               suffix={data.unit}
               value={data.value}

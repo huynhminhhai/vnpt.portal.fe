@@ -13,9 +13,9 @@ const DetailButton = ({ onClick }: DetailButtonProps) => {
       onClick={onClick}
     >
       <Icon
-        className="!text-blue-600"
+        className="!text-blue-700"
         fontSize={20}
-        icon="iconamoon:eye"
+        icon="solar:eye-broken"
       />
     </AButton>
   );

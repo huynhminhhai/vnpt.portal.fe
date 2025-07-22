@@ -1,8 +1,10 @@
-import { DatePicker } from 'antd';
+import { DatePicker, message } from 'antd';
 
-import { DeleteButton, DetailButton, EditButton } from '@/components/button';
+import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
-import { GetGoiDangKy } from '@/service/api';
+import { DeleteGoiSudung, GetGoiDangKy } from '@/service/api';
+
+import { GoiSuDungAddForm, GoiSuDungUpdateForm } from '.';
 
 // eslint-disable-next-line react/prop-types
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
@@ -92,7 +94,7 @@ const DanhSachDangKySuDung = () => {
   const [searchParams, setSearchParams] = useState({});
 
   // Fetch data function
-  const fetchData = async (params = {}) => {
+  const fetchList = async (params = {}) => {
     setLoading(true);
     try {
       const apiParams = {
@@ -130,45 +132,30 @@ const DanhSachDangKySuDung = () => {
   const reset = () => {
     form.resetFields();
     setSearchParams({});
-    fetchData(); // Reload data after reset
+    fetchList();
   };
 
   const search = () => {
     const values = form.getFieldsValue();
     setSearchParams(values);
-    fetchData(values); // Fetch data with search params
+    fetchList(values);
   };
 
   // Initial data fetch
   useEffect(() => {
-    fetchData();
+    fetchList();
   }, []);
-
-  const detail = (id: number) => {
-    // eslint-disable-next-line no-console
-    console.log('Detailing:', id);
-  };
-
-  const edit = (id: number) => {
-    // eslint-disable-next-line no-console
-    console.log('Editing:', id);
-  };
-
-  const handleAdd = () => {
-    // eslint-disable-next-line no-console
-    console.log('Adding new user');
-  };
 
   // Action handlers
   const handleDelete = async (id: number) => {
     try {
-      // eslint-disable-next-line no-console
-      console.log('Deleting:', id);
-      // await deleteUser(id);
-      fetchData(); // Refresh data after delete
+      await DeleteGoiSudung(id);
+
+      fetchList();
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('Error deleting:', error);
+      console.log(error);
+      message.error(error as string);
     }
   };
 
@@ -179,7 +166,7 @@ const DanhSachDangKySuDung = () => {
       dataIndex: 'index',
       key: 'index',
       render: (_: any, __: any, idx: number) => idx + 1,
-      title: t('common.index'),
+      title: '#',
       width: 64
     },
     {
@@ -197,6 +184,12 @@ const DanhSachDangKySuDung = () => {
     },
     {
       align: 'center' as const,
+      key: 'giaTien',
+      render: (_: any, record: any) => record.giaTien || '-',
+      title: 'Giá tiền'
+    },
+    {
+      align: 'center' as const,
       key: 'soLuongMua',
       render: (_: any, record: any) => record.soLuongMua || '0',
       title: 'Số lượng mua'
@@ -206,19 +199,11 @@ const DanhSachDangKySuDung = () => {
       key: 'operate',
       render: (_: any, record: any) => (
         <div className="flex-center gap-8px">
-          <DetailButton onClick={() => detail(record.id)} />
-          <EditButton onClick={() => edit(record.id)} />
-          {/* <APopconfirm
-            title={t('common.confirmDelete')}
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <AButton
-              danger
-              size="small"
-            >
-              {t('common.delete')}
-            </AButton>
-          </APopconfirm> */}
+          {/* <DetailButton onClick={() => detail(record.id)} /> */}
+          <GoiSuDungUpdateForm
+            id={record.id}
+            onSuccess={fetchList}
+          />
           <DeleteButton onClick={() => handleDelete(record.id)} />
         </div>
       ),
@@ -232,7 +217,7 @@ const DanhSachDangKySuDung = () => {
       <ACollapse
         bordered={false}
         className="card-wrapper"
-        defaultActiveKey={isMobile ? undefined : '1'}
+        defaultActiveKey={isMobile ? undefined : []}
         items={[
           {
             children: (
@@ -248,7 +233,6 @@ const DanhSachDangKySuDung = () => {
           }
         ]}
       />
-
       <ACard
         className="flex-col-stretch sm:flex-1-hidden card-wrapper"
         ref={tableWrapperRef}
@@ -256,13 +240,12 @@ const DanhSachDangKySuDung = () => {
         variant="borderless"
         extra={
           <TableHeaderOperation
-            add={handleAdd}
+            addForm={<GoiSuDungAddForm onSuccess={fetchList} />}
             columns={columns}
             disabledDelete={true}
-            isShowAdd={true}
             isShowDelete={false}
             loading={loading}
-            refresh={() => fetchData()}
+            refresh={() => fetchList()}
             setColumnChecks={() => {}}
             onDelete={() => {}}
           />

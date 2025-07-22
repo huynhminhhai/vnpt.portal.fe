@@ -7,7 +7,8 @@ import type { FC } from 'react';
 import DragContent from './DragContent';
 
 interface Props {
-  add: () => void;
+  add?: () => void;
+  addForm?: React.ReactNode;
   children?: React.ReactNode;
   columns: AntDesign.TableColumnCheck[];
   disabledDelete?: boolean;
@@ -25,10 +26,11 @@ interface Props {
 
 const TableHeaderOperation: FC<Props> = ({
   add,
+  addForm,
   children,
   columns,
   disabledDelete,
-  isShowAdd = true,
+  isShowAdd = false,
   isShowColumnChecks = false,
   isShowDelete = true,
   itemAlign,
@@ -49,11 +51,13 @@ const TableHeaderOperation: FC<Props> = ({
       {prefix}
       {children || (
         <>
+          {addForm}
           {isShowAdd && (
             <Button
               ghost
+              className="hover:scale-[1.02] !bg-primary !text-white"
               icon={<IconIcRoundPlus className="text-icon" />}
-              size="small"
+              size="middle"
               type="primary"
               onClick={add}
             >
@@ -80,7 +84,7 @@ const TableHeaderOperation: FC<Props> = ({
       )}
       <Button
         icon={<IconMdiRefresh className={classNames('text-icon', { 'animate-spin': loading })} />}
-        size="small"
+        size="middle"
         onClick={refresh}
       >
         {t('common.refresh')}

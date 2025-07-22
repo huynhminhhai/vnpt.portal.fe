@@ -44,6 +44,7 @@ declare global {
   const ATree: typeof import('antd')['Tree']
   const ATypography: typeof import('antd')['Typography']
   const AWatermark: typeof import('antd')['Watermark']
+  const AddButton: typeof import('../components/button/index')['AddButton']
   const BetterScroll: typeof import('../components/BetterScroll')['default']
   const BeyondHiding: typeof import('../components/BeyondHiding')['default']
   const ButtonIcon: typeof import('../components/ButtonIcon')['default']

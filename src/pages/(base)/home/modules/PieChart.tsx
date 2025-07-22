@@ -16,7 +16,7 @@ const PieChart = () => {
     series: [
       {
         avoidLabelOverlap: false,
-        color: ['#5da8ff', '#2196F3', '#1976D2	', '#0D47A1'],
+        color: ['#1976D2', '#0D47A1'],
         data: [] as { name: string; value: number }[],
         emphasis: {
           label: {
@@ -26,7 +26,6 @@ const PieChart = () => {
         },
         itemStyle: {
           borderColor: '#fff',
-          borderRadius: 10,
           borderWidth: 1
         },
         label: {
@@ -36,7 +35,7 @@ const PieChart = () => {
         labelLine: {
           show: false
         },
-        name: t('page.home.schedule'),
+        name: 'Tài khoản',
         radius: ['45%', '75%'],
         type: 'pie'
       }
@@ -53,10 +52,8 @@ const PieChart = () => {
 
     updateOptions(opts => {
       opts.series[0].data = [
-        { name: t('page.home.study'), value: 20 },
-        { name: t('page.home.entertainment'), value: 10 },
-        { name: t('page.home.work'), value: 40 },
-        { name: t('page.home.rest'), value: 30 }
+        { name: t('page.home.freeCount'), value: 40 },
+        { name: t('page.home.paidCount'), value: 30 }
       ];
 
       return opts;
@@ -70,10 +67,8 @@ const PieChart = () => {
       opts.series[0].name = originOpts.series[0].name;
 
       opts.series[0].data = [
-        { name: t('page.home.study'), value: 20 },
-        { name: t('page.home.entertainment'), value: 10 },
-        { name: t('page.home.work'), value: 40 },
-        { name: t('page.home.rest'), value: 30 }
+        { name: t('page.home.freeCount'), value: 40 },
+        { name: t('page.home.paidCount'), value: 30 }
       ];
 
       return opts;

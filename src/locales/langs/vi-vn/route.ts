@@ -7,6 +7,9 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_manage_user': 'Quản lý người dùng',
   '(base)_manage_user_[id]': 'Chi tiết người dùng',
   '(base)_user-center': 'Trung tâm người dùng',
+  '(base)_viewadminmanager': 'Quản lý',
+  '(base)_viewadminmanager_dangkysudung': 'Danh sách gói',
+  '(base)_viewadminmanager_listuse': 'Danh sách người dùng',
   '(blank)_login': 'Đăng nhập',
   '(blank)_login_code-login': 'Đăng nhập bằng mã',
   '(blank)_login_register': 'Đăng ký tài khoản',
@@ -30,10 +33,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   exception_500: '500',
   'iframe-page': 'Trang liên kết ngoài',
   notFound: 'Trang không tồn tại',
-  root: 'Trang chủ',
-  '(base)_viewadminmanager': 'Quản lý',
-  '(base)_viewadminmanager_listuse': 'Danh sách sử dụng',
-  '(base)_viewadminmanager_dangkysudung': 'Đăng ký nâng cấp'
+  root: 'Trang chủ'
 };
 
-export default route; 
+export default route;

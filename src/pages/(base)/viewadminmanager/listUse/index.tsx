@@ -2,7 +2,6 @@ import { DatePicker } from 'antd';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DetailButton, EditButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
 import { useMobile } from '@/hooks/common/mobile';
 import { GetAllUserWithTenant } from '@/service/api';
@@ -96,21 +95,6 @@ const ListUse = () => {
   const [form] = AForm.useForm();
   const [searchParams, setSearchParams] = useState({});
 
-  // Search functions
-  const reset = () => {
-    form.resetFields();
-    setSearchParams({});
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    fetchData(); // Reload data after reset
-  };
-
-  const search = () => {
-    const values = form.getFieldsValue();
-    setSearchParams(values);
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    fetchData(values); // Fetch data with search params
-  };
-
   // Fetch data function
   const fetchData = async (params = {}) => {
     setLoading(true);
@@ -143,25 +127,23 @@ const ListUse = () => {
     }
   };
 
+  // Search functions
+  const reset = () => {
+    form.resetFields();
+    setSearchParams({});
+    fetchData();
+  };
+
+  const search = () => {
+    const values = form.getFieldsValue();
+    setSearchParams(values);
+    fetchData(values);
+  };
+
   // Initial data fetch
   useEffect(() => {
     fetchData();
   }, []);
-
-  const detail = (id: number) => {
-    // eslint-disable-next-line no-console
-    console.log('Detailing:', id);
-  };
-
-  const edit = (id: number) => {
-    // eslint-disable-next-line no-console
-    console.log('Editing:', id);
-  };
-
-  const handleAdd = () => {
-    // eslint-disable-next-line no-console
-    console.log('Adding new user');
-  };
 
   // Column definitions
   const columns: any[] = [
@@ -170,7 +152,7 @@ const ListUse = () => {
       dataIndex: 'index',
       key: 'index',
       render: (_: any, __: any, idx: number) => idx + 1,
-      title: t('common.index'),
+      title: '#',
       width: 64
     },
     {
@@ -191,18 +173,6 @@ const ListUse = () => {
       key: 'ngayKeThuc',
       render: (_: any, record: StatisticalUse) => (record.ngayKeThuc ? formatDate(record.ngayKeThuc) : '-'),
       title: 'Ngày kết thúc'
-    },
-    {
-      align: 'center' as const,
-      key: 'operate',
-      render: (_: any, record: StatisticalUse) => (
-        <div className="flex-center gap-8px">
-          <DetailButton onClick={() => detail(record.id)} />
-          <EditButton onClick={() => edit(record.id)} />
-        </div>
-      ),
-      title: t('common.operate'),
-      width: 200
     }
   ];
 
@@ -235,7 +205,6 @@ const ListUse = () => {
         variant="borderless"
         extra={
           <TableHeaderOperation
-            add={handleAdd}
             columns={columns}
             disabledDelete={true}
             isShowAdd={false}

@@ -7,15 +7,15 @@ type EditButtonProps = {
 const EditButton = ({ onClick }: EditButtonProps) => {
   return (
     <AButton
-      className="hover:scale-[1.04] !border-0 !bg-green-100"
+      className="hover:scale-[1.04] !border-0 !bg-purple-100"
       size="small"
       title="Chỉnh sửa"
       onClick={onClick}
     >
       <Icon
-        className="!text-green-600"
+        className="!text-purple-600"
         fontSize={20}
-        icon="iconamoon:edit"
+        icon="solar:pen-2-broken"
       />
     </AButton>
   );
