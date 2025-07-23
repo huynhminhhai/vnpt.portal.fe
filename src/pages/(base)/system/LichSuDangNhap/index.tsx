@@ -6,6 +6,79 @@ type Pagination = {
     pageSize: number;
     total: number;
 }
+
+const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
+    const { t } = useTranslation();
+
+    return (
+        <AForm
+            form={form}
+            initialValues={searchParams}
+            labelCol={{
+                md: 7,
+                span: 5
+            }}
+        >
+            <ARow
+                wrap
+                gutter={[8, 0]}
+            >
+                <ACol
+                    lg={8}
+                    md={12}
+                    span={24}
+                >
+                    <AForm.Item
+                        className="m-0"
+                        label="Điện thoại"
+                        name="dateRange"
+                    >
+                        <AInput />
+                    </AForm.Item>
+                </ACol>
+                <ACol
+                    lg={8}
+                    md={12}
+                    span={24}
+                >
+                    <AForm.Item
+                        className="m-0"
+                        label="Ngày tạo"
+                        name="dateRange"
+                    >
+                        <ADatePicker.RangePicker />
+                    </AForm.Item>
+                </ACol>
+                <ACol
+                    lg={8}
+                    md={12}
+                    span={24}
+                >
+                    <AFlex
+                        className="w-full"
+                        gap={16}
+                        justify="flex-end"
+                    >
+                        <AButton
+                            icon={<IconMdiRefresh />}
+                            onClick={reset}
+                        >
+                            {t('common.reset')}
+                        </AButton>
+                        <AButton
+                            ghost
+                            icon={<IconUilSearch />}
+                            type="primary"
+                            onClick={search}
+                        >
+                            {t('common.search')}
+                        </AButton>
+                    </AFlex>
+                </ACol>
+            </ARow>
+        </AForm>
+    );
+};
 const LichSuDangNhap = () => {
     const isMobile = useMobile();
     const { scrollConfig, tableWrapperRef } = useTableScroll();
@@ -19,6 +92,8 @@ const LichSuDangNhap = () => {
         pageSize: 10,
         total: 0,
     });
+    const [form] = AForm.useForm();
+    const [searchParams, setSearchParams] = useState({});
     const columns = [
         {
             title: '#',
@@ -126,8 +201,20 @@ const LichSuDangNhap = () => {
     useEffect(() => {
         fetchData();
     }, []);
+
+    const reset = () => {
+        form.resetFields();
+        setSearchParams({});
+        fetchData();
+    };
+
+    const search = () => {
+        const values = form.getFieldsValue();
+        setSearchParams(values);
+        fetchData(values);
+    };
     return (
-        <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-y-auto lt-sm:overflow-auto">
+        <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
             <ACollapse
                 bordered={false}
                 className="card-wrapper"
@@ -135,29 +222,12 @@ const LichSuDangNhap = () => {
                 items={[
                     {
                         children: (
-                            <div>
-                                <AForm>
-                                    <ASpace>
-                                        <AForm.Item label="Tên đăng nhập" name="userNameOrEmailAddress">
-                                            <AInput />
-                                        </AForm.Item>
-                                        <AForm.Item label="Thời gian" name="creationTime">
-                                            <ADatePicker.RangePicker />
-                                        </AForm.Item>
-                                        <AForm.Item >
-                                            <AButton
-                                                ghost
-                                                icon={<IconUilSearch />}
-                                                type="primary"
-                                                onClick={() => { }}
-                                            >
-                                                {t('common.search')}
-                                            </AButton>
-                                        </AForm.Item>
-                                    </ASpace>
-
-                                </AForm>
-                            </div>
+                            <UserSearch
+                                form={form}
+                                reset={reset}
+                                search={search}
+                                searchParams={searchParams}
+                            />
                         ),
                         key: '1',
                         label: t('common.search')
@@ -195,7 +265,7 @@ const LichSuDangNhap = () => {
                         pageSizeOptions: ['10', '20', '50', '100'],
                         showQuickJumper: true,
                         showSizeChanger: true,
-                        showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`
+                        showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} của ${total} items`
                     }}
                     onChange={handleTableChange}
 

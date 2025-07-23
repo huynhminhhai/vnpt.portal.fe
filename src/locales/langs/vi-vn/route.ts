@@ -10,6 +10,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_viewadminmanager': 'Quản lý',
   '(base)_viewadminmanager_dangkysudung': 'Danh sách gói',
   '(base)_viewadminmanager_listuse': 'Danh sách người dùng',
+  '(base)_system': 'Hệ thống',
   '(base)_system_lichsudangnhap': 'Lịch sử đăng nhập',
   "(base)_system_lichsuhoathong": "Lịch sử hoạt động",
   '(blank)_login': 'Đăng nhập',

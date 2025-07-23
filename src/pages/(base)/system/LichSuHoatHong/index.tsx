@@ -6,7 +6,78 @@ type Pagination = {
   pageSize: number;
   total: number;
 }
+const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
+  const { t } = useTranslation();
 
+  return (
+    <AForm
+      form={form}
+      initialValues={searchParams}
+      labelCol={{
+        md: 7,
+        span: 5
+      }}
+    >
+      <ARow
+        wrap
+        gutter={[8, 0]}
+      >
+         <ACol
+          lg={8}
+          md={12}
+          span={24}
+        >
+          <AForm.Item
+            className="m-0"
+            label="Điện thoại"
+            name="dateRange"
+          >
+            <AInput/>
+          </AForm.Item>
+        </ACol>
+        <ACol
+          lg={8}
+          md={12}
+          span={24}
+        >
+          <AForm.Item
+            className="m-0"
+            label="Ngày tạo"
+            name="dateRange"
+          >
+            <ADatePicker.RangePicker />
+          </AForm.Item>
+        </ACol>
+        <ACol
+          lg={8}
+          md={12}
+          span={24}
+        >
+          <AFlex
+            className="w-full"
+            gap={16}
+            justify="flex-end"
+          >
+            <AButton
+              icon={<IconMdiRefresh />}
+              onClick={reset}
+            >
+              {t('common.reset')}
+            </AButton>
+            <AButton
+              ghost
+              icon={<IconUilSearch />}
+              type="primary"
+              onClick={search}
+            >
+              {t('common.search')}
+            </AButton>
+          </AFlex>
+        </ACol>
+      </ARow>
+    </AForm>
+  );
+};
 const LichSuHoatDong = () => {
   const isMobile = useMobile();
   const { scrollConfig, tableWrapperRef } = useTableScroll();
@@ -20,6 +91,8 @@ const LichSuHoatDong = () => {
     pageSize: 10,
     total: 0,
   });
+  const [form] = AForm.useForm();
+   const [searchParams, setSearchParams] = useState({});
   const columns = [
     {
       title: 'ID',
@@ -32,16 +105,16 @@ const LichSuHoatDong = () => {
     {
       title: 'Tên dịch vụ',
       dataIndex: 'serviceName',
-      key: 'serviceName',   minWidth:100
+      key: 'serviceName', minWidth: 100
     },
     {
       title: 'Tên phương thức',
       dataIndex: 'methodName',
-      key: 'methodName', 
- },
+      key: 'methodName',
+    },
     {
       title: 'Tham số',
-      dataIndex: 'parameters', 
+      dataIndex: 'parameters',
     },
     {
       title: 'Kết quả',
@@ -52,7 +125,20 @@ const LichSuHoatDong = () => {
       title: 'Thời gian',
       dataIndex: 'executionTime',
       key: 'executionTime',
-      ellipsis: true
+      ellipsis: true,
+       render: (text: Date) => {
+                // Assuming text is a valid date string or timestamp
+                const date = new Date(text);
+                return new Intl.DateTimeFormat('vi-VN', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                }).format(date);
+            },
+            align:'center'
     },
     {
       title: 'Thời gian thực thi',
@@ -115,19 +201,19 @@ const LichSuHoatDong = () => {
     },
     {
       key: 'methodName',
-      checked: true,  
+      checked: true,
       title: 'Tên phương thức'
     },
     {
       key: 'parameters',
       checked: true,
-      title: 'Tham số'  
+      title: 'Tham số'
     },
     {
       key: 'returnValue',
       checked: false,
       title: 'Kết quả'
-    },  
+    },
     {
       key: 'executionTime',
       checked: true,
@@ -139,7 +225,7 @@ const LichSuHoatDong = () => {
       title: 'Thời gian thực thi'
     },
     {
-      key: 'clientIpAddress', 
+      key: 'clientIpAddress',
       checked: true,
       title: 'IP'
     },
@@ -172,8 +258,8 @@ const LichSuHoatDong = () => {
   const handleSetColumnChecks = (checks: AntDesign.TableColumnCheck[]) => {
     setColumnChecks(checks);
   };
-  const filteredColumns = columns.filter(col => 
-    columnChecks.find(check => check.key === col.key)?.checked  
+  const filteredColumns = columns.filter(col =>
+    columnChecks.find(check => check.key === col.key)?.checked
   );
   const fetchData = async (params = {}) => {
     setLoading(true);
@@ -233,43 +319,37 @@ const LichSuHoatDong = () => {
   useEffect(() => {
     fetchData();
   }, []);
+      const reset = () => {
+        form.resetFields();
+        setSearchParams({});
+        fetchData();
+    };
+
+    const search = () => {
+        const values = form.getFieldsValue();
+        setSearchParams(values);
+        fetchData(values);
+    };
   return (
     <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-y-auto lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
         className="card-wrapper"
         defaultActiveKey={isMobile ? undefined : '1'}
-        items={[
-          {
-            children: (
-              <div>
-                <AForm>
-                  <ASpace>
-                    <AForm.Item label="Tên đăng nhập" name="userNameOrEmailAddress">
-                      <AInput />
-                    </AForm.Item>
-                    <AForm.Item label="Thời gian" name="creationTime">
-                      <ADatePicker.RangePicker />
-                    </AForm.Item>
-                    <AForm.Item >
-                      <AButton
-                        ghost
-                        icon={<IconUilSearch />}
-                        type="primary"
-                        onClick={() => { }}
-                      >
-                        {t('common.search')}
-                      </AButton>
-                    </AForm.Item>
-                  </ASpace>
-
-                </AForm>
-              </div>
-            ),
-            key: '1',
-            label: t('common.search')
-          }
-        ]}
+         items={[
+                    {
+                        children: (
+                            <UserSearch
+                                form={form}
+                                reset={reset}
+                                search={search}
+                                searchParams={searchParams}
+                            />
+                        ),
+                        key: '1',
+                        label: t('common.search')
+                    }
+                ]}
 
       />
       <ACard className="flex-col-stretch sm:flex-1-hidden card-wrapper" title="Danh sách lịch sử đăng nhập"
@@ -304,7 +384,7 @@ const LichSuHoatDong = () => {
             pageSizeOptions: ['10', '20', '50', '100'],
             showQuickJumper: true,
             showSizeChanger: true,
-            showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`
+            showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} của ${total} dòng`
           }}
           onChange={handleTableChange}
         />
