@@ -1,9 +1,10 @@
 import CardData from './modules/CardData';
-import CreativityBanner from './modules/CreativityBanner';
+// import CreativityBanner from './modules/CreativityBanner';
 // import HeaderBanner from './modules/HeaderBanner';
 import LineChart from './modules/LineChart';
 import PieChart from './modules/PieChart';
-import ProjectNews from './modules/ProjectNews';
+import UpgradeNew from './modules/UpgradeNew';
+import UsersNew from './modules/UsersNew';
 
 const Home = () => {
   return (
@@ -32,16 +33,17 @@ const Home = () => {
       </ARow>
       <ARow gutter={[16, 16]}>
         <ACol
-          lg={12}
+          lg={14}
           span={24}
         >
-          <ProjectNews />
+          <UpgradeNew />
         </ACol>
         <ACol
-          lg={12}
+          lg={10}
           span={24}
         >
-          <CreativityBanner />
+          {/* <CreativityBanner /> */}
+          <UsersNew />
         </ACol>
       </ARow>
     </ASpace>

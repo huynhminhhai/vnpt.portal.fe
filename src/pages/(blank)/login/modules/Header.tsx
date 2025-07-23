@@ -11,10 +11,10 @@ const Header = memo(() => {
   return (
     <header className="flex-center justify-between">
       <Space>
-        <SystemLogo className="mt-2 h-36px w-36px text-primary lt-sm:h-48px lt-sm:w-48px" />
+        <SystemLogo className="mb-1 mr-2 mt-2 h-36px w-36px text-primary lt-sm:h-48px lt-sm:w-48px" />
 
         <FlipText
-          className="text-28px text-primary font-500 lt-sm:text-22px"
+          className="text-28px text-[#0059a9] font-500 lt-sm:text-22px"
           word={t('system.title')}
         />
       </Space>

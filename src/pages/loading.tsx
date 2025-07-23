@@ -36,14 +36,14 @@ const GlobalLoading = memo(() => {
           {loadingClasses.map(item => {
             return (
               <div
-                className={clsx('absolute w-16px h-16px bg-primary rounded-8px animate-pulse ', item)}
+                className={clsx('absolute w-16px h-16px bg-[#0059a9] rounded-8px animate-pulse ', item)}
                 key={item}
               />
             );
           })}
         </div>
       </div>
-      <h2 className="text-28px text-primary font-500">{t('system.title')}</h2>
+      <h2 className="text-28px text-[#0059a9] font-500">{t('system.title')}</h2>
     </div>
   );
 });

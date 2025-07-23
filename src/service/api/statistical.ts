@@ -38,3 +38,23 @@ export const GetThongTinTongQuat = () => {
     url: '/api/services/app/ThongKe/GetThongTinTongQuat'
   });
 };
+
+export const GetNewDangKySuDung = (top: number) => {
+  return newRequest<any>({
+    method: 'get',
+    params: {
+      top
+    },
+    url: '/api/services/app/ThongKe/GetNewDangKySuDung'
+  });
+};
+
+export const GetNewUserSuDung = (top: number) => {
+  return newRequest<any>({
+    method: 'get',
+    params: {
+      top
+    },
+    url: '/api/services/app/ThongKe/GetNewUserSuDung'
+  });
+};

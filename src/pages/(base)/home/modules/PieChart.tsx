@@ -44,8 +44,8 @@ const PieChart = () => {
         },
         itemStyle: {
           borderColor: '#ffffff',
-          borderRadius: 8,
-          borderWidth: 2
+          borderRadius: 10,
+          borderWidth: 10
         },
         label: {
           position: 'center',
@@ -55,7 +55,7 @@ const PieChart = () => {
           show: false
         },
         name: 'Tài khoản',
-        radius: ['55%', '75%'],
+        radius: ['42%', '70%'],
         type: 'pie'
       }
     ],
