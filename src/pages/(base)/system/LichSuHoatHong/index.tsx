@@ -1,180 +1,266 @@
-import { TableHeaderOperation, useTableScroll } from "@/features/table";
-import { GetAllAuditLog, GetAllLoginLog } from "@/service/api/system";
+import { TableHeaderOperation, useTableScroll } from '@/features/table';
+import { GetAllAuditLog } from '@/service/api/system';
 
-type Pagination = {
-  current: number;
-  pageSize: number;
-  total: number;
-}
+// type Pagination = {
+//   current: number;
+//   pageSize: number;
+//   total: number;
+// };
+// eslint-disable-next-line react/prop-types
+const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
+  const { t } = useTranslation();
 
+  return (
+    <AForm
+      form={form}
+      initialValues={searchParams}
+      labelCol={{
+        md: 7,
+        span: 5
+      }}
+    >
+      <ARow
+        wrap
+        gutter={[8, 0]}
+      >
+        <ACol
+          lg={8}
+          md={12}
+          span={24}
+        >
+          <AForm.Item
+            className="m-0"
+            label="Điện thoại"
+            name="dateRange"
+          >
+            <AInput />
+          </AForm.Item>
+        </ACol>
+        <ACol
+          lg={8}
+          md={12}
+          span={24}
+        >
+          <AForm.Item
+            className="m-0"
+            label="Ngày tạo"
+            name="dateRange"
+          >
+            <ADatePicker.RangePicker />
+          </AForm.Item>
+        </ACol>
+        <ACol
+          lg={8}
+          md={12}
+          span={24}
+        >
+          <AFlex
+            className="w-full"
+            gap={16}
+            justify="flex-end"
+          >
+            <AButton
+              icon={<IconMdiRefresh />}
+              onClick={reset}
+            >
+              {t('common.reset')}
+            </AButton>
+            <AButton
+              ghost
+              icon={<IconUilSearch />}
+              type="primary"
+              onClick={search}
+            >
+              {t('common.search')}
+            </AButton>
+          </AFlex>
+        </ACol>
+      </ARow>
+    </AForm>
+  );
+};
 const LichSuHoatDong = () => {
   const isMobile = useMobile();
   const { scrollConfig, tableWrapperRef } = useTableScroll();
   const { t } = useTranslation();
 
-  console.log(scrollConfig)
+  console.log(scrollConfig);
   const [loading, setLoading] = useState(false);
   const [datas, setDatas] = useState([]);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
-    total: 0,
+    total: 0
   });
+  const [form] = AForm.useForm();
+  const [searchParams, setSearchParams] = useState({});
   const columns = [
     {
-      title: 'ID',
+      align: 'center',
       dataIndex: 'id',
-      key: 'id',
-      width: 60,
       fixed: 'left',
-      align: 'center'
-    },
-    {
-      title: 'Tên dịch vụ',
-      dataIndex: 'serviceName',
-      key: 'serviceName',   minWidth:100
-    },
-    {
-      title: 'Tên phương thức',
-      dataIndex: 'methodName',
-      key: 'methodName', 
- },
-    {
-      title: 'Tham số',
-      dataIndex: 'parameters', 
-    },
-    {
-      title: 'Kết quả',
-      dataIndex: 'returnValue',
-      key: 'returnValue', ellipsis: true, width: 150
-    },
-    {
-      title: 'Thời gian',
-      dataIndex: 'executionTime',
-      key: 'executionTime',
-      ellipsis: true
-    },
-    {
-      title: 'Thời gian thực thi',
-      dataIndex: 'executionDuration',
-      key: 'executionDuration',
-      ellipsis: true
-    },
-    {
-      title: 'IP',
-      dataIndex: 'clientIpAddress',
-      key: 'clientIpAddress',
-      ellipsis: true
-    },
-    {
-      title: 'Tên máy chủ',
-      dataIndex: 'clientName',
-      key: 'clientName',
-      ellipsis: true
-    },
-    {
-      title: 'BrowserInfo',
-      dataIndex: 'browserInfo',
-      key: 'browserInfo',
-      ellipsis: true
-    },
-    {
-      title: 'Lỗi',
-      dataIndex: 'exceptionMessage',
-      key: 'exceptionMessage',
-      ellipsis: true,
-
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'exception',
-      key: 'exception',
-      ellipsis: true,
-      minWidth: 100
-    },
-    {
-      title: 'Dữ liệu tùy chỉnh',
-      dataIndex: 'customData',
-      key: 'customData',
-      ellipsis: true,
-      width: 200
-    }
-  ]
-
-
-  const [columnChecks, setColumnChecks] = useState<AntDesign.TableColumnCheck[]>([
-    {
       key: 'id',
-      checked: true,
-      title: 'ID'
+      title: 'ID',
+      width: 60
     },
     {
+      dataIndex: 'serviceName',
       key: 'serviceName',
-      checked: true,
+      minWidth: 100,
       title: 'Tên dịch vụ'
     },
     {
+      dataIndex: 'methodName',
       key: 'methodName',
-      checked: true,  
       title: 'Tên phương thức'
     },
     {
-      key: 'parameters',
-      checked: true,
-      title: 'Tham số'  
+      dataIndex: 'parameters',
+      title: 'Tham số'
     },
     {
+      dataIndex: 'returnValue',
+      ellipsis: true,
       key: 'returnValue',
-      checked: false,
-      title: 'Kết quả'
-    },  
+      title: 'Kết quả',
+      width: 150
+    },
     {
+      align: 'center',
+      dataIndex: 'executionTime',
+      ellipsis: true,
       key: 'executionTime',
-      checked: true,
+      render: (text: Date) => {
+        // Assuming text is a valid date string or timestamp
+        const date = new Date(text);
+        return new Intl.DateTimeFormat('vi-VN', {
+          day: '2-digit',
+          hour: '2-digit',
+          hour12: false,
+          minute: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        }).format(date);
+      },
       title: 'Thời gian'
     },
     {
+      dataIndex: 'executionDuration',
+      ellipsis: true,
       key: 'executionDuration',
-      checked: true,
       title: 'Thời gian thực thi'
     },
     {
-      key: 'clientIpAddress', 
-      checked: true,
+      dataIndex: 'clientIpAddress',
+      ellipsis: true,
+      key: 'clientIpAddress',
       title: 'IP'
     },
     {
+      dataIndex: 'clientName',
+      ellipsis: true,
       key: 'clientName',
-      checked: false,
       title: 'Tên máy chủ'
     },
     {
+      dataIndex: 'browserInfo',
+      ellipsis: true,
       key: 'browserInfo',
-      checked: false,
       title: 'BrowserInfo'
     },
     {
+      dataIndex: 'exceptionMessage',
+      ellipsis: true,
       key: 'exceptionMessage',
-      checked: true,
       title: 'Lỗi'
     },
     {
+      dataIndex: 'exception',
+      ellipsis: true,
       key: 'exception',
-      checked: true,
+      minWidth: 100,
       title: 'Trạng thái'
     },
     {
+      dataIndex: 'customData',
+      ellipsis: true,
       key: 'customData',
+      title: 'Dữ liệu tùy chỉnh',
+      width: 200
+    }
+  ];
+
+  const [columnChecks, setColumnChecks] = useState<AntDesign.TableColumnCheck[]>([
+    {
+      checked: true,
+      key: 'id',
+      title: 'ID'
+    },
+    {
+      checked: true,
+      key: 'serviceName',
+      title: 'Tên dịch vụ'
+    },
+    {
+      checked: true,
+      key: 'methodName',
+      title: 'Tên phương thức'
+    },
+    {
+      checked: true,
+      key: 'parameters',
+      title: 'Tham số'
+    },
+    {
       checked: false,
+      key: 'returnValue',
+      title: 'Kết quả'
+    },
+    {
+      checked: true,
+      key: 'executionTime',
+      title: 'Thời gian'
+    },
+    {
+      checked: true,
+      key: 'executionDuration',
+      title: 'Thời gian thực thi'
+    },
+    {
+      checked: true,
+      key: 'clientIpAddress',
+      title: 'IP'
+    },
+    {
+      checked: false,
+      key: 'clientName',
+      title: 'Tên máy chủ'
+    },
+    {
+      checked: false,
+      key: 'browserInfo',
+      title: 'BrowserInfo'
+    },
+    {
+      checked: true,
+      key: 'exceptionMessage',
+      title: 'Lỗi'
+    },
+    {
+      checked: true,
+      key: 'exception',
+      title: 'Trạng thái'
+    },
+    {
+      checked: false,
+      key: 'customData',
       title: 'Dữ liệu tùy chỉnh'
     }
   ]);
   const handleSetColumnChecks = (checks: AntDesign.TableColumnCheck[]) => {
     setColumnChecks(checks);
   };
-  const filteredColumns = columns.filter(col => 
-    columnChecks.find(check => check.key === col.key)?.checked  
-  );
+  const filteredColumns = columns.filter(col => columnChecks.find(check => check.key === col.key)?.checked);
   const fetchData = async (params = {}) => {
     setLoading(true);
     try {
@@ -187,15 +273,14 @@ const LichSuHoatDong = () => {
 
       const res = await GetAllAuditLog(apiParams as any);
 
-
       const resData = res.data as any;
 
       if (resData && resData.result) {
         const data = resData.result.items;
         setDatas(data);
-        setPagination((prev) => ({
+        setPagination(prev => ({
           ...prev,
-          total: resData.result.totalCount || 0,
+          total: resData.result.totalCount || 0
         }));
       } else {
         // eslint-disable-next-line no-console
@@ -209,30 +294,46 @@ const LichSuHoatDong = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const handleTableChange = (
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     pagination: { current?: number; pageSize?: number; total?: number },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     filters: any,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sorter: any,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     extra: any
+    // eslint-disable-next-line max-params
   ) => {
     const current = pagination.current || 1;
     const pageSize = pagination.pageSize || 10;
-    setPagination((prev) => ({
+    setPagination(prev => ({
       ...prev,
       current,
-      pageSize,
+      pageSize
     }));
     fetchData({
       MaxResultCount: pageSize,
-      SkipCount: (current - 1) * pageSize,
+      SkipCount: (current - 1) * pageSize
     });
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+  const reset = () => {
+    form.resetFields();
+    setSearchParams({});
+    fetchData();
+  };
+
+  const search = () => {
+    const values = form.getFieldsValue();
+    setSearchParams(values);
+    fetchData(values);
+  };
   return (
     <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-y-auto lt-sm:overflow-auto">
       <ACollapse
@@ -242,52 +343,37 @@ const LichSuHoatDong = () => {
         items={[
           {
             children: (
-              <div>
-                <AForm>
-                  <ASpace>
-                    <AForm.Item label="Tên đăng nhập" name="userNameOrEmailAddress">
-                      <AInput />
-                    </AForm.Item>
-                    <AForm.Item label="Thời gian" name="creationTime">
-                      <ADatePicker.RangePicker />
-                    </AForm.Item>
-                    <AForm.Item >
-                      <AButton
-                        ghost
-                        icon={<IconUilSearch />}
-                        type="primary"
-                        onClick={() => { }}
-                      >
-                        {t('common.search')}
-                      </AButton>
-                    </AForm.Item>
-                  </ASpace>
-
-                </AForm>
-              </div>
+              <UserSearch
+                form={form}
+                reset={reset}
+                search={search}
+                searchParams={searchParams}
+              />
             ),
             key: '1',
             label: t('common.search')
           }
         ]}
-
       />
-      <ACard className="flex-col-stretch sm:flex-1-hidden card-wrapper" title="Danh sách lịch sử đăng nhập"
+      <ACard
+        className="flex-col-stretch sm:flex-1-hidden card-wrapper"
+        ref={tableWrapperRef}
+        title="Danh sách lịch sử đăng nhập"
         extra={
           <TableHeaderOperation
-            add={() => { }}
+            add={() => {}}
             columns={columnChecks as any}
             disabledDelete={true}
             isShowAdd={false}
+            isShowColumnChecks={true}
             isShowDelete={false}
             loading={loading}
             refresh={() => fetchData()}
             setColumnChecks={handleSetColumnChecks}
-            onDelete={() => { }}
-            isShowColumnChecks={true}
+            onDelete={() => {}}
           />
         }
-        ref={tableWrapperRef}>
+      >
         <ATable
           bordered
           columns={filteredColumns as any}
@@ -300,19 +386,17 @@ const LichSuHoatDong = () => {
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
-            total: pagination.total,
             pageSizeOptions: ['10', '20', '50', '100'],
             showQuickJumper: true,
             showSizeChanger: true,
-            showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`
+            showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} của ${total} dòng`,
+            total: pagination.total
           }}
           onChange={handleTableChange}
         />
       </ACard>
     </div>
-  )
+  );
 };
-
-
 
 export default LichSuHoatDong;
