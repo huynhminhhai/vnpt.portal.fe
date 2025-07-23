@@ -104,6 +104,39 @@ export const generatedRoutes: ElegantConstRoute[] = [
             ]
           },
           {
+            matchedFiles: [null, null, null, null],
+            name: '(base)_system',
+            path: '/system',
+            handle: {
+              i18nKey: 'route.(base)_system',
+              title: '(base)_system',
+              icon: 'fluent:apps-settings-20-regular',
+              order: 10
+            },
+            children: [
+              {
+                matchedFiles: [null, '/src/pages/(base)/system/LichSuDangNhap/index.tsx', null, null],
+                name: '(base)_system_lichsudangnhap',
+                path: '/system/lichsudangnhap',
+                handle: {
+                  i18nKey: 'route.(base)_system_lichsudangnhap',
+                  title: '(base)_system_lichsudangnhap',
+                  icon: 'fluent:chat-history-24-regular'
+                }
+              },
+              {
+                matchedFiles: [null, '/src/pages/(base)/system/LichSuHoatHong/index.tsx', null, null],
+                name: '(base)_system_lichsuhoathong',
+                path: '/system/lichsuhoathong',
+                handle: {
+                  i18nKey: 'route.(base)_system_lichsuhoathong',
+                  title: '(base)_system_lichsuhoathong',
+                  icon: 'fluent:data-whisker-20-filled'
+                }
+              }
+            ]
+          },
+          {
             matchedFiles: [null, '/src/pages/(base)/user-center/index.tsx', null, null],
             name: '(base)_user-center',
             path: '/user-center',

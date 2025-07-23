@@ -36,6 +36,9 @@ declare module "@soybean-react/vite-plugin-react-router" {
     "(base)_manage_role_[...slug]": "/manage/role/*";
     "(base)_manage_user": "/manage/user";
     "(base)_manage_user_[id]": "/manage/user/:id";
+    "(base)_system": "/system";
+    "(base)_system_lichsudangnhap": "/system/lichsudangnhap";
+    "(base)_system_lichsuhoathong": "/system/lichsuhoathong";
     "(base)_user-center": "/user-center";
     "(base)_viewadminmanager": "/viewadminmanager";
     "(base)_viewadminmanager_dangkysudung": "/viewadminmanager/dangkysudung";
@@ -125,6 +128,8 @@ declare module "@soybean-react/vite-plugin-react-router" {
     | "(base)_manage_role"
     | "(base)_manage_user_[id]"
     | "(base)_manage_user"
+    | "(base)_system_lichsudangnhap"
+    | "(base)_system_lichsuhoathong"
     | "(base)_user-center"
     | "(base)_viewadminmanager_dangkysudung"
     | "(base)_viewadminmanager_listuse"
