@@ -48,7 +48,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
     mode: 'chrome',
     visible: true
   },
-  themeColor: '#0059a9',
+  themeColor: '#0798d7',
   tokens: {
     dark: {
       colors: {

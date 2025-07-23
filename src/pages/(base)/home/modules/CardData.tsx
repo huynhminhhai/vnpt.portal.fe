@@ -4,8 +4,10 @@ import wave2 from '@/assets/imgs/wave-2.webp';
 import wave3 from '@/assets/imgs/wave-3.png';
 import NumberTicker from '@/components/NumberTicker';
 import { ThemeContext } from '@/features/theme';
+import { GetThongTinTongQuat } from '@/service/api';
 
 interface CardDataProps {
+  cardKey: string;
   color: {
     end: string;
     start: string;
@@ -24,90 +26,82 @@ interface CardDataProps {
 
 function useGetCardData() {
   const { t } = useTranslation();
+  const [cardData, setCardData] = useState<CardDataProps[]>([]);
 
-  const cardData: CardDataProps[] = [
-    {
-      color: {
-        end: '#f1f2f7',
-        start: '#f1f2f7'
-      },
-      icon: 'ant-design:bar-chart-outlined',
-      image: wave3,
-      key: 'visitCount',
-      title: t('page.home.visitCount'),
-      unit: '',
-      value: 725
-    },
-    {
-      color: {
-        end: '#f1f2f7',
-        start: '#f1f2f7'
-      },
-      icon: 'carbon:document-download',
-      image: wave3,
-      key: 'freeCount',
-      title: t('page.home.freeCount'),
-      unit: '',
-      value: 525
-    },
-    {
-      color: {
-        end: '#f1f2f7',
-        start: '#f1f2f7'
-      },
-      icon: 'ant-design:trademark-circle-outlined',
-      image: wave2,
-      key: 'paidCount',
-      title: t('page.home.paidCount'),
-      unit: '',
-      value: 227
-    },
-    {
-      color: {
-        end: '#f1f2f7',
-        start: '#f1f2f7'
-      },
-      icon: 'ant-design:money-collect-outlined',
-      image: wave2,
-      key: 'turnover',
-      title: t('page.home.turnover'),
-      unit: 'đ',
-      value: 10260000
-    }
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetThongTinTongQuat();
+        const data = response?.data?.result;
+
+        // Map API data vào card
+        const mappedData: CardDataProps[] = [
+          {
+            cardKey: 'soLuongSuDung',
+            color: { end: '#f1f2f7', start: '#f1f2f7' },
+            icon: 'ant-design:bar-chart-outlined',
+            image: wave3,
+            key: 'soLuongSuDung',
+            title: t('page.home.visitCount'),
+            unit: '',
+            value: data.soLuongSuDung
+          },
+          {
+            cardKey: 'soLuongMienPhi',
+            color: { end: '#f1f2f7', start: '#f1f2f7' },
+            icon: 'carbon:document-download',
+            image: wave3,
+            key: 'soLuongMienPhi',
+            title: t('page.home.freeCount'),
+            unit: '',
+            value: data.soLuongMienPhi
+          },
+          {
+            cardKey: 'soLuongTraPhi',
+            color: { end: '#f1f2f7', start: '#f1f2f7' },
+            icon: 'ant-design:trademark-circle-outlined',
+            image: wave2,
+            key: 'soLuongTraPhi',
+            title: t('page.home.paidCount'),
+            unit: '',
+            value: data.soLuongTraPhi
+          },
+          {
+            cardKey: 'danhThu',
+            color: { end: '#f1f2f7', start: '#f1f2f7' },
+            icon: 'ant-design:money-collect-outlined',
+            image: wave2,
+            key: 'danhThu',
+            title: t('page.home.turnover'),
+            unit: 'đ',
+            value: data.danhThu
+          }
+        ];
+
+        setCardData(mappedData);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Error fetching card data:', error);
+      }
+    };
+
+    fetchData();
+  }, [t]);
 
   return cardData;
 }
 
-const CardItem = (data: CardDataProps) => {
+const CardItem = (props: CardDataProps) => {
   const { darkMode } = useContext(ThemeContext);
+  const { cardKey, image, title, unit, value } = props;
 
   return (
     <ACol
-      key={data.key}
+      key={cardKey}
       lg={6}
       md={12}
       span={24}
     >
-      {/* <div
-        className="flex-1 rd-8px px-16px pb-4px pt-8px text-white shadow-md"
-        style={{ backgroundImage: getGradientColor(data.color) }}
-      >
-        <h3 className="text-16px text-primary font-medium">{data.title}</h3>
-        <div className="flex justify-between pt-12px">
-          <div className="h-fit rounded-2xl bg-white p-2">
-            <SvgIcon
-              className="text-24px text-primary"
-              icon={data.icon}
-            />
-          </div>
-          <NumberTicker
-            className="text-30px text-primary font-medium"
-            prefix={data.unit}
-            value={data.value}
-          />
-        </div>
-      </div> */}
       <div
         className="relative w-[100%] overflow-hidden rounded-xl bg-blue-50 p-3 py-6"
         style={{
@@ -121,23 +115,23 @@ const CardItem = (data: CardDataProps) => {
             animate={{ opacity: 0.4, WebkitMaskSize: '100% 100%' }}
             className="rotate-[-25deg] scale-[1]"
             initial={{ opacity: 0, WebkitMaskSize: '0% 100%' }}
-            src={data.image}
+            src={image}
             transition={{ duration: 1.5, ease: 'easeInOut' }}
           />
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <div>
             <h5
-              className="text-[16px] text-primary font-semibold"
-              style={{ color: darkMode ? '#ffffffd9' : '#0059a9' }}
+              className="mb-1 text-[14px] text-primary font-normal"
+              style={{ color: darkMode ? '#ffffffd9' : '#000000E0' }}
             >
-              {data.title}
+              {title}
             </h5>
             <NumberTicker
               className="text-26px font-semibold"
-              style={{ color: darkMode ? '#ffffffd9' : '#0059a9' }}
-              suffix={data.unit}
-              value={data.value}
+              style={{ color: darkMode ? '#ffffffd9' : '#0093d8' }}
+              suffix={unit}
+              value={value}
             />
           </div>
         </div>
@@ -155,7 +149,14 @@ const CardData = () => {
       size="small"
       variant="borderless"
     >
-      <ARow gutter={[16, 16]}>{data.map(CardItem)}</ARow>
+      <ARow gutter={[16, 16]}>
+        {data.map(({ key: cardKey, ...rest }) => (
+          <CardItem
+            key={cardKey}
+            {...rest}
+          />
+        ))}
+      </ARow>
     </ACard>
   );
 };

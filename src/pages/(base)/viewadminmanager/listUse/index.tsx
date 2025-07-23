@@ -181,7 +181,7 @@ const ListUse = () => {
       <ACollapse
         bordered={false}
         className="card-wrapper"
-        defaultActiveKey={isMobile ? undefined : '1'}
+        defaultActiveKey={isMobile ? undefined : []}
         items={[
           {
             children: (

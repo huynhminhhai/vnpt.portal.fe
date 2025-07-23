@@ -1,6 +1,6 @@
 // import { UserListParams } from '@/types/statistical';
 
-import { newRequest, request } from '../request';
+import { newRequest } from '../request';
 
 export const GetAllUserWithTenant = async (params: Api.SystemManage.paramsPhanTrang) => {
   const res = await newRequest<Api.SystemManage.GetAllUserWithTenantResponse>({
@@ -23,11 +23,18 @@ export const GetGoiDangKy = (params: Api.SystemManage.paramsPhanTrang) => {
 };
 
 export const GetXuHuong = (nam: number) => {
-  return request<Api.SystemManage.responePhanTrang>({
+  return newRequest<any>({
     method: 'get',
     params: {
       nam
     },
     url: '/api/services/app/ThongKe/GetXuHuong'
+  });
+};
+
+export const GetThongTinTongQuat = () => {
+  return newRequest<any>({
+    method: 'get',
+    url: '/api/services/app/ThongKe/GetThongTinTongQuat'
   });
 };

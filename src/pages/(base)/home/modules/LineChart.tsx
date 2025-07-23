@@ -1,8 +1,7 @@
 import { useLang } from '@/features/lang';
+import { GetXuHuong } from '@/service/api';
 
 const LineChart = () => {
-  const { t } = useTranslation();
-
   const { locale } = useLang();
 
   const { domRef, updateOptions } = useEcharts(() => ({
@@ -13,7 +12,7 @@ const LineChart = () => {
       right: '4%'
     },
     legend: {
-      data: [t('page.home.freeCount'), t('page.home.paidCount')]
+      data: ['Lượt cân']
     },
     series: [
       {
@@ -21,7 +20,7 @@ const LineChart = () => {
           color: {
             colorStops: [
               {
-                color: '#2f97ff',
+                color: '#0798d7',
                 offset: 0.25
               },
               {
@@ -36,42 +35,12 @@ const LineChart = () => {
             y2: 1
           }
         },
-        color: '#2f97ff',
+        color: '#0798d7',
         data: [] as number[],
         emphasis: {
           focus: 'series'
         },
-        name: t('page.home.freeCount'),
-        smooth: true,
-        stack: 'Total',
-        type: 'line'
-      },
-      {
-        areaStyle: {
-          color: {
-            colorStops: [
-              {
-                color: '#bbd9fb',
-                offset: 0.25
-              },
-              {
-                color: '#fff',
-                offset: 1
-              }
-            ],
-            type: 'linear',
-            x: 0,
-            x2: 0,
-            y: 0,
-            y2: 1
-          }
-        },
-        color: '#bbd9fb',
-        data: [],
-        emphasis: {
-          focus: 'series'
-        },
-        name: t('page.home.paidCount'),
+        name: '',
         smooth: true,
         stack: 'Total',
         type: 'line'
@@ -96,22 +65,29 @@ const LineChart = () => {
     }
   }));
 
-  async function mockData() {
-    await new Promise(resolve => {
-      setTimeout(resolve, 1000);
-    });
+  async function fetchXuHuongData(nam: number) {
+    try {
+      const response = await GetXuHuong(nam);
+      const result = response?.data?.result;
 
-    updateOptions(opts => {
-      opts.xAxis.data = ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00'];
-      opts.series[0].data = [4623, 6145, 6268, 6411, 1890, 4251, 2978, 3880, 3606, 4311];
-      opts.series[1].data = [2208, 2016, 2916, 4512, 8281, 2008, 1963, 2367, 2956, 678];
+      // Chuyển đổi dữ liệu
+      const months = Array.from({ length: 12 }, (_, i) => `Tháng ${i + 1}`);
+      const data = months.map((_, i) => result[`thang${i + 1}`] || 0);
 
-      return opts;
-    });
+      // Cập nhật biểu đồ
+      updateOptions(opts => {
+        opts.xAxis.data = months;
+        opts.series[0].data = data;
+        return opts;
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Lỗi khi lấy dữ liệu xu hướng:', error);
+    }
   }
 
   function init() {
-    mockData();
+    fetchXuHuongData(2025);
   }
 
   function updateLocale() {
@@ -119,7 +95,6 @@ const LineChart = () => {
       const originOpts = factory();
       opts.legend.data = originOpts.legend.data;
       opts.series[0].name = originOpts.series[0].name;
-      opts.series[1].name = originOpts.series[1].name;
 
       return opts;
     });
@@ -138,6 +113,7 @@ const LineChart = () => {
       className="card-wrapper"
       variant="borderless"
     >
+      <h5 className="text-center">Biểu đồ lượt cân</h5>
       <div
         className="h-360px overflow-hidden"
         ref={domRef}

@@ -36,7 +36,7 @@ const local: App.I18n.Schema['translation'] = {
   system: {
     errorReason: 'Nguyên nhân lỗi',
     reload: 'Tải lại trang',
-    title: 'Cân lúa admin',
+    title: 'Quản lý cân lúa',
     updateCancel: 'Để sau',
     updateConfirm: 'Làm mới ngay',
     updateContent: 'Phát hiện phiên bản mới của hệ thống, bạn có muốn làm mới trang ngay không?',
@@ -45,4 +45,4 @@ const local: App.I18n.Schema['translation'] = {
   theme
 };
 
-export default local; 
+export default local;
