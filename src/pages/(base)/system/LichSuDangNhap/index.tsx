@@ -241,7 +241,7 @@ const LichSuDangNhap = () => {
                         add={() => { }}
                         columns={columns as any}
                         disabledDelete={true}
-                        isShowAdd={true}
+                        isShowAdd={false}
                         isShowDelete={false}
                         loading={loading}
                         refresh={() => fetchData()}
