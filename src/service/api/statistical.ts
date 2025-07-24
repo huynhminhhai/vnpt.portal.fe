@@ -58,3 +58,11 @@ export const GetNewUserSuDung = (top: number) => {
     url: '/api/services/app/ThongKe/GetNewUserSuDung'
   });
 };
+
+export const GetAllLichSuThanhToan = (params: Api.SystemManage.paramsPhanTrang) => {
+  return newRequest<any>({
+    method: 'get',
+    params,
+    url: '/api/services/app/ThongKe/GetAllLichSuThanhToan'
+  });
+};

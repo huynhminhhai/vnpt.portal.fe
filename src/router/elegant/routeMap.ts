@@ -38,6 +38,7 @@ export const routeMap: RouteMap = {
  "(base)_system": "/system",
  "(base)_system_lichsudangnhap": "/system/lichsudangnhap",
  "(base)_system_lichsuhoathong": "/system/lichsuhoathong",
+ "(base)_system_lichsuthanhtoan": "/system/lichsuthanhtoan",
  "(base)_user-center": "/user-center",
  "(base)_viewadminmanager": "/viewadminmanager",
  "(base)_viewadminmanager_dangkysudung": "/viewadminmanager/dangkysudung",
