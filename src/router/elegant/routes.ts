@@ -39,7 +39,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
             matchedFiles: [null, '/src/pages/(base)/home/index.tsx', null, null],
             name: '(base)_home',
             path: '/home',
-            handle: { i18nKey: 'route.(base)_home', icon: 'mdi:monitor-dashboard', order: 1, title: 'home' }
+            handle: { i18nKey: 'route.(base)_home', icon: 'solar:screencast-2-broken', order: 1, title: 'home' }
           },
           {
             matchedFiles: [null, '/src/pages/(base)/manage/index.tsx', null, null],
@@ -123,7 +123,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
                 handle: {
                   i18nKey: 'route.(base)_system_lichsudangnhap',
                   title: '(base)_system_lichsudangnhap',
-                  icon: 'fluent:chat-history-24-regular'
+                  icon: 'solar:history-broken'
                 }
               },
               {
@@ -133,7 +133,17 @@ export const generatedRoutes: ElegantConstRoute[] = [
                 handle: {
                   i18nKey: 'route.(base)_system_lichsuhoathong',
                   title: '(base)_system_lichsuhoathong',
-                  icon: 'fluent:data-whisker-20-filled'
+                  icon: 'solar:history-2-broken'
+                }
+              },
+              {
+                matchedFiles: [null, '/src/pages/(base)/system/LichSuThanhToan/index.tsx', null, null],
+                name: '(base)_system_lichsuthanhtoan',
+                path: '/system/lichsuthanhtoan',
+                handle: {
+                  i18nKey: 'route.(base)_system_lichsuthanhtoan',
+                  title: '(base)_system_lichsuthanhtoan',
+                  icon: 'solar:chat-round-money-broken'
                 }
               }
             ]
@@ -162,7 +172,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
                 handle: {
                   i18nKey: 'route.(base)_viewadminmanager_dangkysudung',
                   title: '(base)_viewadminmanager_dangkysudung',
-                  icon: 'carbon:intent-request-upgrade'
+                  icon: 'solar:box-broken'
                 }
               },
               {
@@ -172,7 +182,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
                 handle: {
                   i18nKey: 'route.(base)_viewadminmanager_listuse',
                   title: '(base)_viewadminmanager_listuse',
-                  icon: 'carbon:user-certification'
+                  icon: 'solar:user-broken'
                 }
               }
             ]
@@ -183,7 +193,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
       {
         matchedFiles: ['(blank)', null, null, null],
         name: '(blank)',
-       
+
         children: [
           {
             matchedFiles: ['(blank)_login', '/src/pages/(blank)/login/index.tsx', null, null],

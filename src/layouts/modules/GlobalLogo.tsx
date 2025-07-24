@@ -24,7 +24,7 @@ const GlobalLogo: FC<Props> = memo(({ className, showTitle = true, ...props }) =
         icon="emojione-monotone:sheaf-of-rice"
       />
       <h2
-        className="pl-0px text-18px text-primary font-medium capitalize transition duration-300 ease-in-out"
+        className="pl-4px text-18px text-primary font-medium capitalize transition duration-300 ease-in-out"
         style={{ display: showTitle ? 'block' : 'none' }}
       >
         {t('system.title')}

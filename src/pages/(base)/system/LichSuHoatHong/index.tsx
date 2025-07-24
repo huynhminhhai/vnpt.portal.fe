@@ -368,7 +368,7 @@ const LichSuHoatDong = () => {
         title="Danh sách lịch sử đăng nhập"
         extra={
           <TableHeaderOperation
-            add={() => { }}
+            add={() => {}}
             columns={columnChecks as any}
             disabledDelete={true}
             isShowAdd={false}
@@ -377,7 +377,7 @@ const LichSuHoatDong = () => {
             loading={loading}
             refresh={() => fetchData()}
             setColumnChecks={handleSetColumnChecks}
-            onDelete={() => { }}
+            onDelete={() => {}}
           />
         }
       >

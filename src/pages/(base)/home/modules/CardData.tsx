@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 
 import wave2 from '@/assets/imgs/wave-2.webp';
 import wave3 from '@/assets/imgs/wave-3.png';
+import wave4 from '@/assets/imgs/wave-4.webp';
+import wave5 from '@/assets/imgs/wave-5.avif';
 import NumberTicker from '@/components/NumberTicker';
 import { ThemeContext } from '@/features/theme';
 import { GetThongTinTongQuat } from '@/service/api';
@@ -50,7 +52,7 @@ function useGetCardData() {
             cardKey: 'soLuongMienPhi',
             color: { end: '#f1f2f7', start: '#f1f2f7' },
             icon: 'carbon:document-download',
-            image: wave3,
+            image: wave4,
             key: 'soLuongMienPhi',
             title: t('page.home.freeCount'),
             unit: '',
@@ -70,7 +72,7 @@ function useGetCardData() {
             cardKey: 'danhThu',
             color: { end: '#f1f2f7', start: '#f1f2f7' },
             icon: 'ant-design:money-collect-outlined',
-            image: wave2,
+            image: wave5,
             key: 'danhThu',
             title: t('page.home.turnover'),
             unit: 'đ',
@@ -112,7 +114,7 @@ const CardItem = (props: CardDataProps) => {
         <div className="absolute top-[60%] w-[100%] translate-y-[-50%] transform -left-[-18%]">
           <motion.img
             alt="shape"
-            animate={{ opacity: 0.4, WebkitMaskSize: '100% 100%' }}
+            animate={{ opacity: 0.25, WebkitMaskSize: '100% 100%' }}
             className="rotate-[-25deg] scale-[1]"
             initial={{ opacity: 0, WebkitMaskSize: '0% 100%' }}
             src={image}
