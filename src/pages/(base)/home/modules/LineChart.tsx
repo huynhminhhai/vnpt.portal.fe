@@ -1,8 +1,13 @@
+import { Select } from 'antd';
+import { type JSX } from 'react';
+
 import { useLang } from '@/features/lang';
 import { GetXuHuong } from '@/service/api';
 
 const LineChart = () => {
   const { locale } = useLang();
+
+  const [year, setYear] = useState(new Date().getFullYear());
 
   const { domRef, updateOptions } = useEcharts(() => ({
     grid: {
@@ -86,10 +91,6 @@ const LineChart = () => {
     }
   }
 
-  function init() {
-    fetchXuHuongData(2025);
-  }
-
   function updateLocale() {
     updateOptions((opts, factory) => {
       const originOpts = factory();
@@ -99,21 +100,45 @@ const LineChart = () => {
       return opts;
     });
   }
-  // init
 
-  useMount(() => {
-    init();
-  });
+  useEffect(() => {
+    fetchXuHuongData(year);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [year]);
 
   useUpdateEffect(() => {
     updateLocale();
-  }, [locale]);
+  }, [locale, year]);
+
+  const generateYearOptions = (): { label: JSX.Element; value: string }[] => {
+    const currentYear = new Date().getFullYear();
+    const years: { label: JSX.Element; value: string }[] = [];
+
+    // eslint-disable-next-line no-plusplus
+    for (let y = 2023; y <= currentYear; y++) {
+      years.push({
+        label: <span>{y}</span>,
+        value: String(y)
+      });
+    }
+
+    return years.reverse(); // Nếu muốn năm hiện tại hiển thị đầu tiên
+  };
+
   return (
     <ACard
       className="card-wrapper"
       variant="borderless"
     >
       <h5 className="text-center">Biểu đồ lượt cân</h5>
+      <Select
+        className="absolute right-[10px] top-[10px] w-[150px]"
+        options={generateYearOptions()}
+        value={String(year)}
+        onChange={value => {
+          setYear(Number(value));
+        }}
+      />
       <div
         className="h-360px overflow-hidden"
         ref={domRef}

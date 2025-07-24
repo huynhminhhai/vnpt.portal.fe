@@ -128,7 +128,7 @@ const CardItem = (props: CardDataProps) => {
               {title}
             </h5>
             <NumberTicker
-              className="text-26px font-semibold"
+              className="font-number text-26px font-semibold"
               style={{ color: darkMode ? '#ffffffd9' : '#0093d8' }}
               suffix={unit}
               value={value}
