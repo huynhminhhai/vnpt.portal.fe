@@ -25,7 +25,8 @@ export const BaseChildrenRoutes = [
         handle: {
           i18nKey: 'route.exception_403',
           icon: 'ic:baseline-block',
-          title: 'exception_403'
+          title: 'exception_403',
+          hideInMenu: true
         },
         id: 'exception_403',
         lazy: () => import('@/pages/_builtin/403').then(convert),
@@ -35,7 +36,8 @@ export const BaseChildrenRoutes = [
         handle: {
           i18nKey: 'route.exception_404',
           icon: 'ic:baseline-web-asset-off',
-          title: 'exception_404'
+          title: 'exception_404',
+          hideInMenu: true
         },
         id: 'exception_404',
         lazy: () => import('@/pages/_builtin/404').then(convert),
@@ -45,7 +47,8 @@ export const BaseChildrenRoutes = [
         handle: {
           i18nKey: 'route.exception_500',
           icon: 'ic:baseline-wifi-off',
-          title: 'exception_500'
+          title: 'exception_500',
+          hideInMenu: true
         },
         id: 'exception_500',
         lazy: () => import('@/pages/_builtin/500').then(convert),
@@ -56,7 +59,8 @@ export const BaseChildrenRoutes = [
       i18nKey: 'route.exception',
       icon: 'ant-design:exception-outlined',
       order: 4,
-      title: 'exception'
+      title: 'exception',
+      hideInMenu: true
     },
     id: 'exception',
     path: '/exception'

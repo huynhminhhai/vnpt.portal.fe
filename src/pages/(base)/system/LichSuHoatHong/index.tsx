@@ -260,7 +260,14 @@ const LichSuHoatDong = () => {
   const handleSetColumnChecks = (checks: AntDesign.TableColumnCheck[]) => {
     setColumnChecks(checks);
   };
-  const filteredColumns = columns.filter(col => columnChecks.find(check => check.key === col.key)?.checked);
+  const filteredColumns = columnChecks
+    .filter(check => check.checked) // Chỉ lấy những cột được check
+    .map(check => {
+      // Tìm column config tương ứng từ mảng columns gốc
+      const columnConfig = columns.find(col => col.key === check.key);
+      return columnConfig;
+    })
+    .filter(Boolean);
   const fetchData = async (params = {}) => {
     setLoading(true);
     try {
@@ -361,7 +368,7 @@ const LichSuHoatDong = () => {
         title="Danh sách lịch sử đăng nhập"
         extra={
           <TableHeaderOperation
-            add={() => {}}
+            add={() => { }}
             columns={columnChecks as any}
             disabledDelete={true}
             isShowAdd={false}
@@ -370,7 +377,7 @@ const LichSuHoatDong = () => {
             loading={loading}
             refresh={() => fetchData()}
             setColumnChecks={handleSetColumnChecks}
-            onDelete={() => {}}
+            onDelete={() => { }}
           />
         }
       >
