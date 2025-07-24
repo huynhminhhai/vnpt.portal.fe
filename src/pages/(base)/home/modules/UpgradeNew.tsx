@@ -92,7 +92,7 @@ const UpgradeNew = () => {
                           className="h-4 w-4 text-green-600"
                           icon="solar:check-circle-broken"
                         />
-                        <span className="text-green-600 font-medium">ACTIVE</span>
+                        <span className="text-green-600 font-medium">Thành công</span>
                       </>
                     ) : (
                       <>
@@ -100,7 +100,7 @@ const UpgradeNew = () => {
                           className="h-4 w-4 text-red-600"
                           icon="solar:close-circle-broken"
                         />
-                        <span className="text-red-600 font-medium">INACTIVE</span>
+                        <span className="text-red-600 font-medium">Thất bại</span>
                       </>
                     )}
                   </div>
@@ -123,14 +123,14 @@ const UpgradeNew = () => {
                   className="h-5 w-5 text-green-600"
                   icon="solar:check-circle-broken"
                 />
-                <span>Active: {dataList.filter(u => u.trangThai).length}</span>
+                <span>Thành công: {dataList.filter(u => u.trangThai).length}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Icon
                   className="h-5 w-5 text-red-600"
                   icon="solar:close-circle-broken"
                 />
-                <span>Inactive: {dataList.filter(u => !u.trangThai).length}</span>
+                <span>Thất bại: {dataList.filter(u => !u.trangThai).length}</span>
               </div>
             </div>
             <div className="text-xs">Cập nhật mới nhất: {new Date().toLocaleString('vi-VN')}</div>
