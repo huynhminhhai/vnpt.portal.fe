@@ -5,6 +5,7 @@ import wave3 from '@/assets/imgs/wave-3.png';
 import wave4 from '@/assets/imgs/wave-4.webp';
 import wave5 from '@/assets/imgs/wave-5.avif';
 import NumberTicker from '@/components/NumberTicker';
+import CardSkeleton from '@/components/Skeleton/CardSkeleton';
 import { ThemeContext } from '@/features/theme';
 import { GetThongTinTongQuat } from '@/service/api';
 
@@ -29,9 +30,12 @@ interface CardDataProps {
 function useGetCardData() {
   const { t } = useTranslation();
   const [cardData, setCardData] = useState<CardDataProps[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+
       try {
         const response = await GetThongTinTongQuat();
         const data = response?.data?.result;
@@ -84,13 +88,15 @@ function useGetCardData() {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Error fetching card data:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, [t]);
 
-  return cardData;
+  return { cardData, isLoading };
 }
 
 const CardItem = (props: CardDataProps) => {
@@ -143,7 +149,8 @@ const CardItem = (props: CardDataProps) => {
 };
 
 const CardData = () => {
-  const data = useGetCardData();
+  const { cardData: data, isLoading } = useGetCardData();
+  const { darkMode } = useContext(ThemeContext);
 
   return (
     <ACard
@@ -152,12 +159,21 @@ const CardData = () => {
       variant="borderless"
     >
       <ARow gutter={[16, 16]}>
-        {data.map(({ key: cardKey, ...rest }) => (
-          <CardItem
-            key={cardKey}
-            {...rest}
-          />
-        ))}
+        {isLoading ? (
+          <>
+            <CardSkeleton darkMode={darkMode} />
+            <CardSkeleton darkMode={darkMode} />
+            <CardSkeleton darkMode={darkMode} />
+            <CardSkeleton darkMode={darkMode} />
+          </>
+        ) : (
+          data.map(({ key: cardKey, ...rest }) => (
+            <CardItem
+              key={cardKey}
+              {...rest}
+            />
+          ))
+        )}
       </ARow>
     </ACard>
   );

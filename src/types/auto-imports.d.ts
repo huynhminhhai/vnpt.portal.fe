@@ -48,6 +48,7 @@ declare global {
   const BetterScroll: typeof import('../components/BetterScroll')['default']
   const BeyondHiding: typeof import('../components/BeyondHiding')['default']
   const ButtonIcon: typeof import('../components/ButtonIcon')['default']
+  const CardSkeleton: typeof import('../components/Skeleton/CardSkeleton')['default']
   const DarkModeContainer: typeof import('../components/DarkModeContainer')['default']
   const DeleteButton: typeof import('../components/button/index')['DeleteButton']
   const DetailButton: typeof import('../components/button/index')['DetailButton']
