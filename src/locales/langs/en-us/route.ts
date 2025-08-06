@@ -14,6 +14,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_viewadminmanager': 'Admin Manager',
   '(base)_viewadminmanager_dangkysudung': 'Upgrade Account List',
   '(base)_viewadminmanager_listuse': 'Usage List',
+  '(base)_viewadminmanager_cauhinh': 'Configuration',
   '(blank)_login': 'Login',
   '(blank)_login_code-login': 'Code Login',
   '(blank)_login_register': 'Register Account',

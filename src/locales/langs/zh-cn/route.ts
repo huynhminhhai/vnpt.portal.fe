@@ -10,6 +10,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_system_lichsudangnhap': '登录日志',
   '(base)_system_lichsuhoathong': '审计日志',
   '(base)_system_lichsuthanhtoan': '支付日志',
+  '(base)_viewadminmanager_cauhinh': '配置',
   '(base)_user-center': '个人中心',
   '(base)_viewadminmanager': '管理员管理',
   '(base)_viewadminmanager_dangkysudung': '升级账号列表',

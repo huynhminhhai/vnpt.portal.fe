@@ -10,7 +10,6 @@
 //这里只能修改 handle 并且路由组作为布局路由组件 是不能有handle的
 
 import type { ElegantConstRoute } from '@soybean-react/vite-plugin-react-router';
-import { hidden } from 'kolorist';
 
 export const generatedRoutes: ElegantConstRoute[] = [
   {
@@ -166,6 +165,12 @@ export const generatedRoutes: ElegantConstRoute[] = [
             },
             children: [
               {
+                matchedFiles: [null, '/src/pages/(base)/viewadminmanager/CauHinh/index.tsx', null, null],
+                name: '(base)_viewadminmanager_cauhinh',
+                path: '/viewadminmanager/cauhinh',
+                handle: { i18nKey: 'route.(base)_viewadminmanager_cauhinh', title: '(base)_viewadminmanager_cauhinh' }
+              },
+              {
                 matchedFiles: [null, '/src/pages/(base)/viewadminmanager/DangKySuDung/index.tsx', null, null],
                 name: '(base)_viewadminmanager_dangkysudung',
                 path: '/viewadminmanager/dangkysudung',
@@ -193,7 +198,6 @@ export const generatedRoutes: ElegantConstRoute[] = [
       {
         matchedFiles: ['(blank)', null, null, null],
         name: '(blank)',
-
         children: [
           {
             matchedFiles: ['(blank)_login', '/src/pages/(blank)/login/index.tsx', null, null],
@@ -234,19 +238,19 @@ export const generatedRoutes: ElegantConstRoute[] = [
         matchedFiles: [null, '/src/pages/_builtin/403/index.tsx', null, null],
         name: '403',
         path: '/403',
-        handle: { i18nKey: 'route.403', title: '403', constant: true,hideInMenu: true }
+        handle: { i18nKey: 'route.403', title: '403', constant: true, hideInMenu: true }
       },
       {
         matchedFiles: [null, '/src/pages/_builtin/404/index.tsx', null, null],
         name: '404',
         path: '/404',
-        handle: { i18nKey: 'route.404', title: '404', constant: true,hideInMenu: true }
+        handle: { i18nKey: 'route.404', title: '404', constant: true, hideInMenu: true }
       },
       {
         matchedFiles: [null, '/src/pages/_builtin/500/index.tsx', null, null],
         name: '500',
         path: '/500',
-        handle: { i18nKey: 'route.500', title: '500', constant: true,hideInMenu: true }
+        handle: { i18nKey: 'route.500', title: '500', constant: true, hideInMenu: true }
       },
       {
         matchedFiles: [null, '/src/pages/_builtin/iframe-page/index.tsx', null, null],

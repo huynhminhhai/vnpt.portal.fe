@@ -28,6 +28,7 @@ export const pages: Record<string, () => Promise<any>> = {
 "(base)_system_lichsuhoathong": () => import("@/pages/(base)/system/LichSuHoatHong/index.tsx"),
 "(base)_system_lichsuthanhtoan": () => import("@/pages/(base)/system/LichSuThanhToan/index.tsx"),
 "(base)_user-center": () => import("@/pages/(base)/user-center/index.tsx"),
+"(base)_viewadminmanager_cauhinh": () => import("@/pages/(base)/viewadminmanager/CauHinh/index.tsx"),
 "(base)_viewadminmanager_dangkysudung": () => import("@/pages/(base)/viewadminmanager/DangKySuDung/index.tsx"),
 "(base)_viewadminmanager_listuse": () => import("@/pages/(base)/viewadminmanager/listUse/index.tsx"),
 "(blank)_login-out": () => import("@/pages/(blank)/login-out/index.tsx"),

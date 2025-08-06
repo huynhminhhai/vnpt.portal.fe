@@ -14,6 +14,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_viewadminmanager': 'Quản lý',
   '(base)_viewadminmanager_dangkysudung': 'Danh sách gói',
   '(base)_viewadminmanager_listuse': 'Danh sách người dùng',
+  '(base)_viewadminmanager_cauhinh': 'Cấu hình',
   '(blank)_login': 'Đăng nhập',
   '(blank)_login_code-login': 'Đăng nhập bằng mã',
   '(blank)_login_register': 'Đăng ký tài khoản',
