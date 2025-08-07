@@ -38,7 +38,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
             matchedFiles: [null, '/src/pages/(base)/home/index.tsx', null, null],
             name: '(base)_home',
             path: '/home',
-            handle: { i18nKey: 'route.(base)_home', icon: 'solar:screencast-2-broken', order: 1, title: 'home' }
+            handle: { i18nKey: 'route.(base)_home', icon: 'solar:monitor-linear', order: 1, title: 'home' }
           },
           {
             matchedFiles: [null, '/src/pages/(base)/manage/index.tsx', null, null],
@@ -168,7 +168,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
                 matchedFiles: [null, '/src/pages/(base)/viewadminmanager/CauHinh/index.tsx', null, null],
                 name: '(base)_viewadminmanager_cauhinh',
                 path: '/viewadminmanager/cauhinh',
-                handle: { i18nKey: 'route.(base)_viewadminmanager_cauhinh', title: '(base)_viewadminmanager_cauhinh' }
+                handle: { i18nKey: 'route.(base)_viewadminmanager_cauhinh', title: '(base)_viewadminmanager_cauhinh', icon: 'solar:layers-minimalistic-broken' }
               },
               {
                 matchedFiles: [null, '/src/pages/(base)/viewadminmanager/DangKySuDung/index.tsx', null, null],

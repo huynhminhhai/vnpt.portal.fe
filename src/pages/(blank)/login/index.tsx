@@ -15,8 +15,8 @@ interface Account {
 type LoginParams = Pick<Account, 'password' | 'userName'>;
 
 const INITIAL_VALUES = {
-  password: 'Vnpt#2022',
-  userName: 'admin'
+  password: '',
+  userName: ''
 };
 
 const PwdLogin = () => {

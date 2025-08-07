@@ -36,7 +36,7 @@ const local: App.I18n.Schema['translation'] = {
   system: {
     errorReason: 'Nguyên nhân lỗi',
     reload: 'Tải lại trang',
-    title: 'Quản lý cân lúa',
+    title: 'Quản lý Sổ Cân Lúa',
     updateCancel: 'Để sau',
     updateConfirm: 'Làm mới ngay',
     updateContent: 'Phát hiện phiên bản mới của hệ thống, bạn có muốn làm mới trang ngay không?',

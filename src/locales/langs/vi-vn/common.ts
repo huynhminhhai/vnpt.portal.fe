@@ -13,6 +13,7 @@ const common: App.I18n.Schema['translation']['common'] = {
   confirmDelete: 'Bạn có chắc chắn muốn xóa?',
   delete: 'Xóa',
   deleteSuccess: 'Xóa thành công',
+  detail: 'Chi tiết',
   edit: 'Chỉnh sửa',
   error: 'Lỗi',
   errorHint: 'Đã xảy ra lỗi, vui lòng thử lại sau',
@@ -38,11 +39,10 @@ const common: App.I18n.Schema['translation']['common'] = {
   updateSuccess: 'Cập nhật thành công',
   userCenter: 'Trung tâm người dùng',
   warning: 'Cảnh báo',
-  detail: 'Chi tiết',
   yesOrNo: {
     no: 'Không',
     yes: 'Có'
   }
 };
 
-export default common; 
+export default common;

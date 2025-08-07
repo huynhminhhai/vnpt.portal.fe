@@ -165,7 +165,7 @@ const ListUse = () => {
     {
       align: 'center' as const,
       key: 'tenGoiSuDung',
-      render: (_: any, record: StatisticalUse) => (record.tenGoiSuDung?.length > 0 ? record.tenGoiSuDung : '-'),
+      render: (_: any, record: StatisticalUse) => (record.tenGoiSuDung?.length > 0 ? record.tenGoiSuDung : 'Miễn phí'),
       title: 'Gói sử dụng'
     },
     {
