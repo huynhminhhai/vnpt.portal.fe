@@ -1,11 +1,3 @@
-import CardData from './modules/CardData';
-// import CreativityBanner from './modules/CreativityBanner';
-// import HeaderBanner from './modules/HeaderBanner';
-import LineChart from './modules/LineChart';
-import PieChart from './modules/PieChart';
-import UpgradeNew from './modules/UpgradeNew';
-import UsersNew from './modules/UsersNew';
-
 const Home = () => {
   return (
     <ASpace
@@ -13,38 +5,15 @@ const Home = () => {
       direction="vertical"
       size={[16, 16]}
     >
-      {/* <HeaderBanner /> */}
-
-      <CardData />
-
       <ARow gutter={[16, 16]}>
         <ACol
           lg={16}
           span={24}
-        >
-          <LineChart />
-        </ACol>
+        />
         <ACol
           lg={8}
           span={24}
-        >
-          <PieChart />
-        </ACol>
-      </ARow>
-      <ARow gutter={[16, 16]}>
-        <ACol
-          lg={14}
-          span={24}
-        >
-          <UpgradeNew />
-        </ACol>
-        <ACol
-          lg={10}
-          span={24}
-        >
-          {/* <CreativityBanner /> */}
-          <UsersNew />
-        </ACol>
+        />
       </ARow>
     </ASpace>
   );

@@ -56,8 +56,10 @@ const page: App.I18n.Schema['translation']['page'] = {
     dealCount: 'Deal Count',
     downloadCount: 'Download Count',
     entertainment: 'Entertainment',
+    freeCount: 'Free Count',
     greeting: 'Good morning, {{userName}}, today is another day full of vitality!',
     message: 'Message',
+    paidCount: 'Paid Count',
     projectCount: 'Project Count',
     projectNews: {
       desc1: 'Soybean created the open source project soybean-admin on May 28, 2021!',
@@ -76,9 +78,7 @@ const page: App.I18n.Schema['translation']['page'] = {
     turnover: 'Turnover',
     visitCount: 'Visit Count',
     weatherDesc: 'Today is cloudy to clear, 20℃ - 25℃!',
-    work: 'Work',
-    freeCount: 'Free Count',
-    paidCount: 'Paid Count'
+    work: 'Work'
   },
   login: {
     bindWeChat: {
@@ -113,7 +113,7 @@ const page: App.I18n.Schema['translation']['page'] = {
       register: 'Register',
       rememberMe: 'Remember me',
       superAdmin: 'Super Admin',
-      title: 'Password Login',
+      title: 'Login With Password',
       user: 'User'
     },
     register: {
@@ -132,6 +132,10 @@ const page: App.I18n.Schema['translation']['page'] = {
         disable: 'Disable',
         enable: 'Enable'
       }
+    },
+    DateItem: {
+      CreateDate: 'Create Date',
+      EndDate: 'End Date'
     },
     menu: {
       activeMenu: 'Active Menu',
@@ -253,10 +257,6 @@ const page: App.I18n.Schema['translation']['page'] = {
     userDetail: {
       content: `The loader allows network requests and lazy-loaded files to be triggered almost simultaneously, enabling the lazy-loaded files to be parsed while waiting for the network request to complete. Once the network request finishes, the page is displayed all at once. Leveraging React's Fiber architecture, if users find the waiting time too long, they can switch to different pages during the wait. This is an advantage of the React framework and React Router's data loader, as it avoids the conventional sequence of: request lazy-loaded file -> parse -> mount -> send network request -> render page -> display, and eliminates the need for manually adding a loading effect.`,
       explain: `This page is solely for demonstrating the powerful capabilities of react-router-dom's loader. The data is random and may not match.`
-    },
-    DateItem :{
-      CreateDate: 'Create Date',
-      EndDate: 'End Date',
     }
   }
 };

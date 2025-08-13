@@ -38,159 +38,18 @@ export const generatedRoutes: ElegantConstRoute[] = [
             matchedFiles: [null, '/src/pages/(base)/home/index.tsx', null, null],
             name: '(base)_home',
             path: '/home',
-            handle: { i18nKey: 'route.(base)_home', icon: 'solar:monitor-linear', order: 1, title: 'home' }
-          },
-          {
-            matchedFiles: [null, '/src/pages/(base)/manage/index.tsx', null, null],
-            name: '(base)_manage',
-            path: '/manage',
             handle: {
-              i18nKey: 'route.(base)_manage',
-              icon: 'carbon:cloud-service-management',
-              order: 8,
-              roles: ['R_ADMIN'],
-              title: 'manage'
-            },
-            children: [
-              {
-                matchedFiles: [null, '/src/pages/(base)/manage/role/index.tsx', null, null],
-                name: '(base)_manage_role',
-                path: '/manage/role',
-                handle: {
-                  i18nKey: 'route.(base)_manage_role',
-                  icon: 'carbon:user-role',
-                  order: 2,
-                  roles: ['R_SUPER'],
-                  title: 'manage_role'
-                },
-                children: [
-                  {
-                    matchedFiles: [null, '/src/pages/(base)/manage/role/[...slug].tsx', null, null],
-                    name: '(base)_manage_role_[...slug]',
-                    path: '/manage/role/*',
-                    handle: {
-                      i18nKey: 'route.(base)_manage_role_[...slug]',
-                      hideInMenu: true,
-                      title: '(base)_manage_role_[...slug]'
-                    }
-                  }
-                ]
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/manage/user/index.tsx', null, null],
-                name: '(base)_manage_user',
-                path: '/manage/user',
-                handle: {
-                  i18nKey: 'route.(base)_manage_user',
-                  icon: 'ic:round-manage-accounts',
-                  keepAlive: true,
-                  order: 1,
-                  roles: ['R_ADMIN'],
-                  title: 'manage_user'
-                },
-                children: [
-                  {
-                    matchedFiles: [null, '/src/pages/(base)/manage/user/[id].tsx', null, null],
-                    name: '(base)_manage_user_[id]',
-                    path: '/manage/user/:id',
-                    handle: {
-                      activeMenu: '/manage/user',
-                      hideInMenu: true,
-                      i18nKey: 'route.(base)_manage_user_[id]',
-                      title: '(base)_manage_user_[id]'
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            matchedFiles: [null, null, null, null],
-            name: '(base)_system',
-            path: '/system',
-            handle: {
-              i18nKey: 'route.(base)_system',
-              title: '(base)_system',
-              icon: 'fluent:apps-settings-20-regular',
-              order: 10
-            },
-            children: [
-              {
-                matchedFiles: [null, '/src/pages/(base)/system/LichSuDangNhap/index.tsx', null, null],
-                name: '(base)_system_lichsudangnhap',
-                path: '/system/lichsudangnhap',
-                handle: {
-                  i18nKey: 'route.(base)_system_lichsudangnhap',
-                  title: '(base)_system_lichsudangnhap',
-                  icon: 'solar:history-broken'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/system/LichSuHoatHong/index.tsx', null, null],
-                name: '(base)_system_lichsuhoathong',
-                path: '/system/lichsuhoathong',
-                handle: {
-                  i18nKey: 'route.(base)_system_lichsuhoathong',
-                  title: '(base)_system_lichsuhoathong',
-                  icon: 'solar:history-2-broken'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/system/LichSuThanhToan/index.tsx', null, null],
-                name: '(base)_system_lichsuthanhtoan',
-                path: '/system/lichsuthanhtoan',
-                handle: {
-                  i18nKey: 'route.(base)_system_lichsuthanhtoan',
-                  title: '(base)_system_lichsuthanhtoan',
-                  icon: 'solar:chat-round-money-broken'
-                }
-              }
-            ]
+              i18nKey: 'route.(base)_home',
+              icon: 'material-symbols-light:desktop-mac-outline',
+              order: 1,
+              title: 'home'
+            }
           },
           {
             matchedFiles: [null, '/src/pages/(base)/user-center/index.tsx', null, null],
             name: '(base)_user-center',
             path: '/user-center',
             handle: { hideInMenu: true, i18nKey: 'route.(base)_user-center', title: 'user-center' }
-          },
-          {
-            matchedFiles: [null, null, null, null],
-            name: '(base)_viewadminmanager',
-            path: '/viewadminmanager',
-            handle: {
-              i18nKey: 'route.(base)_viewadminmanager',
-              order: 2,
-              title: '(base)_viewadminmanager',
-              icon: 'carbon:cloud-service-management'
-            },
-            children: [
-              {
-                matchedFiles: [null, '/src/pages/(base)/viewadminmanager/CauHinh/index.tsx', null, null],
-                name: '(base)_viewadminmanager_cauhinh',
-                path: '/viewadminmanager/cauhinh',
-                handle: { i18nKey: 'route.(base)_viewadminmanager_cauhinh', title: '(base)_viewadminmanager_cauhinh', icon: 'solar:layers-minimalistic-broken' }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/viewadminmanager/DangKySuDung/index.tsx', null, null],
-                name: '(base)_viewadminmanager_dangkysudung',
-                path: '/viewadminmanager/dangkysudung',
-                handle: {
-                  i18nKey: 'route.(base)_viewadminmanager_dangkysudung',
-                  title: '(base)_viewadminmanager_dangkysudung',
-                  icon: 'solar:box-broken'
-                }
-              },
-              {
-                matchedFiles: [null, '/src/pages/(base)/viewadminmanager/listUse/index.tsx', null, null],
-                name: '(base)_viewadminmanager_listuse',
-                path: '/viewadminmanager/listuse',
-                handle: {
-                  i18nKey: 'route.(base)_viewadminmanager_listuse',
-                  title: '(base)_viewadminmanager_listuse',
-                  icon: 'solar:user-broken'
-                }
-              }
-            ]
           }
         ],
         path: null
