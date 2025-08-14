@@ -80,7 +80,7 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
           />
         )}
 
-        <LangSwitch className="px-12px" />
+        {/* <LangSwitch className="px-12px" /> */}
 
         <ThemeSchemaSwitch className="px-12px" />
 

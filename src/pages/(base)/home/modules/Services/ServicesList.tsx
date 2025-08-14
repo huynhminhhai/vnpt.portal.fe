@@ -40,16 +40,18 @@ const servicesData: ServicesItemProps[] = [
 
 const ServicesList = () => {
   return (
-    <ARow gutter={[16, 16]}>
-      {
-        servicesData.map(({...rest }, index) => (
-          <ServicesItem
-            key={index}
-            {...rest}
-          />
-        ))
-      }
-    </ARow>
+    <div className="bg-white rounded-lg p-5 shadow-2xl shadow-primary/25">
+      <ARow gutter={[16, 16]}>
+        {
+          servicesData.map(({...rest }, index) => (
+            <ServicesItem
+              key={index}
+              {...rest}
+            />
+          ))
+        }
+      </ARow>
+    </div>
   )
 }
 

@@ -1,6 +1,7 @@
 import ButtonIcon from '@/components/ButtonIcon';
 import SvgIcon from '@/components/SvgIcon';
 import { getSiderCollapse, toggleSiderCollapse } from '@/layouts/appStore';
+import { Icon } from '@iconify/react';
 
 interface Props {
   /** Arrow style icon */
@@ -39,7 +40,8 @@ const MenuToggler = ({ arrowIcon, className }: Props) => {
       tooltipPlacement="bottomLeft"
       onClick={() => dispatch(toggleSiderCollapse())}
     >
-      <SvgIcon icon={icon} />
+      {/* <SvgIcon icon={icon} /> */}
+      <Icon icon='solar:double-alt-arrow-left-linear' width="20" height="20" style={{ transform: siderCollapse ? 'rotate(180deg)' : 'rotate(0deg)'}} />
     </ButtonIcon>
   );
 };

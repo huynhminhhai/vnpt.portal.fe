@@ -26,7 +26,7 @@ const ServicesItem = (props: ServicesItemProps) => {
         <a
           href={link}
           target="_blank"
-          className="block border-[1px] border-[#e0e0e0e] bg-white rounded-lg cursor-pointer shadow-sm hover:shadow-md relative transition-all duration-300 service-item overflow-hidden hover:border-primary"
+          className="block border-[0px] border-[#e0e0e0e] bg-white rounded-lg cursor-pointer relative transition-all duration-300 service-item overflow-hidden shadow-[0_0_0.25em_rgba(0,89,169,0.27),_0_0.25em_1em_rgba(0,89,169,0.05)] shadow-primary/20"
         >
           <div className="absolute top-4 right-5">
             <Image
@@ -50,14 +50,12 @@ const ServicesItem = (props: ServicesItemProps) => {
               {desc}
             </div>
           </div>
-          <div className="px-4 py-3 flex items-center justify-between border-t-[1px] border-gray-200">
-            <div className="text-[14px] leading-[1] text-primary font-medium bg-white px-5 py-2 rounded-md border-[1px] border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">Truy cập ngay</div>
-            {/* <div>Truy cập ngay</div>
-            <div>
-              <Icon icon='si:arrow-right-line' fontSize={24} className="text-gray-500"  />
-            </div> */}
+          <div className="px-4 py-3 flex items-center justify-between border-t-[1px] border-gray-200 group-hover:bg-primary group-hover:text-white">
+            {/* <div className="text-[14px] leading-[1] text-primary font-medium bg-white px-5 py-2 rounded-md border-[1px] border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">Truy cập ngay</div> */}
+            <div className="text-[14px] leading-[1] text-primary font-medium group-hover:text-white">Truy cập ngay</div>
+            <Icon icon='si:arrow-right-line' fontSize={24} className="text-primary group-hover:text-white" />
           </div>
-        {/* <div
+          {/* <div
           className="absolute inset-x-0 top-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           style={{
             background: `${gradientColor}`

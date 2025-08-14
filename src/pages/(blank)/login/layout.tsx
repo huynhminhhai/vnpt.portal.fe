@@ -33,7 +33,9 @@ const LoginLayout = () => {
       className="relative size-full flex-center overflow-hidden bg-layout"
       style={{ backgroundColor: bgColor }}
     >
-      <WaveBg themeColor={bgThemeColor} />
+      {/* <WaveBg themeColor={bgThemeColor} /> */}
+
+      <img src="/src/assets/imgs/bg.png" alt="vnpt bg" className='absolute top-0 left-0 w-full h-full object-cover brightness-80' />
 
       <ACard
         className="relative z-4 w-auto rd-12px"

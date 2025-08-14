@@ -89,12 +89,12 @@ const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
   const { activeFirstLevelMenuKey, allMenus, setActiveFirstLevelMenuKey } = useMixMenuContext();
 
   return (
-    <div className="h-full flex-col-stretch flex-1-hidden">
+    <div className="h-full flex-col-stretch flex-1-hidden pt-2">
       {children}
       <SimpleScrollbar>
         {allMenus.map(item => (
           <MixMenuItem
-            active={item.key === activeFirstLevelMenuKey}
+            active={item.key === (activeFirstLevelMenuKey || '/home')}
             inverted={inverted}
             key={item.key}
             menu={item}

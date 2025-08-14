@@ -1,30 +1,28 @@
 const HeroBanner = () => {
   return (
-    <ACard
-      className="relative overflow-hidden rounded-2xl border-none mb-6 p-4"
-      style={{
-        background: "linear-gradient(135deg, #1890ff 0%, #70cfff 100%)",
-        color: "white",
-      }}
-    >
-      {/* Background Decoration */}
-      <div className="absolute top-0 right-0 w-[250px] h-[250px] bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.3)_0%,_transparent_70%)] pointer-events-none"></div>
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold">
-            Xin chào, 👋
-          </h1>
-          <p className="text-white/90 mt-2 max-w-xl text-lg">
-            Chào mừng bạn đến với Cổng dịch vụ trực tuyến.
-            Quản lý và sử dụng các dịch vụ chuyên biệt dành riêng cho địa phương của bạn.
-          </p>
+    <div className="bg-white rounded-lg shadow-2xl shadow-primary/25 p-5">
+      <ACard
+        className="relative overflow-hidden rounded-lg border-none px-4 py-5"
+        style={{
+          // background: "linear-gradient(135deg, #257fd8 0%, #e6f4ff 100%)",
+          background: "linear-gradient(135deg, rgba(0, 90, 169, 1), #e6f4ff 100%)",
+          color: "white",
+        }}
+      >
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl md:text-2xl font-medium">
+              Xin chào, admin 👋
+            </h1>
+            <p className="text-white mt-2 max-w-[60%] text-[17px] leading-[26px]">
+              Chào mừng bạn đến với <b>Cổng dịch vụ trực tuyến</b> — nơi bạn có thể quản lý và sử dụng các giải pháp chuyển đổi số được thiết kế chuyên biệt cho địa phương của mình.
+            </p>
+          </div>
         </div>
-
-
-      </div>
-    </ACard>
+        <img className="absolute z-[1] top-1/2 right-[0px] transform -translate-y-[56%]  w-[280px] h-auto" src="/src/assets/imgs/digital.png" alt="vnpt" />
+        <img src="/src/assets/imgs/sky.avif" alt="bg gradient" className="absolute top-0 left-0 w-full h-full object-cover opacity-50" />
+      </ACard>
+    </div>
   )
 }
 
