@@ -1,13 +1,14 @@
+import { ThemeContext } from "@/features/theme";
 import ServicesItem, { ServicesItemProps } from "./ServicesItem"
 
 const servicesData: ServicesItemProps[] = [
-  {
-    title: "Quản lý Bộ chỉ số",
-    link: "https://bochiso.vnpt.me",
-    desc: "Quản lý và theo dõi Bộ chỉ số cải cách hành chính cấp xã, cập nhật tiến độ và kết quả theo từng đợt đánh giá.",
-    gradientColor: "rgba(0, 89, 169, 1)",
-    logo: ""
-  },
+  // {
+  //   title: "Quản lý Bộ chỉ số",
+  //   link: "https://bochiso.vnpt.me",
+  //   desc: "Quản lý và theo dõi Bộ chỉ số cải cách hành chính cấp xã, cập nhật tiến độ và kết quả theo từng đợt đánh giá.",
+  //   gradientColor: "rgba(0, 89, 169, 1)",
+  //   logo: ""
+  // },
   {
     title: "Đặt lịch hẹn",
     link: "https://lichhen.vnpt.me",
@@ -29,21 +30,29 @@ const servicesData: ServicesItemProps[] = [
     gradientColor: "rgba(139, 215, 250, 1)",
     logo: "https://capnuoccanduoc.vnpt.me/assets/water-management-CfC5ER0q.png"
   },
-  {
-    title: "Khu phố thông minh",
-    link: "https://qlkhupho.vnpt.me",
-    desc: "Khu phố thông minh giúp cư dân dễ dàng quản lý thông tin, gửi yêu cầu, nhận thông báo và kết nối nhanh chóng với ban quản lý ngay trên Zalo.",
-    gradientColor: "rgba(0, 36, 70, 1)",
-    logo: "https://photo-logo-mapps.zadn.vn/4bde6285c4c02d9e74d1.jpg"
-  },
+  // {
+  //   title: "Khu phố thông minh",
+  //   link: "https://qlkhupho.vnpt.me",
+  //   desc: "Khu phố thông minh giúp cư dân dễ dàng quản lý thông tin, gửi yêu cầu, nhận thông báo và kết nối nhanh chóng với ban quản lý ngay trên Zalo.",
+  //   gradientColor: "rgba(0, 36, 70, 1)",
+  //   logo: "https://photo-logo-mapps.zadn.vn/4bde6285c4c02d9e74d1.jpg"
+  // },
 ]
 
 const ServicesList = () => {
+
+  const { darkMode } = useContext(ThemeContext);
+
   return (
-    <div className="bg-white rounded-lg p-5 shadow-2xl shadow-primary/25">
+    <div
+      className="bg-white rounded-lg p-5 shadow-2xl shadow-primary/25 min-h-[400px]"
+      style={{
+        backgroundColor: darkMode ? '#1c1c1c' : '#ffffff'
+      }}
+    >
       <ARow gutter={[16, 16]}>
         {
-          servicesData.map(({...rest }, index) => (
+          servicesData.map(({ ...rest }, index) => (
             <ServicesItem
               key={index}
               {...rest}

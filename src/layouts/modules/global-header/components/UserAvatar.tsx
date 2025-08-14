@@ -37,21 +37,21 @@ const UserAvatar = memo(() => {
   }
 
   const items: MenuProps['items'] = [
-    {
-      key: '0',
-      label: (
-        <div className="flex-center gap-8px">
-          <SvgIcon
-            className="text-icon"
-            icon="ph:user-circle"
-          />
-          {t('common.userCenter')}
-        </div>
-      )
-    },
-    {
-      type: 'divider'
-    },
+    // {
+    //   key: '0',
+    //   label: (
+    //     <div className="flex-center gap-8px">
+    //       <SvgIcon
+    //         className="text-icon"
+    //         icon="ph:user-circle"
+    //       />
+    //       {t('common.userCenter')}
+    //     </div>
+    //   )
+    // },
+    // {
+    //   type: 'divider'
+    // },
     {
       key: '1',
       label: (
@@ -74,11 +74,12 @@ const UserAvatar = memo(() => {
     >
       <div>
         <ButtonIcon className="px-12px">
-          <SvgIcon
+          {/* <SvgIcon
             className="text-icon-large"
             icon="ph:user-circle"
-          />
-          <span className="text-16px font-medium">{userInfo.userName}</span>
+          /> */}
+          <img src="/src/assets/imgs/vnpt.webp" alt="vnpt" className="w-28px h-28px rounded-full border border-primary" />
+          <span className="text-14px capitalize">Admin Xã Cần Đước</span>
         </ButtonIcon>
       </div>
     </ADropdown>

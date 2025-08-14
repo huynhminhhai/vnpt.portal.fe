@@ -1,3 +1,4 @@
+import { ThemeContext } from "@/features/theme"
 import { toHostname } from "@/utils/number"
 import { Icon } from "@iconify/react"
 import { Image } from "antd"
@@ -15,6 +16,8 @@ const ServicesItem = (props: ServicesItemProps) => {
 
   const { cardKey, title, link, desc, gradientColor, logo } = props
 
+  const { darkMode } = useContext(ThemeContext);
+
   return (
     <ACol
       key={cardKey}
@@ -26,7 +29,10 @@ const ServicesItem = (props: ServicesItemProps) => {
         <a
           href={link}
           target="_blank"
-          className="block border-[0px] border-[#e0e0e0e] bg-white rounded-lg cursor-pointer relative transition-all duration-300 service-item overflow-hidden shadow-[0_0_0.25em_rgba(0,89,169,0.27),_0_0.25em_1em_rgba(0,89,169,0.05)] shadow-primary/20"
+          className="block border-[0px] border-[#e0e0e0e] rounded-lg cursor-pointer relative transition-all duration-300 service-item overflow-hidden shadow-[0_0_0.25em_rgba(0,89,169,0.27),_0_0.25em_1em_rgba(0,89,169,0.05)] shadow-primary/20"
+          style={{
+            backgroundColor: darkMode ? '#292929' : '#ffffff'
+          }}
         >
           <div className="absolute top-4 right-5">
             <Image
@@ -38,15 +44,26 @@ const ServicesItem = (props: ServicesItemProps) => {
           </div>
           <div className="px-4 pt-6 pb-4">
             <div className="max-w-[300px]">
-              <h2 className="text-[18px] leading-[24px] font-medium text-[#222222] mb-[4px]">
+              <h2
+                className="text-[18px] leading-[24px] font-medium mb-[4px]"
+                style={{ color: darkMode ? '#ffffffd9' : '#000000E0' }}
+              >
                 {title}
               </h2>
-              <div className="flex items-center gap-1 text-[13px] leading-[20px] text-gray-500">
+              <div className="flex items-center gap-1 text-[13px] leading-[20px]"
+                style={{
+                  color: darkMode ? '#ffffffd9' : '#6b7280'
+                }}>
                 {toHostname(link)}
                 <Icon icon='heroicons:arrow-top-right-on-square-20-solid' fontSize={16} />
               </div>
             </div>
-            <div className="text-[15px] leading-[22px] mt-3 line-clamp-2 max-w-[90%] text-gray-500 h-[44px]">
+            <div
+              className="text-[15px] leading-[22px] mt-3 line-clamp-2 max-w-[90%] h-[44px]"
+              style={{
+                color: darkMode ? '#ffffffd9' : '#6b7280'
+              }}
+            >
               {desc}
             </div>
           </div>
