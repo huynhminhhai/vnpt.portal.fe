@@ -61,12 +61,13 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
 
       {showToggler && <MenuToggler />}
 
-      <div
+      {/* <div
         className="h-full flex-y-center flex-1-hidden"
         id={GLOBAL_HEADER_MENU_ID}
       >
         {!isMobile && !showMenu && <GlobalBreadcrumb className="ml-12px" />}
-      </div>
+      </div> */}
+      <div className="h-full flex-y-center flex-1-hidden"></div>
 
       <div className="h-full flex-y-center justify-end">
         <GlobalSearch />

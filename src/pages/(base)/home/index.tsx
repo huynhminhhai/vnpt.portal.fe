@@ -1,20 +1,15 @@
+import HeroBanner from "./modules/HeroBanner";
+import ServicesList from "./modules/Services/ServicesList";
+
 const Home = () => {
   return (
     <ASpace
-      className="w-full"
+      className="w-full p-0 md:p-3"
       direction="vertical"
       size={[16, 16]}
     >
-      <ARow gutter={[16, 16]}>
-        <ACol
-          lg={16}
-          span={24}
-        />
-        <ACol
-          lg={8}
-          span={24}
-        />
-      </ARow>
+      {/* <HeroBanner /> */}
+      <ServicesList />
     </ASpace>
   );
 };

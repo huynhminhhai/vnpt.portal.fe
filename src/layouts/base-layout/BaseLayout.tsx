@@ -118,7 +118,7 @@ const BaseLayout = () => {
       siderCollapsedWidth={siderCollapsedWidth}
       siderVisible={siderVisible}
       siderWidth={siderWidth}
-      Tab={<GlobalTab />}
+      // Tab={<GlobalTab />}
       tabHeight={themeSettings.tab.height}
       tabVisible={themeSettings.tab.visible}
       updateSiderCollapse={updateSiderCollapse}

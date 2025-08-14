@@ -77,7 +77,7 @@ const GlobalTab = () => {
             className={clsx('h-full flex pr-18px', tabWrapperClass)}
             ref={tabRef}
           >
-            {tabs.map((item, index) => (
+            {/* {tabs.map((item, index) => (
               <ContextMenu
                 active={item.id === activeTabId}
                 darkMode={darkMode}
@@ -109,7 +109,7 @@ const GlobalTab = () => {
                   </PageTab>
                 </div>
               </ContextMenu>
-            ))}
+            ))} */}
           </div>
         </BetterScroll>
       </div>

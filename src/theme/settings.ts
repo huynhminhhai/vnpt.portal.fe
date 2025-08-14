@@ -19,7 +19,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
   isInfoFollowPrimary: true,
   isOnlyExpandCurrentParentMenu: true,
   layout: {
-    mode: 'vertical',
+    mode: 'horizontal',
     reverseHorizontalMix: false,
     scrollMode: 'content'
   },
@@ -72,7 +72,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
     }
   },
   watermark: {
-    text: 'SoybeanAdmin',
+    text: 'VNPT Tay Ninh',
     visible: false
   }
 };
@@ -84,7 +84,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
  */
 export const overrideThemeSettings: Partial<App.Theme.ThemeSetting> = {
   watermark: {
-    text: 'SoybeanAdmin',
+    text: 'VNPT Tay Ninh',
     visible: false
   }
 };

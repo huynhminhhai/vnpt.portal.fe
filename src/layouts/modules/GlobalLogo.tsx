@@ -17,13 +17,13 @@ const GlobalLogo: FC<Props> = memo(({ className, showTitle = true, ...props }) =
       to={import.meta.env.VITE_ROUTE_HOME}
       {...props}
     >
-      <SystemLogo className="mb-[1px] mr-1 h-auto w-[20px] text-32px text-primary" />
+      <SystemLogo className="mb-[1px] mr-1 h-auto w-[22px] text-32px text-primary" />
       {/* <Icon
         className="h-auto w-[20px] text-36px text-primary"
         icon="emojione-monotone:sheaf-of-rice"
       /> */}
       <h2
-        className="pl-4px text-16px text-primary font-medium capitalize transition duration-300 ease-in-out"
+        className="pl-4px text-20px text-primary font-bold capitalize transition duration-300 ease-in-out"
         style={{ display: showTitle ? 'block' : 'none' }}
       >
         {t('system.title')}
