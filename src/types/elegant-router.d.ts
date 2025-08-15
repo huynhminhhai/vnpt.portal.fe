@@ -31,6 +31,8 @@ declare module "@soybean-react/vite-plugin-react-router" {
     "document_ui": "/document/ui";
     "(base)_about": "/about";
     "(base)_home": "/home";
+    "(base)_manage": "/manage";
+    "(base)_manage_system": "/manage/system";
     "(base)_user-center": "/user-center";
     "(blank)_login": "/login";
     "(blank)_login_code-login": "/login/code-login";
@@ -112,6 +114,7 @@ declare module "@soybean-react/vite-plugin-react-router" {
     | "(base)_about"
     | "(base)_home"
     | "(base)"
+    | "(base)_manage_system"
     | "(base)_user-center"
     | "(blank)"
     | "(blank)_login-out"

@@ -38,12 +38,26 @@ export const generatedRoutes: ElegantConstRoute[] = [
             matchedFiles: [null, '/src/pages/(base)/home/index.tsx', null, null],
             name: '(base)_home',
             path: '/home',
+            handle: { i18nKey: 'route.(base)_home', icon: 'solar:monitor-linear', order: 1, title: 'home' }
+          },
+          {
+            matchedFiles: [null, null, null, null],
+            name: '(base)_manage',
+            path: '/manage',
             handle: {
-              i18nKey: 'route.(base)_home',
-              icon: 'material-symbols-light:desktop-mac-outline',
-              order: 1,
-              title: 'home'
-            }
+              i18nKey: 'route.(base)_manage',
+              title: '(base)_manage',
+              order: 2,
+              icon: 'solar:folder-with-files-linear'
+            },
+            children: [
+              {
+                matchedFiles: [null, '/src/pages/(base)/manage/system/index.tsx', null, null],
+                name: '(base)_manage_system',
+                path: '/manage/system',
+                handle: { i18nKey: 'route.(base)_manage_system', title: '(base)_manage_system', icon: 'solar:shield-network-outline' }
+              }
+            ]
           },
           {
             matchedFiles: [null, '/src/pages/(base)/user-center/index.tsx', null, null],

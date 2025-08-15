@@ -11,14 +11,14 @@ const DeleteButton = ({ onClick }: DeleteButtonProps) => {
       onConfirm={onClick}
     >
       <AButton
-        className="hover:scale-[1.04] !border-0 !bg-red-100"
+        className="hover:scale-[1.02] !border-0 !bg-red-100"
         size="small"
         title="Xóa"
       >
         <Icon
           className="!text-red-600"
           fontSize={20}
-          icon="solar:trash-bin-minimalistic-broken"
+          icon="solar:trash-bin-trash-linear"
         />
       </AButton>
     </APopconfirm>

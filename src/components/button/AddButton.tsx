@@ -7,7 +7,7 @@ type AddButtonProps = {
 const AddButton = ({ onClick }: AddButtonProps) => {
   return (
     <AButton
-      className="hover:scale-[1.04] !border-0 !bg-primary !text-white"
+      className="hover:scale-[1.04] !border-0 !bg-primary !text-white gap-1"
       size="middle"
       title="Thêm mới"
       onClick={onClick}
@@ -15,7 +15,7 @@ const AddButton = ({ onClick }: AddButtonProps) => {
       <Icon
         className="!text-white"
         fontSize={20}
-        icon="solar:add-circle-broken"
+        icon="stash:plus"
       />
       Thêm mới
     </AButton>

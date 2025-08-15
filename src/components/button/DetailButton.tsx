@@ -7,7 +7,7 @@ type DetailButtonProps = {
 const DetailButton = ({ onClick }: DetailButtonProps) => {
   return (
     <AButton
-      className="hover:scale-[1.04] !border-0 !bg-blue-100"
+      className="hover:scale-[1.02] !border-0 !bg-blue-100"
       size="small"
       title="Chi tiết"
       onClick={onClick}
@@ -15,7 +15,7 @@ const DetailButton = ({ onClick }: DetailButtonProps) => {
       <Icon
         className="!text-blue-700"
         fontSize={20}
-        icon="solar:eye-broken"
+        icon="solar:eye-outline"
       />
     </AButton>
   );

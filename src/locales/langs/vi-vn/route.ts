@@ -1,6 +1,8 @@
 const route: App.I18n.Schema['translation']['route'] = {
   '(base)_about': 'Giới thiệu',
   '(base)_home': 'Trang chủ',
+  '(base)_manage': 'Quản lý',
+  '(base)_manage_system': 'Danh sách dịch vụ',
   '(base)_user-center': 'Trung tâm người dùng',
   '(blank)_login': 'Đăng nhập',
   '(blank)_login_code-login': 'Đăng nhập bằng mã',

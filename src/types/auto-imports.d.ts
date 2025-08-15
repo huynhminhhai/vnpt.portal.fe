@@ -90,6 +90,7 @@ declare global {
   const SvgIcon: typeof import('../components/SvgIcon')['default']
   const SystemLogo: typeof import('../components/SystemLogo')['default']
   const TypingAnimation: typeof import('../components/TypingAnimation')['TypingAnimation']
+  const UploadImage: typeof import('../components/form/UploadImage')['default']
   const WaveBg: typeof import('../components/WaveBg')['default']
   const createRef: typeof import('react')['createRef']
   const forwardRef: typeof import('react')['forwardRef']
