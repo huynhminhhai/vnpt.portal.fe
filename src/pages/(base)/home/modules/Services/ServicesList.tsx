@@ -1,5 +1,8 @@
 import { ThemeContext } from "@/features/theme";
 import ServicesItem, { ServicesItemProps } from "./ServicesItem"
+import ServiceHeading from "./ServiceHeading";
+import { Icon } from "@iconify/react";
+import { Input, Select } from "antd";
 
 const servicesData: ServicesItemProps[] = [
   // {
@@ -39,9 +42,36 @@ const servicesData: ServicesItemProps[] = [
   // },
 ]
 
+const servicesDataOthers: ServicesItemProps[] = [
+  {
+    title: "Khu phố thông minh",
+    link: "https://qlkhupho.vnpt.me",
+    desc: "Khu phố thông minh giúp cư dân dễ dàng quản lý thông tin, gửi yêu cầu, nhận thông báo và kết nối nhanh chóng với ban quản lý ngay trên Zalo.",
+    gradientColor: "rgba(0, 36, 70, 1)",
+    logo: "https://photo-logo-mapps.zadn.vn/4bde6285c4c02d9e74d1.jpg"
+  },
+]
+
 const ServicesList = () => {
 
   const { darkMode } = useContext(ThemeContext);
+  const { Search } = Input;
+
+  const [isShowAll, setIsShowAll] = useState(
+    JSON.parse(localStorage.getItem("isShowAll") || "false")
+  );
+
+  useEffect(() => {
+    localStorage.setItem("isShowAll", JSON.stringify(isShowAll));
+  }, [isShowAll]);
+
+  const handleToggleShowAll = () => {
+    setIsShowAll(!isShowAll);
+  }
+
+  const onChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   return (
     <div
@@ -51,15 +81,99 @@ const ServicesList = () => {
       }}
     >
       <ARow gutter={[16, 16]}>
-        {
-          servicesData.map(({ ...rest }, index) => (
-            <ServicesItem
-              key={index}
-              {...rest}
+        <ACol
+          lg={4}
+          md={12}
+          span={24}
+        >
+          <Select
+            className="w-full"
+            size="large"
+            showSearch
+            placeholder="Chọn loại dịch vụ"
+            optionFilterProp="label"
+            onChange={onChange}
+            options={[
+              {
+                value: 'Y tế',
+                label: 'Y tế',
+              },
+              {
+                value: 'Giáo dục',
+                label: 'Giáo dục',
+              },
+              {
+                value: 'Khác',
+                label: 'Khác',
+              },
+            ]}
+          />
+        </ACol>
+        <ACol
+          lg={6}
+          md={12}
+          span={24}
+        >
+          <Search className="w-full" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="large" />
+        </ACol>
+        <ACol
+          lg={4}
+          md={12}
+          span={24}
+          className="ml-auto flex justify-end"
+        >
+          <div className="flex items-center gap-4">
+            <ButtonIcon
+              triggerParent
+              className="px-10px text-2xl border-[1px] border-[#e0e0e0] h-40px"
+              icon={isShowAll ? "circum:grid-4-1" : 'circum:grid-3-2'}
+              tooltipContent={isShowAll ? 'Chế độ xem tất cả' : 'Chế độ xem theo loại'}
+              onClick={handleToggleShowAll}
             />
-          ))
-        }
+          </div>
+        </ACol>
       </ARow>
+      {
+        isShowAll ?
+          <>
+            <ARow gutter={[16, 16]} className="mt-10">
+              {
+                [...servicesData, ...servicesDataOthers].map(({ ...rest }, index) => (
+                  <ServicesItem
+                    key={index}
+                    {...rest}
+                  />
+                ))
+              }
+            </ARow>
+          </>
+          :
+          <>
+            <ServiceHeading title="Dịch vụ số" />
+            <ARow gutter={[16, 16]}>
+              {
+                servicesData.map(({ ...rest }, index) => (
+                  <ServicesItem
+                    key={index}
+                    {...rest}
+                  />
+                ))
+              }
+            </ARow>
+            <ServiceHeading title="Dịch vụ khác" />
+            <ARow gutter={[16, 16]}>
+              {
+                servicesDataOthers.map(({ ...rest }, index) => (
+                  <ServicesItem
+                    key={index}
+                    {...rest}
+                  />
+                ))
+              }
+            </ARow>
+          </>
+      }
+
     </div>
   )
 }
