@@ -10,7 +10,7 @@ type Props = {
   onSuccess?: () => void;
 };
 
-const ServiceUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
+const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -233,4 +233,4 @@ const ServiceUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
   );
 };
 
-export default ServiceUpdateForm;
+export default SystemUpdateForm;

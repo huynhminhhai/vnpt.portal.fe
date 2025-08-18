@@ -58,7 +58,19 @@ export const generatedRoutes: ElegantConstRoute[] = [
                 handle: {
                   i18nKey: 'route.(base)_manage_system',
                   title: '(base)_manage_system',
-                  icon: 'streamline-plump:web'
+                  icon: 'streamline-plump:web',
+                  order: 2,
+                }
+              },
+              {
+                matchedFiles: [null, '/src/pages/(base)/manage/system-group/index.tsx', null, null],
+                name: '(base)_manage_system-group',
+                path: '/manage/system-group',
+                handle: {
+                  i18nKey: 'route.(base)_manage_system-group',
+                  title: '(base)_manage_system-group',
+                  icon: 'uil:layer-group',
+                  order: 1,
                 }
               }
             ]

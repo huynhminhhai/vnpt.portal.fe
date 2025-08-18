@@ -19,7 +19,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
   isInfoFollowPrimary: true,
   isOnlyExpandCurrentParentMenu: true,
   layout: {
-    mode: 'horizontal-mix',
+    mode: 'vertical',
     reverseHorizontalMix: false,
     scrollMode: 'content'
   },

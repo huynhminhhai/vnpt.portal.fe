@@ -41,7 +41,7 @@ const MenuToggler = ({ arrowIcon, className }: Props) => {
       onClick={() => dispatch(toggleSiderCollapse())}
     >
       {/* <SvgIcon icon={icon} /> */}
-      <Icon icon='solar:double-alt-arrow-left-linear' width="20" height="20" style={{ transform: siderCollapse ? 'rotate(180deg)' : 'rotate(0deg)'}} />
+      <Icon icon='solar:sidebar-minimalistic-linear' width="20" height="20" style={{ transform: siderCollapse ? 'rotate(180deg)' : 'rotate(0deg)'}} />
     </ButtonIcon>
   );
 };

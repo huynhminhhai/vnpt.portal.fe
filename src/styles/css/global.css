@@ -2,6 +2,7 @@
 @import './nprogress.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 html,
 body,
@@ -14,7 +15,7 @@ html {
 }
 
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Mulish', sans-serif;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
 }
@@ -100,4 +101,62 @@ textarea.ant-input[disabled],
   height: 300px;
   background: radial-gradient(circle at top right, var(--color-rgb) 0%, transparent 50%);
   pointer-events: none;
+}
+
+.ant-form-item-label label {
+  color: #737982 !important;
+}
+
+.ant-form-item-label {
+  padding-bottom: 4px !important;
+  height: 30px;
+}
+
+@media screen and (max-width: 991px) {
+  .ant-table-cell {
+    white-space: nowrap;
+  }
+
+  .table-custom .ant-collapse-header,
+  .table-custom .ant-collapse-content-box {
+    padding: 0 !important;
+  }
+
+  .table-custom .ant-card-head-wrapper {
+    flex-direction: column;
+    gap: 12px;
+    padding-block: 24px 12px;
+  }
+
+  .table-custom .ant-card-head-wrapper .ant-card-head-title {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .table-custom .ant-card-body,
+  .table-custom .ant-card-head {
+    padding-inline: 10px !important;
+  }
+
+  .table-custom .ant-list-pagination {
+    margin-top: 12px;
+  }
+
+  .table-custom .ant-card-head-wrapper .ant-card-extra {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space {
+    width: 100%;
+    margin-top: 6px;
+    flex-direction: row;
+    flex-wrap: nowrap !important;
+  }
+
+  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space button,
+  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space .ant-space-item {
+    width: 100%;
+  }
 }

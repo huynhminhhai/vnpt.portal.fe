@@ -2,7 +2,7 @@ import { Button, Col, Drawer, Form, Input, Row, Select, Space, message } from 'a
 import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
-import UploadImage from '@/components/form/UploadImage';
+import { CreateSystemGroup } from '@/service/api';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -11,7 +11,7 @@ type Props = {
   onSuccess?: () => void;
 };
 
-const ServiceAddForm: React.FC<Props> = ({ onSuccess }) => {
+const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -29,18 +29,16 @@ const ServiceAddForm: React.FC<Props> = ({ onSuccess }) => {
     try {
       const dataSubmit = { ...values };
 
-      // await CreateGoiSudung(dataSubmit);
-      console.log(dataSubmit)
+      await CreateSystemGroup(dataSubmit);
 
-      message.success('Thêm dịch vụ thành công!');
+      message.success('Thêm nhóm hệ thống thành công!');
 
-      // form.resetFields();
+      form.resetFields();
 
-      // onSuccess?.();
+      onSuccess?.();
 
-      // onClose();
+      onClose();
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.log(error);
       message.error(error as string);
     } finally {
@@ -54,7 +52,7 @@ const ServiceAddForm: React.FC<Props> = ({ onSuccess }) => {
       <Drawer
         className='p-0'
         open={open}
-        title="Thêm mới dịch vụ"
+        title="Thêm mới nhóm hệ thống"
         width={580}
         extra={
           <Space>
@@ -78,66 +76,45 @@ const ServiceAddForm: React.FC<Props> = ({ onSuccess }) => {
           form={form}
           layout="vertical"
           onFinish={onFinish}
+          initialValues={{
+            status: 1
+          }}
         >
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                label="Tên dịch vụ"
-                name="tenDichVu"
-                rules={[{ message: 'Vui lòng nhập tên dịch vụ', required: true }]}
+                label="Tên nhóm"
+                name="displayName"
+                rules={[{ message: 'Vui lòng nhập tên nhóm', required: true }]}
               >
                 <Input
-                  placeholder="Nhập tên dịch vụ"
-                  size="large"
+                  placeholder="Nhập tên nhóm"
+                  size="middle"
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Loại dịch vụ"
-                name="loaiDichVu"
-                rules={[{ message: 'Vui lòng nhập đường dẫn dịch vụ', required: true }]}
+                label="Trạng thái"
+                name="status"
+                rules={[{ message: 'Vui lòng chọn trạng thái', required: true }]}
               >
                 <Select
                   placeholder="Vui lòng chọn trạng thái"
-                  size="large"
+                  size="middle"
                 >
-                  <Option value='1'>Y tế</Option>
-                  <Option value='2'>Giáo dục</Option>
+                  <Option value={1}>Đang hoạt động</Option>
+                  <Option value={2}>Tạm dừng</Option>
                 </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                label="Đường dẫn dịch vụ"
-                name="duongDan"
-                rules={[{ message: 'Vui lòng nhập đường dẫn dịch vụ', required: true }]}
-              >
-                <Input
-                  placeholder="Nhập đường dẫn dịch vụ"
-                  size="large"
-                />
               </Form.Item>
             </Col>
             <Col span={24}>
               <Form.Item
                 label="Mô tả"
-                name="moTa"
-                rules={[{ message: 'Vui lòng nhập mô tả', required: true }]}
+                name="description"
+                rules={[{ message: 'Vui lòng nhập mô tả', required: false }]}
               >
-                <TextArea rows={4} placeholder="Nhập mô tả dịch vụ" maxLength={6} />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                label="Đường dẫn logo"
-                name="duongDanLogo"
-                rules={[{ message: 'Vui lòng nhập đường dẫn logo', required: false }]}
-              >
-                <Input
-                  placeholder="Nhập đường dẫn logo"
-                  size="large"
-                />
+                <TextArea rows={4} placeholder="Nhập mô tả nhóm" maxLength={255} size='middle' />
               </Form.Item>
             </Col>
           </Row>
@@ -158,4 +135,4 @@ const ServiceAddForm: React.FC<Props> = ({ onSuccess }) => {
   );
 };
 
-export default ServiceAddForm;
+export default SystemGroupAddForm;

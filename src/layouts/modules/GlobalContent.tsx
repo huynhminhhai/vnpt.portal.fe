@@ -47,7 +47,7 @@ const GlobalContent = ({ closePadding }: Props) => {
   }, [reload, transitionName]);
 
   return (
-    <div className={clsx('h-full flex-grow bg-layout', { 'p-16px': !closePadding })}>
+    <div className={clsx('h-full flex-grow bg-layout', { 'p-6px md:p-16px': !closePadding })}>
       <KeepAlive
         activeCacheKey={pathname}
         aliveRef={aliveRef}

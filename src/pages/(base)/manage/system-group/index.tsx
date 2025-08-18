@@ -1,0 +1,409 @@
+import { Card, Collapse, Dropdown, List, MenuProps, message, Tag } from 'antd';
+import { DeleteButton } from '@/components/button';
+import { TableHeaderOperation, useTableScroll } from '@/features/table';
+import SystemGroupAddForm from './modules/SystemGroupAddForm';
+import SystemGroupUpdateForm from './modules/SystemGroupUpdateForm';
+import { formatDate } from '@/utils/date';
+import { DeleteGroupSystem, GetAllSystemGroup, UpdateSystemGroup } from '@/service/api';
+import { Icon } from '@iconify/react';
+import { useIsTabletResponsive } from '@/utils/responsive';
+
+const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
+  const { t } = useTranslation();
+
+  return (
+    <AForm
+      form={form}
+      initialValues={searchParams}
+      labelCol={{
+        md: 7,
+        span: 5
+      }}
+    >
+      <ARow
+        wrap
+        gutter={[8, 16]}
+      >
+        <ACol
+          lg={8}
+          md={12}
+          sm={24}
+          span={24}
+        >
+          <AForm.Item
+            className="m-0"
+            label='Tên nhóm'
+            name="keyword"
+          >
+            <AInput placeholder='Nhập tên nhóm' />
+          </AForm.Item>
+        </ACol>
+
+        <ACol
+          lg={8}
+          md={12}
+          sm={24}
+          span={24}
+        >
+          <AFlex
+            className="w-full"
+            gap={16}
+            justify="flex-end"
+          >
+            <AButton
+              className='w-full'
+              icon={<IconMdiRefresh />}
+              onClick={reset}
+            >
+              {t('common.reset')}
+            </AButton>
+            <AButton
+              className='w-full'
+              ghost
+              icon={<IconUilSearch />}
+              type="primary"
+              onClick={search}
+            >
+              {t('common.search')}
+            </AButton>
+          </AFlex>
+        </ACol>
+      </ARow>
+    </AForm>
+  );
+};
+
+const SystemGroupManagePage = () => {
+  const { t } = useTranslation();
+  const { scrollConfig, tableWrapperRef } = useTableScroll();
+
+  // const nav = useNavigate();
+  const [datas, setDatas] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const isMobile = useMobile();
+  const isTabletRes = useIsTabletResponsive();
+
+  // Form state
+  const [form] = AForm.useForm();
+  const [searchParams, setSearchParams] = useState({});
+
+  // Fetch data function
+  const fetchList = async (params = {}) => {
+    setLoading(true);
+    try {
+      const apiParams = {
+        MaxResultCount: '9999',
+        SkipCount: 0,
+        Sorting: null,
+        IsActive: null,
+        Keyword: '',
+        ...params
+      };
+
+      const res = await GetAllSystemGroup(apiParams);
+
+      const resData = res.data as any;
+
+      if (resData && resData.result && resData.result.items) {
+        const data = (resData.result.items).reverse();
+
+        setDatas(data);
+      } else {
+        console.warn('API response format không đúng, sử dụng fallback data');
+        setDatas([]);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setDatas([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Search functions
+  const reset = () => {
+    form.resetFields();
+    setSearchParams({});
+    fetchList();
+  };
+
+  const search = () => {
+    const values = form.getFieldsValue();
+    setSearchParams(values);
+    fetchList(values);
+  };
+
+  // Initial data fetch
+  useEffect(() => {
+    fetchList();
+  }, []);
+
+  const handleStatusMenuClick = async (info: any, record: any) => {
+    setLoading(true);
+    try {
+      const dataSubmit = { ...record, status: info.key };
+
+      await UpdateSystemGroup(dataSubmit);
+
+      message.success('Cập nhật trạng thái nhóm hệ thống thành công!');
+
+    } catch (error) {
+      console.log(error);
+      message.error(error as string);
+    } finally {
+      setLoading(false);
+      fetchList();
+    }
+  };
+
+  // Action handlers
+  const handleDelete = async (id: number) => {
+    try {
+      await DeleteGroupSystem(id);
+
+      fetchList();
+    } catch (error) {
+      console.log(error);
+      message.error(error as string);
+    }
+  };
+
+  const items: MenuProps['items'] = [
+    {
+      label: 'Đang hoạt động',
+      key: 1,
+    },
+    {
+      type: 'divider',
+    },
+    {
+      label: 'Tạm dừng',
+      key: 2,
+    },
+  ];
+
+  // Column definitions
+  const columns: any[] = [
+    {
+      align: 'center' as const,
+      key: 'index',
+      render: (_: any, record: any) => record.id,
+      title: 'ID',
+      width: 64
+    },
+    {
+      align: 'center' as const,
+      key: 'displayName',
+      render: (_: any, record: any) => <div>{record.displayName}</div>,
+      title: 'Tên nhóm hệ thống'
+    },
+    {
+      align: 'center' as const,
+      key: 'description',
+      render: (_: any, record: any) => <div className='line-clamp-2'>{record?.description || '-'}</div>,
+      title: 'Mô tả',
+    },
+    {
+      align: 'center' as const,
+      key: 'creationTime',
+      render: (_: any, record: any) => <div>{record?.creationTime && formatDate(record.creationTime)}</div>,
+      title: 'Ngày tạo'
+    },
+    {
+      align: 'center' as const,
+      key: 'lastModificationTime',
+      render: (_: any, record: any) => <div>{record?.lastModificationTime && formatDate(record.lastModificationTime)}</div>,
+      title: 'Ngày chỉnh sửa'
+    },
+    {
+      align: 'center' as const,
+      key: 'status',
+      render: (_: any, record: any) =>
+        <Dropdown menu={{ items, onClick: (info) => handleStatusMenuClick(info, record) }} trigger={['click']}>
+          <div className='cursor-pointer'>{record.status === 1 ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="orange">Tạm dừng</Tag>}</div>
+        </Dropdown>
+      ,
+      title: 'Trạng thái'
+    },
+    {
+      align: 'center' as const,
+      key: 'operate',
+      render: (_: any, record: any) => (
+        <div className="flex-center gap-8px">
+          <SystemGroupUpdateForm
+            id={record.id}
+            onSuccess={fetchList}
+          />
+          <DeleteButton onClick={() => handleDelete(record.id)} />
+        </div>
+      ),
+      title: t('common.operate')
+    }
+  ];
+
+  return (
+    <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+      <ACollapse
+        bordered={false}
+        className="card-wrapper"
+        defaultActiveKey={isMobile ? undefined : []}
+        items={[
+          {
+            children: (
+              <UserSearch
+                form={form}
+                reset={reset}
+                search={search}
+                searchParams={searchParams}
+              />
+            ),
+            key: '1',
+            label: t('common.search'),
+          }
+        ]}
+      />
+      <ACard
+        className="flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
+        ref={tableWrapperRef}
+        title="Danh sách nhóm hệ thống"
+        variant="borderless"
+        extra={
+          <TableHeaderOperation
+            addForm={<SystemGroupAddForm onSuccess={fetchList} />}
+            columns={columns}
+            disabledDelete={true}
+            isShowDelete={false}
+            loading={loading}
+            refresh={() => fetchList()}
+            setColumnChecks={() => { }}
+            onDelete={() => { }}
+          />
+        }
+      >
+        {
+          !isTabletRes ?
+            <ATable
+              bordered
+              columns={columns}
+              dataSource={datas}
+              loading={loading}
+              rowKey="id"
+              scroll={scrollConfig}
+              size="small"
+              pagination={{
+                defaultPageSize: 10,
+                pageSizeOptions: ['10', '20', '50', '100'],
+                showQuickJumper: true,
+                showSizeChanger: true,
+                showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`
+              }}
+            /> :
+            <div className='h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden'>
+              <List
+                grid={{
+                  gutter: [16, 0],
+                  column: 1,
+                  sm: 1,
+                  md: 2,
+                  xl: 3,
+                }}
+                dataSource={datas}
+                pagination={{
+                  pageSize: 10,
+                  showSizeChanger: true,
+                  showQuickJumper: true,
+                  showTotal: (total, range) =>
+                    `${range[0]}-${range[1]} của ${total} mục`,
+                  pageSizeOptions: ['6', '12', '24', '48']
+                }}
+                renderItem={(item: any) => (
+                  <List.Item>
+                    <Card
+                      className="h-full shadow-sm border-[1px] border-[#e0e0e0]"
+                    >
+                      {/* Header với ID và Status */}
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 bg-blue-50 rounded-lg flex items-center justify-center">
+                            <span className="text-xs font-semibold text-primary">#{item.id}</span>
+                          </div>
+                        </div>
+                        <Dropdown
+                          menu={{
+                            items,
+                            onClick: (info) => handleStatusMenuClick(info, item)
+                          }}
+                          trigger={["click"]}
+                          placement="bottomRight"
+                        >
+                          <div className="cursor-pointer">
+                            {item.status === 1 ? (
+                              <Tag color="green" className="mr-0">
+                                Đang hoạt động
+                              </Tag>
+                            ) : (
+                              <Tag color="orange" className="mr-0">
+                                Tạm dừng
+                              </Tag>
+                            )}
+                          </div>
+                        </Dropdown>
+                      </div>
+
+                      {/* Title + Collapse */}
+                      <Collapse ghost expandIconPosition="end">
+                        <Collapse.Panel
+                          key="panel"
+                          header={
+                            <h3 className="text-[18px] leading-[24px] font-medium mb-1 line-clamp-1">
+                              {item.displayName}
+                            </h3>
+                          }
+                        >
+                          {/* Description */}
+                          <div className="mb-3">
+                            <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed min-h-[44px]">
+                              {item?.description || (
+                                <span className="text-gray-500 italic">Chưa có mô tả</span>
+                              )}
+                            </p>
+                          </div>
+
+                          {/* Dates */}
+                          <div className="space-y-2 pt-3 border-t border-gray-100">
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm text-gray-600">Ngày tạo: </span>
+                              <p className="text-sm font-medium">
+                                {item?.creationTime ? formatDate(item.creationTime) : "-"}
+                              </p>
+                            </div>
+
+                            {item?.lastModificationTime && (
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm text-gray-600">Ngày chỉnh sửa: </span>
+                                <p className="text-sm font-medium">
+                                  {formatDate(item.lastModificationTime)}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Actions */}
+                          <div className="flex justify-center gap-3 pt-3 border-t mt-3">
+                            <SystemGroupUpdateForm id={item.id} onSuccess={fetchList} />
+                            <DeleteButton onClick={() => handleDelete(item.id)} />
+                          </div>
+                        </Collapse.Panel>
+                      </Collapse>
+                    </Card>
+                  </List.Item>
+                )}
+              />
+            </div>
+        }
+      </ACard>
+    </div>
+  );
+};
+
+export default SystemGroupManagePage;

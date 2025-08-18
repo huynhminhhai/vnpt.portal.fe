@@ -2,9 +2,9 @@ import { DatePicker, message } from 'antd';
 
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
-import { DeleteGoiSudung, GetAllSystem, GetGoiDangKy } from '@/service/api';
-import ServiceAddForm from './modules/ServiceAddForm';
-import ServiceUpdateForm from './modules/ServiceUpdateForm';
+import { GetAllSystem } from '@/service/api';
+import SystemAddForm from './modules/SystemAddForm';
+import SystemUpdateForm from './modules/SystemUpdateForm';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
@@ -80,7 +80,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
   );
 };
 
-const DanhSachDangKySuDung = () => {
+const SystemManagePage = () => {
   const { t } = useTranslation();
   const { scrollConfig, tableWrapperRef } = useTableScroll();
   // const nav = useNavigate();
@@ -151,7 +151,6 @@ const DanhSachDangKySuDung = () => {
 
       fetchList();
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.log(error);
       message.error(error as string);
     }
@@ -204,7 +203,7 @@ const DanhSachDangKySuDung = () => {
       key: 'operate',
       render: (_: any, record: any) => (
         <div className="flex-center gap-8px">
-          <ServiceUpdateForm
+          <SystemUpdateForm
             id={record.id}
             onSuccess={fetchList}
           />
@@ -212,7 +211,7 @@ const DanhSachDangKySuDung = () => {
         </div>
       ),
       title: t('common.operate'),
-      width: 200
+      width: 160
     }
   ];
 
@@ -240,11 +239,11 @@ const DanhSachDangKySuDung = () => {
       <ACard
         className="flex-col-stretch sm:flex-1-hidden card-wrapper"
         ref={tableWrapperRef}
-        title="Danh sách dịch vụ"
+        title="Danh sách hệ thống"
         variant="borderless"
         extra={
           <TableHeaderOperation
-            addForm={<ServiceAddForm onSuccess={fetchList} />}
+            addForm={<SystemAddForm onSuccess={fetchList} />}
             columns={columns}
             disabledDelete={true}
             isShowDelete={false}
@@ -276,4 +275,4 @@ const DanhSachDangKySuDung = () => {
   );
 };
 
-export default DanhSachDangKySuDung;
+export default SystemManagePage;
