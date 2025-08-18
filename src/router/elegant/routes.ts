@@ -55,7 +55,11 @@ export const generatedRoutes: ElegantConstRoute[] = [
                 matchedFiles: [null, '/src/pages/(base)/manage/system/index.tsx', null, null],
                 name: '(base)_manage_system',
                 path: '/manage/system',
-                handle: { i18nKey: 'route.(base)_manage_system', title: '(base)_manage_system', icon: 'solar:shield-network-outline' }
+                handle: {
+                  i18nKey: 'route.(base)_manage_system',
+                  title: '(base)_manage_system',
+                  icon: 'streamline-plump:web'
+                }
               }
             ]
           },

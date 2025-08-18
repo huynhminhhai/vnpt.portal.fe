@@ -92,42 +92,54 @@ export const newRequest = createFlatRequest<Api.SystemManage.ApiResponse, Reques
     isBackendSuccess(response) {
       // Validate response structure first
       const responseData = response.data as Api.SystemManage.ApiResponse;
-      
+
       if (!responseData || typeof responseData.success !== 'boolean') {
         console.warn('Invalid response structure:', responseData);
         return false;
       }
-      
+
       // Chỉ check success field - đơn giản và reliable nhất
       return responseData.success === true;
     },
     async onBackendFail(response, instance) {
       // Xử lý lỗi riêng cho API format mới với type safety
       const responseData = response.data as Api.SystemManage.ApiResponse;
-      
+
       const errorMessage = responseData.error
-      
+
       console.error('API Error:', {
         message: errorMessage,
         error: responseData.error,
         success: responseData.success,
         result: responseData.result
       });
-      
+
       window.$message?.error(errorMessage);
     },
     onError(error) {
-      // Xử lý lỗi network với thông tin chi tiết hơn
       console.error('Network Error:', {
         message: error.message,
         code: error.code,
         status: error.response?.status,
         data: error.response?.data
       });
-      
+
       let message = error.message || 'Network error';
-      
-      // Xử lý các loại lỗi network phổ biến
+
+      const data = error.response?.data;
+
+
+      if (data?.error) {
+        console.log(data?.error);
+        // Bắt lỗi chi tiết từ API
+        const { message: msg, details } = data.error as any;
+        message = details ? `${msg} - ${details}` : msg || message;
+
+        window.$message?.error(message);
+
+        return;
+      }
+
       if (error.code === 'NETWORK_ERROR') {
         message = 'Không thể kết nối đến server';
       } else if (error.response?.status === 500) {
@@ -135,7 +147,7 @@ export const newRequest = createFlatRequest<Api.SystemManage.ApiResponse, Reques
       } else if (error.response?.status === 404) {
         message = 'API không tìm thấy';
       }
-      
+
       window.$message?.error(message);
     },
     async onRequest(config) {

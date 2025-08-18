@@ -38,7 +38,7 @@ const LoginLayout = () => {
       <img src="/src/assets/imgs/bg.png" alt="vnpt bg" className='absolute top-0 left-0 w-full h-full object-cover brightness-80' />
 
       <ACard
-        className="relative z-4 w-auto rd-12px"
+        className="relative z-4 w-auto rd-12px p-6"
         variant="borderless"
       >
         <div className="w-400px lt-sm:w-300px">

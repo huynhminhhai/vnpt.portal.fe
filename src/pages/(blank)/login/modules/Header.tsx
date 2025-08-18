@@ -24,7 +24,7 @@ const Header = memo(() => {
           className="text-20px lt-sm:text-18px"
           showTooltip={false}
         />
-        <LangSwitch showTooltip={false} />
+        {/* <LangSwitch showTooltip={false} /> */}
       </div>
     </header>
   );

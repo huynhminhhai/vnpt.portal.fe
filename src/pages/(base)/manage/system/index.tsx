@@ -2,11 +2,10 @@ import { DatePicker, message } from 'antd';
 
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
-import { DeleteGoiSudung, GetGoiDangKy } from '@/service/api';
+import { DeleteGoiSudung, GetAllSystem, GetGoiDangKy } from '@/service/api';
 import ServiceAddForm from './modules/ServiceAddForm';
 import ServiceUpdateForm from './modules/ServiceUpdateForm';
 
-// eslint-disable-next-line react/prop-types
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
 
@@ -101,28 +100,27 @@ const DanhSachDangKySuDung = () => {
         MaxResultCount: '9999',
         SkipCount: 0,
         Sorting: null,
+        IsActive: null,
+        Keyword: '',
         ...params
       };
 
-      const res = await GetGoiDangKy(apiParams);
-
-      // eslint-disable-next-line no-console
-      console.log('res', res);
+      const res = await GetAllSystem(apiParams);
 
       const resData = res.data as any;
 
-      if (resData && resData.result) {
-        const data = resData.result;
+      if (resData && resData.result && resData.result.items) {
+        const data = resData.result.items;
+
+        console.log(data)
         setDatas(data);
       } else {
-        // eslint-disable-next-line no-console
         console.warn('API response format không đúng, sử dụng fallback data');
-        setDatas([]); // Set empty array if no data
+        setDatas([]);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Error fetching data:', error);
-      setDatas([]); // Set empty array on error
+      setDatas([]);
     } finally {
       setLoading(false);
     }
@@ -171,28 +169,35 @@ const DanhSachDangKySuDung = () => {
     },
     {
       align: 'center' as const,
-      key: 'tenGoi',
-      minWidth: 100,
-      render: (_: any, record: any) => record.tenGoi || '-',
-      title: 'Tên gói'
+      key: 'iconUrl',
+      width: 100,
+      render: (_: any, record: any) => record.iconUrl ? <div className='w-full flex items-center justify-center'><AImage className='rounded-md' width={40} src={record.iconUrl} /></div> : '',
+      title: 'Logo'
     },
     {
       align: 'center' as const,
-      key: 'tenHienThi',
-      render: (_: any, record: any) => record.tenHienThi || '-',
+      key: 'systemCode',
+      width: 180,
+      render: (_: any, record: any) => record.systemCode || '-',
+      title: 'Mã dịch vụ'
+    },
+    {
+      align: 'center' as const,
+      key: 'systemName',
+      render: (_: any, record: any) => record.systemName || '-',
       title: 'Tên hiển thị'
     },
     {
       align: 'center' as const,
-      key: 'giaTien',
-      render: (_: any, record: any) => record.giaTien || '-',
-      title: 'Giá tiền'
+      key: 'systemUrl',
+      render: (_: any, record: any) => record.systemUrl || '-',
+      title: 'Đường dẫn'
     },
     {
       align: 'center' as const,
-      key: 'soLuongMua',
-      render: (_: any, record: any) => record.soLuongMua || '0',
-      title: 'Số lượng mua'
+      key: 'systemDescription',
+      render: (_: any, record: any) => record.systemDescription ? <div className='line-clamp-2'>{record.systemDescription}</div> : '-',
+      title: 'Mô tả'
     },
     {
       align: 'center' as const,
@@ -207,7 +212,7 @@ const DanhSachDangKySuDung = () => {
         </div>
       ),
       title: t('common.operate'),
-      width: 260
+      width: 200
     }
   ];
 

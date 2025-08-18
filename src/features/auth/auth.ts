@@ -52,8 +52,6 @@ export function useInitAuth() {
     startLoading();
     const loginToken = await fetchLogin(userName, password);
 
-    console.log(loginToken);
-
     if (loginToken) {
       localStg.set('token', loginToken.result.accessToken);
       localStg.set('refreshToken', loginToken.result.encryptedAccessToken);
