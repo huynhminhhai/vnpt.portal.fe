@@ -49,7 +49,7 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
 
       await UpdateSystemGroup(dataSubmit);
 
-      message.success('Cập nhật nhóm hệ thống thành công!');
+      message.success('Cập nhật nhóm dịch vụ thành công!');
 
       onSuccess?.();
 
@@ -67,18 +67,8 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
       <DetailButton onClick={showDrawer} />
       <Drawer
         open={open}
-        title={!isEdit ? 'Chi tiết nhóm hệ thống' : 'Cập nhật nhóm hệ thống'}
+        title={!isEdit ? 'Chi tiết nhóm dịch vụ' : 'Cập nhật nhóm dịch vụ'}
         width={480}
-        extra={
-          <Space>
-            <Button
-              size="middle"
-              onClick={onClose}
-            >
-              Đóng
-            </Button>
-          </Space>
-        }
         styles={{
           body: {
             paddingBottom: 80
@@ -87,7 +77,6 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
         onClose={onClose}
       >
         <Form
-          hideRequiredMark
           form={form}
           layout="vertical"
           onFinish={onFinish}
@@ -121,15 +110,15 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
                 {
                   !isEdit
                   ?
-                  <div>{detailData?.status === 1 ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="orange">Tạm dừng</Tag>}</div>
+                  <div>{detailData?.status === 1 ? <Tag color="green">Hoạt động</Tag> : <Tag color="orange">Ngừng hoạt động</Tag>}</div>
                   :
                   <Select
                     disabled={!isEdit}
                     placeholder="Vui lòng chọn trạng thái"
                     size="middle"
                   >
-                    <Option value={1}>Đang hoạt động</Option>
-                    <Option value={2}>Tạm dừng</Option>
+                    <Option value={1}>Hoạt động</Option>
+                    <Option value={2}>Ngừng hoạt động</Option>
                   </Select>
                 }
               </Form.Item>
@@ -145,7 +134,7 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
                   ?
                   <div className='font-medium'>{detailData?.description || '-'}</div>
                   :
-                <TextArea rows={4} placeholder="Nhập mô tả nhóm" maxLength={255} size='middle' disabled={!isEdit} />
+                <TextArea rows={2} placeholder="Nhập mô tả nhóm" maxLength={255} size='middle' disabled={!isEdit} />
                 }
               </Form.Item>
             </Col>
@@ -172,46 +161,48 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
               )
             }
           </Row>
-          <Row gutter={16}>
-            <Col span={24}>
-              {isEdit ? (
-                <>
+          <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white'>
+            <Row gutter={16}>
+              <Col span={24}>
+                {isEdit ? (
+                  <>
+                    <Button
+                      className="w-full"
+                      htmlType="submit"
+                      loading={loading || loadingDetail}
+                      size="middle"
+                      type="primary"
+                    >
+                      Lưu lại
+                    </Button>
+                    <Button
+                      className="mt-4 w-full"
+                      size="middle"
+                      type="default"
+                      onClick={e => {
+                        e.preventDefault();
+                        setIsEdit(false);
+                      }}
+                    >
+                      Chế độ xem
+                    </Button>
+                  </>
+                ) : (
                   <Button
-                    className="mt-4 w-full"
-                    htmlType="submit"
-                    loading={loading || loadingDetail}
-                    size="large"
-                    type="primary"
-                  >
-                    Lưu lại
-                  </Button>
-                  <Button
-                    className="mt-4 w-full"
-                    size="large"
+                    className="w-full"
+                    size="middle"
                     type="default"
                     onClick={e => {
                       e.preventDefault();
-                      setIsEdit(false);
+                      setIsEdit(true);
                     }}
                   >
-                    Chế độ xem
+                    Chỉnh sửa
                   </Button>
-                </>
-              ) : (
-                <Button
-                  className="mt-4 w-full"
-                  size="large"
-                  type="default"
-                  onClick={e => {
-                    e.preventDefault();
-                    setIsEdit(true);
-                  }}
-                >
-                  Chỉnh sửa
-                </Button>
-              )}
-            </Col>
-          </Row>
+                )}
+              </Col>
+            </Row>
+          </div>
         </Form>
       </Drawer>
     </>

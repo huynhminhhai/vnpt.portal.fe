@@ -31,7 +31,7 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
 
       await CreateSystemGroup(dataSubmit);
 
-      message.success('Thêm nhóm hệ thống thành công!');
+      message.success('Thêm nhóm dịch vụ thành công!');
 
       form.resetFields();
 
@@ -52,18 +52,8 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
       <Drawer
         className='p-0'
         open={open}
-        title="Thêm mới nhóm hệ thống"
-        width={580}
-        extra={
-          <Space>
-            <Button
-              size="middle"
-              onClick={onClose}
-            >
-              Đóng
-            </Button>
-          </Space>
-        }
+        title="Thêm mới nhóm dịch vụ"
+        width={480}
         styles={{
           body: {
             paddingBottom: 80
@@ -72,7 +62,6 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
         onClose={onClose}
       >
         <Form
-          hideRequiredMark
           form={form}
           layout="vertical"
           onFinish={onFinish}
@@ -103,8 +92,8 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
                   placeholder="Vui lòng chọn trạng thái"
                   size="middle"
                 >
-                  <Option value={1}>Đang hoạt động</Option>
-                  <Option value={2}>Tạm dừng</Option>
+                  <Option value={1}>Hoạt động</Option>
+                  <Option value={2}>Ngừng hoạt động</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -114,7 +103,7 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
                 name="description"
                 rules={[{ message: 'Vui lòng nhập mô tả', required: false }]}
               >
-                <TextArea rows={4} placeholder="Nhập mô tả nhóm" maxLength={255} size='middle' />
+                <TextArea rows={2} placeholder="Nhập mô tả nhóm" maxLength={255} size='middle' />
               </Form.Item>
             </Col>
           </Row>
@@ -123,7 +112,7 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
               className="w-full"
               htmlType="submit"
               loading={loading}
-              size="large"
+              size="middle"
               type="primary"
             >
               Lưu lại

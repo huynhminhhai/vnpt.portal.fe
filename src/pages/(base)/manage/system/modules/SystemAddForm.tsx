@@ -2,16 +2,17 @@ import { Button, Col, Drawer, Form, Input, Row, Select, Space, message } from 'a
 import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
-import UploadImage from '@/components/form/UploadImage';
+import { CreateSystemWeb } from '@/service/api';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 type Props = {
   onSuccess?: () => void;
+  groupData: any[]
 };
 
-const SystemAddForm: React.FC<Props> = ({ onSuccess }) => {
+const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -29,16 +30,16 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess }) => {
     try {
       const dataSubmit = { ...values };
 
-      // await CreateGoiSudung(dataSubmit);
+      await CreateSystemWeb(dataSubmit);
       console.log(dataSubmit)
 
       message.success('Thêm dịch vụ thành công!');
 
-      // form.resetFields();
+      form.resetFields();
 
-      // onSuccess?.();
+      onSuccess?.();
 
-      // onClose();
+      onClose();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -55,17 +56,7 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess }) => {
         className='p-0'
         open={open}
         title="Thêm mới dịch vụ"
-        width={580}
-        extra={
-          <Space>
-            <Button
-              size="middle"
-              onClick={onClose}
-            >
-              Đóng
-            </Button>
-          </Space>
-        }
+        width={480}
         styles={{
           body: {
             paddingBottom: 80
@@ -74,70 +65,124 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess }) => {
         onClose={onClose}
       >
         <Form
-          hideRequiredMark
           form={form}
           layout="vertical"
           onFinish={onFinish}
+          initialValues={{
+            systemStatus: 1,
+          }}
         >
           <Row gutter={16}>
+            {/* Nhóm 1: Thông tin cơ bản */}
             <Col span={12}>
               <Form.Item
                 label="Tên dịch vụ"
-                name="tenDichVu"
+                name="systemName"
                 rules={[{ message: 'Vui lòng nhập tên dịch vụ', required: true }]}
               >
-                <Input
-                  placeholder="Nhập tên dịch vụ"
-                  size="large"
-                />
+                <Input placeholder="Nhập tên dịch vụ" size="middle" />
               </Form.Item>
             </Col>
+
+            <Col span={12}>
+              <Form.Item
+                label="Mã dịch vụ"
+                name="systemCode"
+                rules={[{ message: 'Vui lòng nhập mã dịch vụ', required: true }]}
+              >
+                <Input placeholder="Nhập mã dịch vụ (ví dụ: lichhen)" size="middle" />
+              </Form.Item>
+            </Col>
+
             <Col span={12}>
               <Form.Item
                 label="Loại dịch vụ"
-                name="loaiDichVu"
-                rules={[{ message: 'Vui lòng nhập đường dẫn dịch vụ', required: true }]}
+                name="groupSystemId"
+                rules={[{ message: 'Vui lòng chọn loại dịch vụ', required: true }]}
               >
-                <Select
-                  placeholder="Vui lòng chọn trạng thái"
-                  size="large"
-                >
-                  <Option value='1'>Y tế</Option>
-                  <Option value='2'>Giáo dục</Option>
+                <Select placeholder="Chọn loại dịch vụ" size="middle" loading={loading} allowClear>
+                  {groupData.map((group) => (
+                    <Option key={group.id} value={group.id}>
+                      {group.displayName}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
+
             <Col span={12}>
               <Form.Item
                 label="Đường dẫn dịch vụ"
-                name="duongDan"
+                name="systemUrl"
                 rules={[{ message: 'Vui lòng nhập đường dẫn dịch vụ', required: true }]}
               >
-                <Input
-                  placeholder="Nhập đường dẫn dịch vụ"
-                  size="large"
-                />
+                <Input placeholder="Nhập đường dẫn dịch vụ" size="middle" />
               </Form.Item>
             </Col>
+
+            {/* Nhóm 2: Hiển thị & mô tả */}
             <Col span={24}>
               <Form.Item
                 label="Mô tả"
-                name="moTa"
-                rules={[{ message: 'Vui lòng nhập mô tả', required: true }]}
+                name="systemDescription"
+                rules={[{ message: 'Vui lòng nhập mô tả', required: false }]}
               >
-                <TextArea rows={4} placeholder="Nhập mô tả dịch vụ" maxLength={6} />
+                <TextArea rows={2} placeholder="Nhập mô tả dịch vụ" maxLength={255} />
               </Form.Item>
             </Col>
-            <Col span={12}>
+
+            <Col span={24}>
               <Form.Item
                 label="Đường dẫn logo"
-                name="duongDanLogo"
+                name="iconUrl"
                 rules={[{ message: 'Vui lòng nhập đường dẫn logo', required: false }]}
               >
-                <Input
-                  placeholder="Nhập đường dẫn logo"
-                  size="large"
-                />
+                <Input placeholder="Nhập đường dẫn logo" size="middle" />
+              </Form.Item>
+            </Col>
+
+            {/* Nhóm 3: Cấu hình nâng cao */}
+
+            {/* <Col span={12}>
+              <Form.Item
+                label="Secret Key"
+                name="secretKey"
+                rules={[{ required: false }]}
+              >
+                <Input placeholder="Nhập secret key" size="middle" />
+              </Form.Item>
+            </Col> */}
+
+            {/* <Col span={12}>
+              <Form.Item
+                label="Callback URL"
+                name="callbackUrl"
+                rules={[{ required: false }]}
+              >
+                <Input placeholder="Nhập callback URL" size="middle" />
+              </Form.Item>
+            </Col> */}
+
+            <Col span={12}>
+              <Form.Item
+                label="Thứ tự hiển thị"
+                name="sortOrder"
+                rules={[{ required: false }]}
+              >
+                <Input type="number" placeholder="Nhập thứ tự" size="middle" />
+              </Form.Item>
+            </Col>
+
+            <Col span={12}>
+              <Form.Item
+                label="Trạng thái"
+                name="systemStatus"
+                rules={[{ message: 'Vui lòng chọn trạng thái', required: false }]}
+              >
+                <Select placeholder="Chọn trạng thái" size="middle">
+                  <Option value={1}>Hoạt động</Option>
+                  <Option value={2}>Ngừng hoạt động</Option>
+                </Select>
               </Form.Item>
             </Col>
           </Row>
@@ -146,7 +191,7 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess }) => {
               className="w-full"
               htmlType="submit"
               loading={loading}
-              size="large"
+              size="middle"
               type="primary"
             >
               Lưu lại

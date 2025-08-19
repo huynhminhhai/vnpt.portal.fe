@@ -59,7 +59,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
                   i18nKey: 'route.(base)_manage_system',
                   title: '(base)_manage_system',
                   icon: 'streamline-plump:web',
-                  order: 2,
+                  order: 2
                 }
               },
               {
@@ -70,7 +70,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
                   i18nKey: 'route.(base)_manage_system-group',
                   title: '(base)_manage_system-group',
                   icon: 'uil:layer-group',
-                  order: 1,
+                  order: 1
                 }
               }
             ]

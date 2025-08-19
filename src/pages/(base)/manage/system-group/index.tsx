@@ -5,7 +5,6 @@ import SystemGroupAddForm from './modules/SystemGroupAddForm';
 import SystemGroupUpdateForm from './modules/SystemGroupUpdateForm';
 import { formatDate } from '@/utils/date';
 import { DeleteGroupSystem, GetAllSystemGroup, UpdateSystemGroup } from '@/service/api';
-import { Icon } from '@iconify/react';
 import { useIsTabletResponsive } from '@/utils/responsive';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
@@ -23,6 +22,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
       <ARow
         wrap
         gutter={[8, 16]}
+        className='justify-between'
       >
         <ACol
           lg={8}
@@ -145,7 +145,7 @@ const SystemGroupManagePage = () => {
 
       await UpdateSystemGroup(dataSubmit);
 
-      message.success('Cập nhật trạng thái nhóm hệ thống thành công!');
+      message.success('Cập nhật trạng thái nhóm dịch vụ thành công!');
 
     } catch (error) {
       console.log(error);
@@ -170,14 +170,14 @@ const SystemGroupManagePage = () => {
 
   const items: MenuProps['items'] = [
     {
-      label: 'Đang hoạt động',
+      label: 'Hoạt động',
       key: 1,
     },
     {
       type: 'divider',
     },
     {
-      label: 'Tạm dừng',
+      label: 'Ngừng hoạt động',
       key: 2,
     },
   ];
@@ -195,7 +195,7 @@ const SystemGroupManagePage = () => {
       align: 'center' as const,
       key: 'displayName',
       render: (_: any, record: any) => <div>{record.displayName}</div>,
-      title: 'Tên nhóm hệ thống'
+      title: 'Tên nhóm dịch vụ'
     },
     {
       align: 'center' as const,
@@ -207,23 +207,26 @@ const SystemGroupManagePage = () => {
       align: 'center' as const,
       key: 'creationTime',
       render: (_: any, record: any) => <div>{record?.creationTime && formatDate(record.creationTime)}</div>,
-      title: 'Ngày tạo'
+      title: 'Ngày tạo',
+      width: 140
     },
     {
       align: 'center' as const,
       key: 'lastModificationTime',
       render: (_: any, record: any) => <div>{record?.lastModificationTime && formatDate(record.lastModificationTime)}</div>,
-      title: 'Ngày chỉnh sửa'
+      title: 'Ngày chỉnh sửa',
+      width: 140
     },
     {
       align: 'center' as const,
       key: 'status',
       render: (_: any, record: any) =>
         <Dropdown menu={{ items, onClick: (info) => handleStatusMenuClick(info, record) }} trigger={['click']}>
-          <div className='cursor-pointer'>{record.status === 1 ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="orange">Tạm dừng</Tag>}</div>
+          <div className='cursor-pointer'>{record.status === 1 ? <Tag color="green">Hoạt động</Tag> : <Tag color="orange">Ngừng hoạt động</Tag>}</div>
         </Dropdown>
       ,
-      title: 'Trạng thái'
+      title: 'Trạng thái',
+      width: 160
     },
     {
       align: 'center' as const,
@@ -237,7 +240,8 @@ const SystemGroupManagePage = () => {
           <DeleteButton onClick={() => handleDelete(record.id)} />
         </div>
       ),
-      title: t('common.operate')
+      title: t('common.operate'),
+      width: 160
     }
   ];
 
@@ -265,7 +269,7 @@ const SystemGroupManagePage = () => {
       <ACard
         className="flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
         ref={tableWrapperRef}
-        title="Danh sách nhóm hệ thống"
+        title="Danh sách nhóm dịch vụ"
         variant="borderless"
         extra={
           <TableHeaderOperation
@@ -317,12 +321,12 @@ const SystemGroupManagePage = () => {
                   pageSizeOptions: ['6', '12', '24', '48']
                 }}
                 renderItem={(item: any) => (
-                  <List.Item>
+                  <List.Item className='h-full'>
                     <Card
-                      className="h-full shadow-sm border-[1px] border-[#e0e0e0]"
+                      className="h-full shadow-sm border-[1px] border-[#e0e0e0] px-1"
                     >
                       {/* Header với ID và Status */}
-                      <div className="flex justify-between items-start mb-3">
+                      <div className="flex justify-between items-start mb-4">
                         <div className="flex items-center gap-2">
                           <div className="w-6 h-6 bg-blue-50 rounded-lg flex items-center justify-center">
                             <span className="text-xs font-semibold text-primary">#{item.id}</span>
@@ -339,11 +343,11 @@ const SystemGroupManagePage = () => {
                           <div className="cursor-pointer">
                             {item.status === 1 ? (
                               <Tag color="green" className="mr-0">
-                                Đang hoạt động
+                                Hoạt động
                               </Tag>
                             ) : (
                               <Tag color="orange" className="mr-0">
-                                Tạm dừng
+                                Ngừng hoạt động
                               </Tag>
                             )}
                           </div>
@@ -355,7 +359,7 @@ const SystemGroupManagePage = () => {
                         <Collapse.Panel
                           key="panel"
                           header={
-                            <h3 className="text-[17px] leading-[24px] font-semibold mb-1 line-clamp-1">
+                            <h3 className="text-[17px] leading-[24px] font-semibold mb-2">
                               {item.displayName}
                             </h3>
                           }
@@ -364,7 +368,7 @@ const SystemGroupManagePage = () => {
                           {
                             item.description && (
                               <div className="mb-3">
-                                <p className="text-gray-600 text-sm leading-relaxed min-h-[44px]">
+                                <p className="text-gray-600 text-sm leading-relaxed md:min-h-[44px] md:line-clamp-2">
                                   {item.description}
                                 </p>
                               </div>
