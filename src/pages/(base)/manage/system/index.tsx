@@ -210,11 +210,6 @@ const SystemManagePage = () => {
     fetchGroups();
   }, []);
 
-  const mapGroupIdToName = groups.reduce((acc: Record<number, string>, cur: any) => {
-    acc[cur.id] = cur.displayName;
-    return acc;
-  }, {});
-
   // Column definitions
   const columns: any[] = [
     {
@@ -279,7 +274,7 @@ const SystemManagePage = () => {
   ];
 
   return (
-    <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <div className="h-full min-h-500px flex-col-stretch gap-2px md:gap-12px overflow-hidden lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
         className="card-wrapper"
@@ -354,14 +349,14 @@ const SystemManagePage = () => {
                   pageSizeOptions: ['6', '12', '24', '48']
                 }}
                 renderItem={(item: any) => (
-                  <List.Item>
+                  <List.Item className='!mb-2'>
                     <Card
-                      className="h-full shadow-sm border-[1px] border-[#e0e0e0] px-1"
+                      className="h-full border-[1px] border-[#e0e0e0] px-1"
                     >
                       {/* Header với ID và Status */}
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex items-center gap-2">
-                          <div className="py-1 px-5 bg-blue-50 rounded-lg flex items-center justify-center">
+                          <div className="py-1 px-3 bg-blue-50 rounded-lg flex items-center justify-center">
                             <span className="text-xs font-semibold text-primary">#{item.systemCode}</span>
                           </div>
                         </div>

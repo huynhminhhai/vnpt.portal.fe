@@ -246,7 +246,7 @@ const SystemGroupManagePage = () => {
   ];
 
   return (
-    <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <div className="h-full min-h-500px flex-col-stretch gap-2px md:gap-12px overflow-hidden lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
         className="card-wrapper"
@@ -321,7 +321,7 @@ const SystemGroupManagePage = () => {
                   pageSizeOptions: ['6', '12', '24', '48']
                 }}
                 renderItem={(item: any) => (
-                  <List.Item className='h-full'>
+                  <List.Item className='!mb-2'>
                     <Card
                       className="h-full shadow-sm border-[1px] border-[#e0e0e0] px-1"
                     >

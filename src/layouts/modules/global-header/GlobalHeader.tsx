@@ -73,9 +73,9 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
       <div className="h-full flex-y-center flex-1-hidden"></div>
 
       <div className="h-full flex-y-center justify-end">
-        {
+        {/* {
           pathname !== '/home' && <GlobalSearch />
-        }
+        } */}
 
         {!isMobile && (
           <FullScreen

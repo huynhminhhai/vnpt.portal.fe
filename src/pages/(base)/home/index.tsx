@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <ASpace
-      className="w-full min-h-full"
+      className="w-full"
       direction="vertical"
       size={[0, 0]}
       style={{

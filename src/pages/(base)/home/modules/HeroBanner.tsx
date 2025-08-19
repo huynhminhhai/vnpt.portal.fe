@@ -5,15 +5,14 @@ const HeroBanner = () => {
   const { darkMode } = useContext(ThemeContext);
 
   return (
-    <div className="py-5 px-10"
+    <div
       style={{
         backgroundColor: darkMode ? '#1c1c1c' : '#ffffff'
       }}
     >
       <ACard
-        className="relative overflow-hidden rounded-lg border-none px-4 py-10"
+        className="relative overflow-hidden border-none px-10 py-[52px] rounded-0"
         style={{
-          // background: "linear-gradient(135deg, #257fd8 0%, #e6f4ff 100%)",
           background: "linear-gradient(135deg, #0059a9, #e6f4ff 100%)",
           color: "white",
         }}
@@ -28,7 +27,7 @@ const HeroBanner = () => {
             </p>
           </div>
         </div>
-        <img className="absolute z-[1] top-1/2 right-[40px] transform -translate-y-[54%] w-[320px] h-auto" src="/src/assets/imgs/digital.png" alt="vnpt" />
+        <img className="absolute z-[1] top-1/2 right-[40px] transform -translate-y-[50%] w-[320px] h-auto" src="/src/assets/imgs/digital.png" alt="vnpt" />
         <img src="/src/assets/imgs/sky.avif" alt="bg gradient" className="absolute top-0 left-0 w-full h-full object-cover opacity-40" />
       </ACard>
     </div>

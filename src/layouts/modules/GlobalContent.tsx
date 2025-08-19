@@ -63,7 +63,7 @@ const GlobalContent = ({ closePadding }: Props) => {
       className={clsx(
         "h-full flex-grow bg-layout",
         {
-          "p-6px": !closePadding,
+          "p-0px": !closePadding,
           "md:p-16px": !closePadding && pathname !== "/home",
           "md:p-0px": !closePadding && pathname === "/home",
         }
