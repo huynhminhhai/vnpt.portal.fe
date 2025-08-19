@@ -11,6 +11,7 @@ import GlobalSearch from '../global-search/GlobalSearch';
 import GlobalBreadcrumb from './components/Breadcrumb';
 import ThemeButton from './components/ThemeButton';
 import UserAvatar from './components/UserAvatar';
+import { useLocation } from "react-router-dom";
 
 interface Props {
   isMobile: boolean;
@@ -45,6 +46,8 @@ const HEADER_PROPS_CONFIG: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderPro
 const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) => {
   const [isFullscreen, { toggleFullscreen }] = useFullscreen(document.body);
 
+  const { pathname } = useLocation();
+
   const { showLogo, showMenu, showMenuToggler } = HEADER_PROPS_CONFIG[mode];
 
   const showToggler = reverse ? true : showMenuToggler;
@@ -70,7 +73,9 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
       <div className="h-full flex-y-center flex-1-hidden"></div>
 
       <div className="h-full flex-y-center justify-end">
-        <GlobalSearch />
+        {
+          pathname !== '/home' && <GlobalSearch />
+        }
 
         {!isMobile && (
           <FullScreen
@@ -84,7 +89,9 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
 
         <ThemeSchemaSwitch className="px-12px" />
 
-        <ThemeButton />
+        {
+          pathname !== '/home' && <ThemeButton />
+        }
 
         <UserAvatar />
       </div>

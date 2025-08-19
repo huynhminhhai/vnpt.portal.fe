@@ -28,7 +28,7 @@ const UserAvatar = memo(() => {
     if (key === '1') {
       logout();
     } else {
-      navigate('/user-center');
+      navigate('/manage/system-group');
     }
   }
 
@@ -37,21 +37,21 @@ const UserAvatar = memo(() => {
   }
 
   const items: MenuProps['items'] = [
-    // {
-    //   key: '0',
-    //   label: (
-    //     <div className="flex-center gap-8px">
-    //       <SvgIcon
-    //         className="text-icon"
-    //         icon="ph:user-circle"
-    //       />
-    //       {t('common.userCenter')}
-    //     </div>
-    //   )
-    // },
-    // {
-    //   type: 'divider'
-    // },
+    {
+      key: '0',
+      label: (
+        <div className="flex-center gap-8px">
+          <SvgIcon
+            className="text-icon"
+            icon="ph:user-circle"
+          />
+          Quản lý dịch vụ
+        </div>
+      )
+    },
+    {
+      type: 'divider'
+    },
     {
       key: '1',
       label: (

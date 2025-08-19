@@ -75,10 +75,7 @@ const ServicesList = () => {
 
   return (
     <div
-      className="bg-white rounded-lg p-5 shadow-2xl shadow-primary/25 min-h-[400px]"
-      style={{
-        backgroundColor: darkMode ? '#1c1c1c' : '#ffffff'
-      }}
+      className="px-10 pt-[30px] pb-[100px]"
     >
       <ARow gutter={[16, 16]}>
         <ACol
@@ -88,7 +85,7 @@ const ServicesList = () => {
         >
           <Select
             className="w-full"
-            size="large"
+            size="middle"
             showSearch
             placeholder="Chọn loại dịch vụ"
             optionFilterProp="label"
@@ -114,7 +111,7 @@ const ServicesList = () => {
           md={12}
           span={24}
         >
-          <Search className="w-full" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="large" />
+          <Search className="w-full" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="middle" />
         </ACol>
         <ACol
           lg={4}
@@ -125,7 +122,7 @@ const ServicesList = () => {
           <div className="flex items-center gap-4">
             <ButtonIcon
               triggerParent
-              className="px-10px text-2xl border-[1px] border-[#e0e0e0] h-40px"
+              className="px-6px text-2xl border-[1px] border-[#e0e0e0] h-32px"
               icon={isShowAll ? "circum:grid-4-1" : 'circum:grid-3-2'}
               tooltipContent={isShowAll ? 'Chế độ xem tất cả' : 'Chế độ xem theo loại'}
               onClick={handleToggleShowAll}
@@ -136,7 +133,7 @@ const ServicesList = () => {
       {
         isShowAll ?
           <>
-            <ARow gutter={[16, 16]} className="mt-10">
+            <ARow gutter={[16, 16]} className="mt-8">
               {
                 [...servicesData, ...servicesDataOthers].map(({ ...rest }, index) => (
                   <ServicesItem

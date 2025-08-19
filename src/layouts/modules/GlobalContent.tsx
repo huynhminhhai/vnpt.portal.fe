@@ -5,6 +5,8 @@ import { usePreviousRoute } from '@/features/router';
 import { selectCacheRoutes, selectRemoveCacheKey, setRemoveCacheKey } from '@/features/router/routeStore';
 import { useThemeSettings } from '@/features/theme';
 import { getReloadFlag } from '@/layouts/appStore';
+import { useLocation } from "react-router-dom";
+import { setLayoutMode } from '@/features/theme';
 import './transition.css';
 
 interface Props {
@@ -46,8 +48,26 @@ const GlobalContent = ({ closePadding }: Props) => {
     aliveRef.current?.refresh();
   }, [reload, transitionName]);
 
+  useLayoutEffect(() => {
+
+    if (pathname === "/home") {
+      dispatch(setLayoutMode('horizontal'));
+    } else {
+      dispatch(setLayoutMode('vertical'));
+    }
+
+  }, [dispatch, pathname]);
+
   return (
-    <div className={clsx('h-full flex-grow bg-layout', { 'p-6px md:p-16px': !closePadding })}>
+    <div
+      className={clsx(
+        "h-full flex-grow bg-layout",
+        {
+          "p-6px": !closePadding,
+          "md:p-16px": !closePadding && pathname !== "/home",
+          "md:p-0px": !closePadding && pathname === "/home",
+        }
+      )}>
       <KeepAlive
         activeCacheKey={pathname}
         aliveRef={aliveRef}

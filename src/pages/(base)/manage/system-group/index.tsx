@@ -355,22 +355,24 @@ const SystemGroupManagePage = () => {
                         <Collapse.Panel
                           key="panel"
                           header={
-                            <h3 className="text-[18px] leading-[24px] font-medium mb-1 line-clamp-1">
+                            <h3 className="text-[17px] leading-[24px] font-semibold mb-1 line-clamp-1">
                               {item.displayName}
                             </h3>
                           }
                         >
                           {/* Description */}
-                          <div className="mb-3">
-                            <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed min-h-[44px]">
-                              {item?.description || (
-                                <span className="text-gray-500 italic">Chưa có mô tả</span>
-                              )}
-                            </p>
-                          </div>
+                          {
+                            item.description && (
+                              <div className="mb-3">
+                                <p className="text-gray-600 text-sm leading-relaxed min-h-[44px]">
+                                  {item.description}
+                                </p>
+                              </div>
+                            )
+                          }
 
                           {/* Dates */}
-                          <div className="space-y-2 pt-3 border-t border-gray-100">
+                          <div className="space-y-2 pt-3 border-t">
                             <div className="flex items-center gap-2">
                               <span className="text-sm text-gray-600">Ngày tạo: </span>
                               <p className="text-sm font-medium">

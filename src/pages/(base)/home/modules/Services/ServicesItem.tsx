@@ -29,9 +29,10 @@ const ServicesItem = (props: ServicesItemProps) => {
         <a
           href={link}
           target="_blank"
-          className="flex flex-col justify-between border-[0px] border-[#e0e0e0e] rounded-lg cursor-pointer relative transition-all duration-300 service-item overflow-hidden shadow-[0_0_0.25em_rgba(0,89,169,0.20),_0_0.25em_1em_rgba(0,89,169,0.05)] h-full"
+          className="flex flex-col justify-between border-[1px] border-[#e0e0e0e] rounded-lg cursor-pointer relative transition-all duration-300 service-item overflow-hidden h-full"
           style={{
-            backgroundColor: darkMode ? '#292929' : '#ffffff'
+            backgroundColor: darkMode ? '#292929' : '#ffffff',
+            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px'
           }}
         >
           <div className="absolute top-4 right-5">
@@ -45,7 +46,7 @@ const ServicesItem = (props: ServicesItemProps) => {
           <div className="px-4 pt-6 pb-4">
             <div className="max-w-[80%]">
               <h2
-                className="text-[18px] leading-[24px] font-medium mb-[4px]"
+                className="text-[18px] leading-[24px] font-semibold mb-[4px]"
                 style={{ color: darkMode ? '#ffffffd9' : '#000000E0' }}
               >
                 {title}
