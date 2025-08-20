@@ -8,10 +8,10 @@ const Home = () => {
   const { darkMode } = useContext(ThemeContext);
 
   return (
-    <ASpace
-      className="w-full"
-      direction="vertical"
-      size={[0, 0]}
+    <div
+      className="w-full min-h-[calc(100vh-56px)] flex flex-col"
+      // direction="vertical"
+      // size={[0, 0]}
       style={{
         backgroundColor: darkMode ? '#1c1c1c' : '#ffffff'
       }}
@@ -19,7 +19,7 @@ const Home = () => {
       <HeroBanner />
       <ServicesList />
       <Footer />
-    </ASpace>
+    </div>
   );
 };
 

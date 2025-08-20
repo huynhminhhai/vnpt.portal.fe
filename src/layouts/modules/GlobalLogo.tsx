@@ -19,7 +19,7 @@ const GlobalLogo: FC<Props> = memo(({ className, showTitle = true, ...props }) =
     >
       <SystemLogo className="mb-[1px] mr-1 h-auto w-[18px] text-32px text-primary" />
       <h2
-        className="pl-4px text-16px text-primary font-bold capitalize transition duration-300 ease-in-out"
+        className="pl-4px text-16px text-[#0059a9] font-bold capitalize transition duration-300 ease-in-out"
         style={{ display: showTitle ? 'block' : 'none' }}
       >
         {t('system.title')}

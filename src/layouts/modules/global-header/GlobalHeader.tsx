@@ -62,7 +62,7 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
       )}
       <div>{reverse ? true : showMenuToggler}</div>
 
-      {showToggler && <MenuToggler />}
+      {pathname !== '/home' ? (showToggler && <MenuToggler />) : null}
 
       {/* <div
         className="h-full flex-y-center flex-1-hidden"

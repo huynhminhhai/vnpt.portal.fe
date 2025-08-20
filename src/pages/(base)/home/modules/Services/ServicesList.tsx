@@ -75,9 +75,26 @@ const ServicesList = () => {
 
   return (
     <div
-      className="px-10 pt-[30px] pb-[100px]"
+      className="px-3 md:px-10 pt-[20px] pb-[60px] grow-[1]"
     >
       <ARow gutter={[16, 16]}>
+
+        <ACol
+          lg={4}
+          md={12}
+          span={24}
+          className="mr-auto flex justify-start"
+        >
+          <div className="hidden md:flex items-center gap-4">
+            <ButtonIcon
+              triggerParent
+              className="px-6px text-2xl border-[1px] border-[#e0e0e0] h-32px"
+              icon={isShowAll ? "circum:grid-4-1" : 'circum:grid-3-2'}
+              tooltipContent={isShowAll ? 'Chế độ xem tất cả' : 'Chế độ xem theo loại'}
+              onClick={handleToggleShowAll}
+            />
+          </div>
+        </ACol>
         <ACol
           lg={4}
           md={12}
@@ -112,22 +129,6 @@ const ServicesList = () => {
           span={24}
         >
           <Search className="w-full" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="middle" />
-        </ACol>
-        <ACol
-          lg={4}
-          md={12}
-          span={24}
-          className="ml-auto flex justify-end"
-        >
-          <div className="flex items-center gap-4">
-            <ButtonIcon
-              triggerParent
-              className="px-6px text-2xl border-[1px] border-[#e0e0e0] h-32px"
-              icon={isShowAll ? "circum:grid-4-1" : 'circum:grid-3-2'}
-              tooltipContent={isShowAll ? 'Chế độ xem tất cả' : 'Chế độ xem theo loại'}
-              onClick={handleToggleShowAll}
-            />
-          </div>
         </ACol>
       </ARow>
       {

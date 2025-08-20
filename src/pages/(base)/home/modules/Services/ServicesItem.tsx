@@ -32,7 +32,7 @@ const ServicesItem = (props: ServicesItemProps) => {
           className="flex flex-col justify-between border-[1px] border-[#e0e0e0e] rounded-lg cursor-pointer relative transition-all duration-300 service-item overflow-hidden h-full"
           style={{
             backgroundColor: darkMode ? '#292929' : '#ffffff',
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px'
+            boxShadow: '0px 24px 84px 0px rgba(0,0,0,0.05)'
           }}
         >
           <div className="absolute top-4 right-5">
@@ -69,9 +69,8 @@ const ServicesItem = (props: ServicesItemProps) => {
             </div>
           </div>
           <div className="px-4 py-3 flex items-center justify-between border-t-[1px] border-gray-200 group-hover:bg-primary group-hover:text-white">
-            {/* <div className="text-[14px] leading-[1] text-primary font-medium bg-white px-5 py-2 rounded-md border-[1px] border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">Truy cập ngay</div> */}
-            <div className="text-[14px] leading-[1] text-primary font-medium group-hover:text-white">Truy cập ngay</div>
-            <Icon icon='si:arrow-right-line' fontSize={24} className="text-primary group-hover:text-white" />
+            <div className="text-[14px] leading-[1] text-primary font-medium dark:text-white group-hover:text-white">Truy cập ngay</div>
+            <Icon icon='si:arrow-right-line' fontSize={24} className="text-primary dark:text-white group-hover:text-white" />
           </div>
         </a >
       </div>

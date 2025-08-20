@@ -134,13 +134,14 @@ const BaseLayout = () => {
         />
       }
       Sider={
+        pathname !== '/home' ?
         <GlobalSider
           headerHeight={themeSettings.header.height}
           inverted={themeSettings.sider.inverted}
           isHorizontalMix={isHorizontalMix}
           isVerticalMix={isVerticalMix}
           siderCollapse={siderCollapse}
-        />
+        /> : null
       }
     >
       <GlobalContent />
