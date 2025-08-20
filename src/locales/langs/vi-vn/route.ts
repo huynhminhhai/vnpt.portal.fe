@@ -4,6 +4,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_manage': 'Quản lý',
   '(base)_manage_system': 'Dịch vụ',
   '(base)_manage_system-group': 'Nhóm dịch vụ',
+  '(base)_manage_tenant': 'Đơn vị sử dụng',
   '(base)_user-center': 'Trung tâm người dùng',
   '(blank)_login': 'Đăng nhập',
   '(blank)_login_code-login': 'Đăng nhập bằng mã',

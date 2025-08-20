@@ -94,7 +94,7 @@ const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
       <SimpleScrollbar>
         {allMenus.map(item => (
           <MixMenuItem
-            active={item.key === (activeFirstLevelMenuKey || '/home')}
+            active={item.key === activeFirstLevelMenuKey}
             inverted={inverted}
             key={item.key}
             menu={item}

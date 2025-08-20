@@ -21,11 +21,14 @@ import GlobalSider from '../modules/GlobalSider';
 import GlobalHeader from '../modules/global-header/GlobalHeader';
 import GlobalMenu from '../modules/global-menu';
 import ThemeDrawer from '../modules/theme-drawer';
+import { useLocation } from "react-router-dom";
 
 configResponsive({ sm: 640 });
 
 const BaseLayout = () => {
   const dispatch = useAppDispatch();
+
+  const { pathname } = useLocation();
 
   const themeSettings = useAppSelector(getThemeSettings);
 
@@ -118,7 +121,7 @@ const BaseLayout = () => {
       siderCollapsedWidth={siderCollapsedWidth}
       siderVisible={siderVisible}
       siderWidth={siderWidth}
-      // Tab={<GlobalTab />}
+      Tab={ pathname !== '/home' ? <GlobalTab /> : null}
       tabHeight={themeSettings.tab.height}
       tabVisible={themeSettings.tab.visible}
       updateSiderCollapse={updateSiderCollapse}

@@ -69,8 +69,19 @@ export const generatedRoutes: ElegantConstRoute[] = [
                 handle: {
                   i18nKey: 'route.(base)_manage_system-group',
                   title: '(base)_manage_system-group',
-                  icon: 'uil:layer-group',
+                  icon: 'solar:layers-minimalistic-linear',
                   order: 1
+                }
+              },
+              {
+                matchedFiles: [null, '/src/pages/(base)/manage/tenant/index.tsx', null, null],
+                name: '(base)_manage_tenant',
+                path: '/manage/tenant',
+                handle: {
+                  i18nKey: 'route.(base)_manage_tenant',
+                  title: '(base)_manage_tenant',
+                  icon: 'solar:buildings-2-linear',
+                  order: 3
                 }
               }
             ]
