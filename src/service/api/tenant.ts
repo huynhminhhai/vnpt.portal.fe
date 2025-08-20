@@ -46,3 +46,12 @@ export const UpdateTenant = (data: TenantType) => {
 
   return res;
 };
+
+export const DeleteTenant = (id: number) => {
+  const res = newRequest<any>({
+    method: 'delete',
+    url: `/api/services/app/Tenant/Delete?id=${id}`
+  });
+
+  return res;
+};

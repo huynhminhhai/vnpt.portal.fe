@@ -2,7 +2,7 @@ import { Card, Collapse, Dropdown, List, message, Tag } from 'antd';
 
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
-import { DeleteSystemWeb, GetAllSystemGroup, GetAllTenant, UpdateSystemWeb, UpdateTenant } from '@/service/api';
+import { DeleteTenant, GetAllTenant, UpdateTenant } from '@/service/api';
 import { useIsTabletResponsive } from '@/utils/responsive';
 import TenantAddForm from './modules/TenantAddForm';
 import TenantUpdateForm from './modules/TenantUpdateForm';
@@ -170,7 +170,7 @@ const TenantManagePage = () => {
   // Action handlers
   const handleDelete = async (id: number) => {
     try {
-      await DeleteSystemWeb(id);
+      await DeleteTenant(id);
 
       fetchList();
     } catch (error) {
