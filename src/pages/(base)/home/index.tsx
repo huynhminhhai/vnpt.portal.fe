@@ -1,4 +1,3 @@
-import Footer from "./modules/Footer";
 import HeroBanner from "./modules/HeroBanner";
 import ServicesList from "./modules/Services/ServicesList";
 import { ThemeContext } from "@/features/theme";
@@ -18,7 +17,6 @@ const Home = () => {
     >
       <HeroBanner />
       <ServicesList />
-      <Footer />
     </div>
   );
 };

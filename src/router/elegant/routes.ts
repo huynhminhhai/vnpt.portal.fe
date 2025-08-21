@@ -83,6 +83,17 @@ export const generatedRoutes: ElegantConstRoute[] = [
                   icon: 'solar:buildings-2-linear',
                   order: 3
                 }
+              },
+              {
+                matchedFiles: [null, '/src/pages/(base)/manage/user/index.tsx', null, null],
+                name: '(base)_manage_user',
+                path: '/manage/user',
+                handle: {
+                  i18nKey: 'route.(base)_manage_user',
+                  title: '(base)_manage_user',
+                  icon: 'solar:user-linear',
+                  order: 4
+                }
               }
             ]
           },

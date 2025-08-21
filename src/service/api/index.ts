@@ -5,3 +5,4 @@ export * from './system-manage';
 export * from './systems';
 export * from './system-group';
 export * from './tenant';
+export * from './user';

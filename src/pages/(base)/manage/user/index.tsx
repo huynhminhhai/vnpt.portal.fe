@@ -2,12 +2,13 @@ import { Card, Collapse, Dropdown, List, message, Tag } from 'antd';
 
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
-import { DeleteTenant, GetAllTenant, UpdateTenant } from '@/service/api';
+import { DeleteTenant, DeleteUser, GetAllTenant, GetAllUser, UpdateUser } from '@/service/api';
 import { useIsTabletResponsive } from '@/utils/responsive';
 import TenantAddForm from './modules/TenantAddForm';
 import TenantUpdateForm from './modules/TenantUpdateForm';
-import IsActiveDropdown from '@/components/dropdown/IsActiveDropdown';
+import { formatDate } from '@/utils/date';
 import { isActiveOptions } from '@/utils/options';
+import IsActiveDropdown from '@/components/dropdown/IsActiveDropdown';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
@@ -74,7 +75,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
   );
 };
 
-const TenantManagePage = () => {
+const UserManagePage = () => {
   const { t } = useTranslation();
   const { scrollConfig, tableWrapperRef } = useTableScroll();
   const isMobile = useMobile();
@@ -85,29 +86,16 @@ const TenantManagePage = () => {
   const [datas, setDatas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({});
-
-  const items: any = [
-    {
-      label: 'Hoạt động',
-      key: true,
-    },
-    {
-      type: 'divider',
-    },
-    {
-      label: 'Ngừng hoạt động',
-      key: false,
-    },
-  ];
+  const [tenants, setTenants] = useState<any[]>([]);
 
   const handleStatusMenuClick = async (info: any, record: any) => {
     setLoading(true);
     try {
       const dataSubmit = { ...record, isActive: info.key };
 
-      await UpdateTenant(dataSubmit);
+      await UpdateUser(dataSubmit);
 
-      message.success('Cập nhật trạng thái dịch vụ thành công!');
+      message.success('Cập nhật trạng thái người dùng thành công!');
 
     } catch (error) {
       console.log(error);
@@ -131,7 +119,7 @@ const TenantManagePage = () => {
         ...params
       };
 
-      const res = await GetAllTenant(apiParams);
+      const res = await GetAllUser(apiParams);
 
       const resData = res.data as any;
 
@@ -172,7 +160,7 @@ const TenantManagePage = () => {
   // Action handlers
   const handleDelete = async (id: number) => {
     try {
-      await DeleteTenant(id);
+      await DeleteUser(id);
 
       fetchList();
     } catch (error) {
@@ -180,6 +168,35 @@ const TenantManagePage = () => {
       message.error(error as string);
     }
   };
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      setLoading(true);
+      const apiParams = {
+        MaxResultCount: "9999",
+        SkipCount: 0,
+        Sorting: null,
+        IsActive: null,
+        Keyword: "",
+      };
+
+      try {
+        const res = await GetAllTenant(apiParams);
+
+        const resData = res.data as any;
+
+        if (resData && resData.result && resData.result.items) {
+          setTenants(resData.result.items.filter((item: any) => item.isActive === true));
+        }
+      } catch (err) {
+        console.error("Fetch groups error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGroups();
+  }, []);
 
   // Column definitions
   const columns: any[] = [
@@ -192,16 +209,28 @@ const TenantManagePage = () => {
     },
     {
       align: 'center' as const,
-      key: 'tenancyName',
-      width: 160,
-      render: (_: any, record: any) => record.tenancyName || '-',
-      title: 'Mã đơn vị'
+      key: 'userName',
+      render: (_: any, record: any) => record.userName || '-',
+      title: 'Tên đăng nhập'
     },
     {
       align: 'center' as const,
       key: 'name',
-      render: (_: any, record: any) => record.name || '-',
+      render: (_: any, record: any) => {
+        const tenancyKey = record.userName?.split(".")[0];
+
+        const tenant = tenants.find(t => t.tenancyName === tenancyKey);
+
+        return tenant?.name || '-';
+      },
       title: 'Tên đơn vị'
+    },
+    {
+      align: 'center' as const,
+      key: 'creationTime',
+      render: (_: any, record: any) => <div>{record?.creationTime && formatDate(record.creationTime)}</div>,
+      title: 'Ngày tạo',
+      width: 140
     },
     {
       align: 'center' as const,
@@ -258,7 +287,7 @@ const TenantManagePage = () => {
       <ACard
         className="flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
         ref={tableWrapperRef}
-        title="Danh sách hệ thống"
+        title="Danh sách người dùng"
         variant="borderless"
         extra={
           <TableHeaderOperation
@@ -367,4 +396,4 @@ const TenantManagePage = () => {
   );
 };
 
-export default TenantManagePage;
+export default UserManagePage;
