@@ -24,6 +24,16 @@ export const GetAllUser = async (params: Api.SystemManage.paramsPhanTrang) => {
   return res;
 };
 
+export const CreateUser = (data: UserType) => {
+  const res = newRequest<any>({
+    data,
+    method: 'post',
+    url: '/api/services/app/User/Create'
+  });
+
+  return res;
+};
+
 export const UpdateUser = (data: UserType) => {
   const res = newRequest<any>({
     data,

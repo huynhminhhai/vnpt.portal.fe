@@ -174,6 +174,8 @@ const SystemManagePage = () => {
     try {
       await DeleteSystemWeb(id);
 
+      message.success('Xóa dịch vụ thành công!');
+
       fetchList();
     } catch (error) {
       console.log(error);

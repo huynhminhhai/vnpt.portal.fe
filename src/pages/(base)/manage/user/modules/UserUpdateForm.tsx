@@ -9,7 +9,7 @@ type Props = {
   onSuccess?: () => void;
 };
 
-const TenantUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
+const UserUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -183,4 +183,4 @@ const TenantUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
   );
 };
 
-export default TenantUpdateForm;
+export default UserUpdateForm;

@@ -174,6 +174,8 @@ const TenantManagePage = () => {
     try {
       await DeleteTenant(id);
 
+      message.success('Xóa đơn vị thành công!');
+
       fetchList();
     } catch (error) {
       console.log(error);
@@ -193,7 +195,6 @@ const TenantManagePage = () => {
     {
       align: 'center' as const,
       key: 'tenancyName',
-      width: 160,
       render: (_: any, record: any) => record.tenancyName || '-',
       title: 'Mã đơn vị'
     },

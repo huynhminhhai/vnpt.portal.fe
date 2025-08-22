@@ -160,6 +160,7 @@ const SystemGroupManagePage = () => {
   const handleDelete = async (id: number) => {
     try {
       await DeleteGroupSystem(id);
+      message.success('Xóa nhóm dịch vụ thành công!');
 
       fetchList();
     } catch (error) {
@@ -197,12 +198,12 @@ const SystemGroupManagePage = () => {
       render: (_: any, record: any) => <div>{record.displayName}</div>,
       title: 'Tên nhóm dịch vụ'
     },
-    {
-      align: 'center' as const,
-      key: 'description',
-      render: (_: any, record: any) => <div className='line-clamp-2'>{record?.description || '-'}</div>,
-      title: 'Mô tả',
-    },
+    // {
+    //   align: 'center' as const,
+    //   key: 'description',
+    //   render: (_: any, record: any) => <div className='line-clamp-2'>{record?.description || '-'}</div>,
+    //   title: 'Mô tả',
+    // },
     {
       align: 'center' as const,
       key: 'creationTime',

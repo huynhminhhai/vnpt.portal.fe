@@ -2,18 +2,20 @@ import { Button, Col, Drawer, Form, Input, Row, Select, message } from 'antd';
 import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
-import { CreateTenant } from '@/service/api';
+import { CreateUser } from '@/service/api';
 
 const { Option } = Select;
 
 type Props = {
   onSuccess?: () => void;
+  groupData: any[];
 };
 
-const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
+const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [tenantData, setTenantData] = useState<any>('');
 
   const showDrawer = () => {
     setOpen(true);
@@ -26,11 +28,17 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      const dataSubmit = { ...values, adminEmailAddress: values?.tenancyName + '@gmail.com' };
+      const dataSubmit = {
+        ...values,
+        userName: tenantData + '.' + values?.userName,
+        surname: '',
+        emailAddress: values?.userName + '@gmail.com',
+        roleNames: null,
+      };
 
-      await CreateTenant(dataSubmit);
+      await CreateUser(dataSubmit);
 
-      message.success('Thêm đơn vị thành công!');
+      message.success('Thêm người dùng thành công!');
 
       form.resetFields();
 
@@ -52,7 +60,7 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
       <Drawer
         className='p-0'
         open={open}
-        title="Thêm mới đơn vị"
+        title="Thêm mới người dùng"
         width={480}
         styles={{
           body: {
@@ -72,21 +80,47 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                label="Tên đơn vị"
+                label="Tên người dùng"
                 name="name"
-                rules={[{ message: 'Vui lòng nhập tên đơn vị', required: true }]}
+                rules={[{ message: 'Vui lòng nhập tên người dùng', required: true }]}
               >
-                <Input placeholder="Nhập tên đơn vị" size="middle" />
+                <Input placeholder="Nhập tên người dùng" size="middle" />
               </Form.Item>
             </Col>
 
             <Col span={12}>
               <Form.Item
-                label="Mã đơn vị"
-                name="tenancyName"
-                rules={[{ message: 'Vui lòng nhập mã đơn vị', required: true }]}
+                label="Đơn vị"
+                name=""
+                rules={[{ message: 'Vui lòng chọn đơn vị', required: true }]}
               >
-                <Input placeholder="Nhập mã đơn vị" size="middle" />
+                <Select placeholder="Chọn đơn vị" size="middle" loading={loading} allowClear onChange={(value) => setTenantData(value)}>
+                  {groupData.map((group) => (
+                    <Option key={group.tenancyName} value={group.tenancyName}>
+                      {group.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Tên đăng nhập"
+                name="userName"
+                rules={[{ message: 'Vui lòng nhập tên đăng nhập', required: true }]}
+              >
+                <Input addonBefore={tenantData + '.'} placeholder="Nhập tên đăng nhập" size="middle" />
+              </Form.Item>
+            </Col>
+
+            <Col span={12}>
+              <Form.Item
+                label="Mật khẩu"
+                name="password"
+                rules={[{ message: 'Vui lòng nhập mật khẩu', required: true }]}
+              >
+                <Input placeholder="Nhập mật khẩu" size="middle" />
               </Form.Item>
             </Col>
 
@@ -120,4 +154,4 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
   );
 };
 
-export default TenantAddForm;
+export default UserAddForm;

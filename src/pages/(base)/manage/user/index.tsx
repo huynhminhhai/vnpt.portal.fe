@@ -2,13 +2,13 @@ import { Card, Collapse, Dropdown, List, message, Tag } from 'antd';
 
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
-import { DeleteTenant, DeleteUser, GetAllTenant, GetAllUser, UpdateUser } from '@/service/api';
+import { DeleteUser, GetAllTenant, GetAllUser, UpdateUser } from '@/service/api';
 import { useIsTabletResponsive } from '@/utils/responsive';
-import TenantAddForm from './modules/TenantAddForm';
-import TenantUpdateForm from './modules/TenantUpdateForm';
 import { formatDate } from '@/utils/date';
 import { isActiveOptions } from '@/utils/options';
 import IsActiveDropdown from '@/components/dropdown/IsActiveDropdown';
+import UserAddForm from './modules/UserAddForm';
+import UserUpdateForm from './modules/UserUpdateForm';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
@@ -162,6 +162,8 @@ const UserManagePage = () => {
     try {
       await DeleteUser(id);
 
+      message.success('Xóa người dùng thành công!');
+
       fetchList();
     } catch (error) {
       console.log(error);
@@ -176,7 +178,7 @@ const UserManagePage = () => {
         MaxResultCount: "9999",
         SkipCount: 0,
         Sorting: null,
-        IsActive: null,
+        IsActive: true,
         Keyword: "",
       };
 
@@ -186,7 +188,7 @@ const UserManagePage = () => {
         const resData = res.data as any;
 
         if (resData && resData.result && resData.result.items) {
-          setTenants(resData.result.items.filter((item: any) => item.isActive === true));
+          setTenants(resData.result.items);
         }
       } catch (err) {
         console.error("Fetch groups error:", err);
@@ -206,6 +208,12 @@ const UserManagePage = () => {
       render: (_: any, record: any) => record.id,
       title: 'ID',
       width: 64
+    },
+    {
+      align: 'center' as const,
+      key: 'name',
+      render: (_: any, record: any) => record.name || '-',
+      title: 'Tên người dùng'
     },
     {
       align: 'center' as const,
@@ -251,7 +259,7 @@ const UserManagePage = () => {
       key: 'operate',
       render: (_: any, record: any) => (
         <div className="flex-center gap-8px">
-          <TenantUpdateForm
+          <UserUpdateForm
             id={record.id}
             onSuccess={fetchList}
           />
@@ -291,7 +299,7 @@ const UserManagePage = () => {
         variant="borderless"
         extra={
           <TableHeaderOperation
-            addForm={<TenantAddForm onSuccess={fetchList} />}
+            addForm={<UserAddForm onSuccess={fetchList} groupData={tenants} />}
             columns={columns}
             disabledDelete={true}
             isShowDelete={false}
@@ -380,7 +388,7 @@ const UserManagePage = () => {
 
                           {/* Actions */}
                           <div className="flex justify-center gap-3 pt-3 border-t mt-3">
-                            <TenantUpdateForm id={item.id} onSuccess={fetchList} />
+                            <UserUpdateForm id={item.id} onSuccess={fetchList} />
                             <DeleteButton onClick={() => handleDelete(item.id)} />
                           </div>
                         </Collapse.Panel>
