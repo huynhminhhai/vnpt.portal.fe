@@ -700,7 +700,7 @@ export const themeConfig = {
 };
 
 export const routeConfig = {
-  homePath: '/dashboard',
+  homePath: '/home',
   loginPath: '/login',
   enableAuth: true
 };

@@ -38,7 +38,12 @@ export const generatedRoutes: ElegantConstRoute[] = [
             matchedFiles: [null, '/src/pages/(base)/dashboard/index.tsx', null, null],
             name: '(base)_dashboard',
             path: '/dashboard',
-            handle: { i18nKey: 'route.(base)_dashboard', icon: 'solar:widget-5-linear',  order: 2, title: '(base)_dashboard' }
+            handle: {
+              i18nKey: 'route.(base)_dashboard',
+              icon: 'solar:widget-5-linear',
+              order: 2,
+              title: '(base)_dashboard'
+            }
           },
           {
             matchedFiles: [null, '/src/pages/(base)/home/index.tsx', null, null],
@@ -50,7 +55,7 @@ export const generatedRoutes: ElegantConstRoute[] = [
             matchedFiles: [null, null, null, null],
             name: '(base)_manage',
             path: '/manage',
-            handle: { i18nKey: 'route.(base)_manage', title: '(base)_manage', order: 3, icon: 'solar:palette-linear' },
+            handle: { i18nKey: 'route.(base)_manage', title: '(base)_manage', order: 3, icon: 'solar:layers-linear' },
             children: [
               {
                 matchedFiles: [null, '/src/pages/(base)/manage/system/index.tsx', null, null],

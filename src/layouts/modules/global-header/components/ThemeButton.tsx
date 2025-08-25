@@ -13,7 +13,7 @@ const ThemeButton = memo(() => {
     <ButtonIcon
       triggerParent
       className="px-12px"
-      icon="majesticons:color-swatch-line"
+      icon="solar:palette-linear"
       tooltipContent={t('icon.themeConfig')}
       onClick={handleClick}
     />

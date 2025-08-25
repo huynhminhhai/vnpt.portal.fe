@@ -46,6 +46,7 @@ const GlobalTab = () => {
     if (index === 1) disabledKeys.push('closeLeft');
 
     if (index === tabs.length - 1) disabledKeys.push('closeRight');
+
     return disabledKeys;
   }
 
@@ -61,6 +62,8 @@ const GlobalTab = () => {
   function handleClickTab(tab: App.Global.Tab) {
     navigate(tab.fullPath);
   }
+
+  console.log(tabs);
 
   return (
     <DarkModeContainer className="size-full flex-y-center px-16px shadow-tab">
@@ -90,7 +93,7 @@ const GlobalTab = () => {
                   <PageTab
                     active={item.id === activeTabId}
                     activeColor={themeSettings.themeColor}
-                    closable={!isTabRetain(item.id)}
+                    closable={!isTabRetain(item.id) && item.id !== '/dashboard'}
                     darkMode={darkMode}
                     datatype={item.id}
                     handleClose={() => handleCloseTab(item)}

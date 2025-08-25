@@ -129,18 +129,18 @@ const CardItem = (props: CardDataProps) => {
         </div>
         <div className="flex items-center gap-2">
           <div>
-            <NumberTicker
-              className="font-number text-26px font-semibold"
-              style={{ color: darkMode ? '#ffffffd9' : '#0047ab' }}
-              suffix={unit}
-              value={value}
-            />
             <h5
-              className="mb-1 text-[14px] text-primary font-medium"
+              className="mb-1 text-16px text-primary font-medium"
               style={{ color: darkMode ? '#ffffffd9' : '#000000E0' }}
             >
               {title}
             </h5>
+            <NumberTicker
+              className="font-number text-26px font-semibold"
+              style={{ color: darkMode ? '#ffffffd9' : '#0059a9' }}
+              suffix={unit}
+              value={value}
+            />
           </div>
         </div>
       </div>

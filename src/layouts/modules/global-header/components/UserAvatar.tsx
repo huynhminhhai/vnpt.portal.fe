@@ -2,6 +2,7 @@ import type { MenuProps } from 'antd';
 
 import { selectToken, selectUserInfo } from '@/features/auth/authStore';
 import { useRouter } from '@/features/router';
+import { Icon } from '@iconify/react';
 
 const UserAvatar = memo(() => {
   const token = useAppSelector(selectToken);
@@ -41,9 +42,9 @@ const UserAvatar = memo(() => {
       key: '0',
       label: (
         <div className="flex-center gap-8px">
-          <SvgIcon
-            className="text-icon"
-            icon="ph:user-circle"
+          <Icon
+            icon="solar:widget-5-linear"
+            fontSize={18}
           />
           Tổng quan
         </div>
@@ -56,9 +57,9 @@ const UserAvatar = memo(() => {
       key: '1',
       label: (
         <div className="flex-center gap-8px">
-          <SvgIcon
-            className="text-icon"
-            icon="ph:sign-out"
+          <Icon
+            icon="solar:logout-outline"
+            fontSize={22}
           />
           {t('common.logout')}
         </div>

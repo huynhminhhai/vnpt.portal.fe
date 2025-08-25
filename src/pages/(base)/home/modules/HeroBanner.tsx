@@ -9,7 +9,7 @@ const HeroBanner = () => {
       >
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[22px] md:text-[32px] leading:[34px] md:leading-[42px] font-semibold capitalize ">
+            <h1 className="text-[22px] md:text-[28px] leading:[34px] md:leading-[40px] font-semibold capitalize ">
               Cổng dịch vụ số <br /> Xã Cần Đước
             </h1>
             <p className="mt-1 md:mt-2 max-w-[90%] md:max-w-[60%] text-[16px] font-normal leading-[26px]">
