@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
 import { CreateSystemGroup } from '@/service/api';
+import { statusOptions } from '@/utils/options';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -92,8 +93,13 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
                   placeholder="Vui lòng chọn trạng thái"
                   size="middle"
                 >
-                  <Option value={1}>Hoạt động</Option>
-                  <Option value={2}>Ngừng hoạt động</Option>
+                  {statusOptions
+                    .filter((item: any) => !item.type)
+                    .map((item: any) => (
+                      <Option key={item.key.toString()} value={item.key}>
+                        {item.label}
+                      </Option>
+                    ))}
                 </Select>
               </Form.Item>
             </Col>

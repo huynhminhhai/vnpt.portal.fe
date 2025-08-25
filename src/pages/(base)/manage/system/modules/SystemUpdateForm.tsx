@@ -1,4 +1,5 @@
 import { GetSystemWebById, UpdateSystemWeb } from '@/service/api';
+import { statusOptions } from '@/utils/options';
 import { Button, Col, Drawer, Form, Input, Row, Select, Space, Tag, message } from 'antd';
 import React, { useState } from 'react';
 
@@ -127,13 +128,13 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                     ?
                     <div className='font-medium'>{groupData.find(g => g.id === detailData?.groupSystemId)?.displayName || "-"}</div>
                     :
-                  <Select placeholder="Chọn loại dịch vụ" size="middle" loading={loading} allowClear>
-                    {groupData.map((group) => (
-                      <Option key={group.id} value={group.id}>
-                        {group.displayName}
-                      </Option>
-                    ))}
-                  </Select>
+                    <Select placeholder="Chọn loại dịch vụ" size="middle" loading={loading} allowClear>
+                      {groupData.map((group) => (
+                        <Option key={group.id} value={group.id}>
+                          {group.displayName}
+                        </Option>
+                      ))}
+                    </Select>
                 }
               </Form.Item>
             </Col>
@@ -253,8 +254,13 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                       placeholder="Vui lòng chọn trạng thái"
                       size="middle"
                     >
-                      <Option value={1}>Hoạt động</Option>
-                      <Option value={2}>Ngừng hoạt động</Option>
+                      {statusOptions
+                        .filter((item: any) => !item.type)
+                        .map((item: any) => (
+                          <Option key={item.key.toString()} value={item.key}>
+                            {item.label}
+                          </Option>
+                        ))}
                     </Select>
                 }
               </Form.Item>

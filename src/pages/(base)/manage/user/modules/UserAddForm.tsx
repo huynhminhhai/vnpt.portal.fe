@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { AddButton } from '@/components/button';
 import { CreateUser } from '@/service/api';
 import { isActiveOptions } from '@/utils/options';
+import { Icon } from '@iconify/react';
 
 const { Option } = Select;
 
@@ -17,6 +18,8 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [tenantData, setTenantData] = useState<any>('');
+  const [password, setPassword] = useState<string>('');
+
 
   const showDrawer = () => {
     setOpen(true);
@@ -33,8 +36,8 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
         ...values,
         userName: tenantData + '.' + values?.userName,
         surname: '',
-        emailAddress: values?.userName + '@gmail.com',
         roleNames: null,
+        emailAddress: values?.emailAddress || values?.userName + '@gmail.com',
       };
 
       await CreateUser(dataSubmit);
@@ -54,6 +57,29 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
       setLoading(false);
     }
   };
+
+  const requirements = [
+    {
+      text: "Ít nhất 8 ký tự",
+      met: password.length >= 8,
+    },
+    {
+      text: "Chứa ít nhất một chữ hoa",
+      met: /[A-Z]/.test(password),
+    },
+    {
+      text: "Chứa ít nhất một chữ thường",
+      met: /[a-z]/.test(password),
+    },
+    {
+      text: "Chứa ít nhất một số",
+      met: /\d/.test(password),
+    },
+    {
+      text: "Chứa ít nhất một ký tự đặc biệt",
+      met: /[@$!%*?&#]/.test(password),
+    },
+  ];
 
   return (
     <>
@@ -91,6 +117,26 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
 
             <Col span={12}>
               <Form.Item
+                label="Email"
+                name="emailAddress"
+                rules={[{ required: false }]}
+              >
+                <Input placeholder="Nhập email" size="middle" />
+              </Form.Item>
+            </Col>
+
+            <Col span={12}>
+              <Form.Item
+                label="Số điện thoại"
+                name="phoneNumber"
+                rules={[{ required: false }]}
+              >
+                <Input placeholder="Nhập số điện thoại" size="middle" />
+              </Form.Item>
+            </Col>
+
+            <Col span={12}>
+              <Form.Item
                 label="Đơn vị"
                 name="tenantId"
                 rules={[{ message: 'Vui lòng chọn đơn vị', required: true }]}
@@ -123,9 +169,17 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
               <Form.Item
                 label="Mật khẩu"
                 name="password"
-                rules={[{ message: 'Vui lòng nhập mật khẩu', required: true }]}
+                rules={[
+                  { required: true, message: "Vui lòng nhập mật khẩu" },
+                  {
+                    pattern:
+                      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+                    message:
+                      "Mật khẩu sai định dạng",
+                  },
+                ]}
               >
-                <Input placeholder="Nhập mật khẩu" size="middle" />
+                <Input placeholder="Nhập mật khẩu" size="middle" onChange={(e) => setPassword(e.target.value)} />
               </Form.Item>
             </Col>
 
@@ -146,27 +200,29 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
                 </Select>
               </Form.Item>
             </Col>
+
             <Col span={24}>
               <div>
-                <b className='text-sm'>
-                  Yêu cầu mật khẩu:
-                </b>
-                <ul className='text-xs list-disc pl-4 pt-1'>
-                  <li>
-                    Tối thiểu 8 ký tự
-                  </li>
-                  <li>
-                    Có ít nhất 1 chữ viết hoa
-                  </li>
-                  <li>
-                    Có ít nhất 1 chữ viết thường
-                  </li>
-                  <li>
-                    Có ít nhất 1 chữ số (0-9)
-                  </li>
-                  <li>
-                    Có ít nhất 1 ký tự đặc biệt (!, @, #, $, %)
-                  </li>
+                <b>Yêu cầu mật khẩu:</b>
+                <ul>
+                  {requirements.map((req, index) => (
+                    <li
+                      key={index}
+                      className='flex items-center'
+                    >
+                      {req.met ? (
+                        <Icon
+                          icon="solar:unread-line-duotone"
+                          style={{ color: "green", marginRight: "8px" }}
+                        />
+                      ) : (
+                        <Icon icon="iconamoon:close-light" style={{ color: "red", marginRight: "8px" }} />
+                      )}
+                      <div style={{ color: req.met ? "green" : "inherit" }}>
+                        {req.text}
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </Col>

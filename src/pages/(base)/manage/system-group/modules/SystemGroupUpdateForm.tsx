@@ -1,5 +1,6 @@
 import { GetSystemGroupById, UpdateSystemGroup } from '@/service/api';
 import { formatDate } from '@/utils/date';
+import { statusOptions } from '@/utils/options';
 import { Button, Col, Drawer, Form, Input, InputNumber, Row, Select, Space, Tag, message } from 'antd';
 import React, { useState } from 'react';
 
@@ -90,14 +91,14 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
               >
                 {
                   !isEdit
-                  ?
+                    ?
                     <div className='font-medium'>{detailData?.displayName}</div>
-                  :
-                  <Input
-                    disabled={!isEdit}
-                    placeholder="Nhập tên nhóm"
-                    size="middle"
-                  />
+                    :
+                    <Input
+                      disabled={!isEdit}
+                      placeholder="Nhập tên nhóm"
+                      size="middle"
+                    />
                 }
               </Form.Item>
             </Col>
@@ -109,17 +110,22 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
               >
                 {
                   !isEdit
-                  ?
-                  <div>{detailData?.status === 1 ? <Tag color="green">Hoạt động</Tag> : <Tag color="orange">Ngừng hoạt động</Tag>}</div>
-                  :
-                  <Select
-                    disabled={!isEdit}
-                    placeholder="Vui lòng chọn trạng thái"
-                    size="middle"
-                  >
-                    <Option value={1}>Hoạt động</Option>
-                    <Option value={2}>Ngừng hoạt động</Option>
-                  </Select>
+                    ?
+                    <div>{detailData?.status === 1 ? <Tag color="green">Hoạt động</Tag> : <Tag color="orange">Ngừng hoạt động</Tag>}</div>
+                    :
+                    <Select
+                      disabled={!isEdit}
+                      placeholder="Vui lòng chọn trạng thái"
+                      size="middle"
+                    >
+                      {statusOptions
+                        .filter((item: any) => !item.type)
+                        .map((item: any) => (
+                          <Option key={item.key.toString()} value={item.key}>
+                            {item.label}
+                          </Option>
+                        ))}
+                    </Select>
                 }
               </Form.Item>
             </Col>
@@ -131,10 +137,10 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
               >
                 {
                   !isEdit
-                  ?
-                  <div className='font-medium'>{detailData?.description || '-'}</div>
-                  :
-                <TextArea rows={2} placeholder="Nhập mô tả nhóm" maxLength={255} size='middle' disabled={!isEdit} />
+                    ?
+                    <div className='font-medium'>{detailData?.description || '-'}</div>
+                    :
+                    <TextArea rows={2} placeholder="Nhập mô tả nhóm" maxLength={255} size='middle' disabled={!isEdit} />
                 }
               </Form.Item>
             </Col>

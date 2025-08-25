@@ -6,6 +6,7 @@ import SystemGroupUpdateForm from './modules/SystemGroupUpdateForm';
 import { formatDate } from '@/utils/date';
 import { DeleteGroupSystem, GetAllSystemGroup, UpdateSystemGroup } from '@/service/api';
 import { useIsTabletResponsive } from '@/utils/responsive';
+import { statusOptions } from '@/utils/options';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
@@ -168,20 +169,6 @@ const SystemGroupManagePage = () => {
     }
   };
 
-  const items: MenuProps['items'] = [
-    {
-      label: 'Hoạt động',
-      key: 1,
-    },
-    {
-      type: 'divider',
-    },
-    {
-      label: 'Ngừng hoạt động',
-      key: 2,
-    },
-  ];
-
   // Column definitions
   const columns: any[] = [
     {
@@ -221,10 +208,12 @@ const SystemGroupManagePage = () => {
       align: 'center' as const,
       key: 'status',
       render: (_: any, record: any) =>
-        <Dropdown menu={{ items, onClick: (info) => handleStatusMenuClick(info, record) }} trigger={['click']}>
-          <div className='cursor-pointer'>{record.status === 1 ? <Tag color="green">Hoạt động</Tag> : <Tag color="orange">Ngừng hoạt động</Tag>}</div>
-        </Dropdown>
-      ,
+        <StatusDropdown
+          record={record}
+          isActive={record.status}
+          statusOptions={statusOptions}
+          handleStatusMenuClick={handleStatusMenuClick}
+        />,
       title: 'Trạng thái',
       width: 160
     },
@@ -332,26 +321,12 @@ const SystemGroupManagePage = () => {
                             <span className="text-xs font-semibold text-primary">#{item.id}</span>
                           </div>
                         </div>
-                        <Dropdown
-                          menu={{
-                            items,
-                            onClick: (info) => handleStatusMenuClick(info, item)
-                          }}
-                          trigger={["click"]}
-                          placement="bottomRight"
-                        >
-                          <div className="cursor-pointer">
-                            {item.status === 1 ? (
-                              <Tag color="green" className="mr-0">
-                                Hoạt động
-                              </Tag>
-                            ) : (
-                              <Tag color="orange" className="mr-0">
-                                Ngừng hoạt động
-                              </Tag>
-                            )}
-                          </div>
-                        </Dropdown>
+                        <StatusDropdown
+                          record={item}
+                          isActive={item.status}
+                          statusOptions={statusOptions}
+                          handleStatusMenuClick={handleStatusMenuClick}
+                        />
                       </div>
 
                       {/* Title + Collapse */}

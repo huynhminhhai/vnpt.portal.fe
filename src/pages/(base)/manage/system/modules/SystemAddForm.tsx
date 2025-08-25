@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
 import { CreateSystemWeb } from '@/service/api';
+import { statusOptions } from '@/utils/options';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -180,8 +181,13 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
                 rules={[{ message: 'Vui lòng chọn trạng thái', required: false }]}
               >
                 <Select placeholder="Chọn trạng thái" size="middle">
-                  <Option value={1}>Hoạt động</Option>
-                  <Option value={2}>Ngừng hoạt động</Option>
+                  {statusOptions
+                    .filter((item: any) => !item.type)
+                    .map((item: any) => (
+                      <Option key={item.key.toString()} value={item.key}>
+                        {item.label}
+                      </Option>
+                    ))}
                 </Select>
               </Form.Item>
             </Col>

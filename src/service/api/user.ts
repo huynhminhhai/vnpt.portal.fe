@@ -27,7 +27,7 @@ export const GetAllUser = async (params: Api.SystemManage.paramsPhanTrang) => {
 export const GetUserById = (id: number) => {
   const res = newRequest<any>({
     method: 'get',
-    url: `/api/services/app/User/Get?id=${id}`
+    url: `/api/services/app/User/GetUserById?userId=${id}`
   });
 
   return res;
@@ -47,7 +47,7 @@ export const UpdateUser = (data: UserType) => {
   const res = newRequest<any>({
     data,
     method: 'put',
-    url: '/api/services/app/User/Update'
+    url: '/api/services/app/User/UpdateUser'
   });
 
   return res;
