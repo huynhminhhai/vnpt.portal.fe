@@ -30,6 +30,7 @@ declare module "@soybean-react/vite-plugin-react-router" {
     "document_antd": "/document/antd";
     "document_ui": "/document/ui";
     "(base)_about": "/about";
+    "(base)_dashboard": "/dashboard";
     "(base)_home": "/home";
     "(base)_manage": "/manage";
     "(base)_manage_system": "/manage/system";
@@ -115,6 +116,7 @@ declare module "@soybean-react/vite-plugin-react-router" {
   export type LastLevelRouteKey = Extract<
     RouteKey,
     | "(base)_about"
+    | "(base)_dashboard"
     | "(base)_home"
     | "(base)"
     | "(base)_manage_system-group"

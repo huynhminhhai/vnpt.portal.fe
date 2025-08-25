@@ -1,4 +1,5 @@
-import { GetTenantById, UpdateTenant } from '@/service/api';
+import { GetTenantById, GetUserById, UpdateTenant, UpdateUser } from '@/service/api';
+import { isActiveOptions } from '@/utils/options';
 import { Button, Col, Drawer, Form, Input, Row, Select, Tag, message } from 'antd';
 import React, { useState } from 'react';
 
@@ -7,15 +8,17 @@ const { Option } = Select;
 type Props = {
   id: number;
   onSuccess?: () => void;
+  groupData: any[];
 };
 
-const UserUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
+const UserUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [detailData, setDetailData] = useState<any>();
   const [isEdit, setIsEdit] = useState(false);
+  const [tenantData, setTenantData] = useState<any>('');
 
   const showDrawer = async () => {
     setOpen(true);
@@ -23,11 +26,14 @@ const UserUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
     setLoadingDetail(true);
 
     try {
-      const res = await GetTenantById(id);
+      const res = await GetUserById(id);
       const data = res.data?.result;
+
+      console.log(data);
 
       form.setFieldsValue(data);
       setDetailData(data);
+      setTenantData(data?.userName?.split(".")[0]);
     } catch (error) {
       console.log(error);
       message.error(error as string);
@@ -45,9 +51,10 @@ const UserUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
     try {
       const dataSubmit = { ...detailData, ...values };
 
-      await UpdateTenant(dataSubmit);
+      // await UpdateUser(dataSubmit);
+      console.log(dataSubmit);
 
-      message.success('Cập nhật đơn vị thành công!');
+      message.success('Cập nhật người dùng thành công!');
 
       onSuccess?.();
 
@@ -82,33 +89,39 @@ const UserUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
           <Row gutter={16} className='pb-4'>
             <Col span={12}>
               <Form.Item
-                label="Tên đơn vị"
+                label="Tên người dùng"
                 name="name"
-                rules={[{ message: 'Vui lòng nhập tên đơn vị', required: true }]}
+                rules={[{ message: 'Vui lòng nhập tên người dùng', required: true }]}
               >
                 {
                   !isEdit
                     ?
                     <div className='font-medium'>{detailData?.name}</div>
                     :
-                    <Input placeholder="Nhập tên đơn vị" size="middle" disabled={!isEdit} />
+                    <Input placeholder="Nhập tên người dùng" size="middle" />
                 }
               </Form.Item>
             </Col>
 
             <Col span={12}>
               <Form.Item
-                label="Mã đơn vị"
-                name="tenancyName"
-                rules={[{ message: 'Vui lòng nhập mã đơn vị', required: true }]}
+                label="Đơn vị"
+                name=""
+                rules={[{ message: 'Vui lòng chọn đơn vị', required: true }]}
               >
-                {
-                  !isEdit
-                    ?
-                    <div className='font-medium'>{detailData?.tenancyName}</div>
-                    :
-                    <Input placeholder="Nhập mã đơn vị (ví dụ: lichhen)" size="middle" disabled={!isEdit} />
-                }
+                <Select placeholder="Chọn đơn vị" size="middle" loading={loading} allowClear value={tenantData} onChange={(value) => setTenantData(value)}>
+                  {
+                    !isEdit
+                      ?
+                      <div className='font-medium'>{groupData?.find((item: any) => item.tenancyName === tenantData)?.name}</div>
+                      :
+                      groupData.map((group) => (
+                        <Option key={group.tenancyName} value={group.tenancyName}>
+                          {group.name}
+                        </Option>
+                      ))
+                  }
+                </Select>
               </Form.Item>
             </Col>
 
@@ -128,8 +141,13 @@ const UserUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
                       placeholder="Vui lòng chọn trạng thái"
                       size="middle"
                     >
-                      <Option value={true}>Hoạt động</Option>
-                      <Option value={false}>Ngừng hoạt động</Option>
+                      {isActiveOptions
+                        .filter((item: any) => !item.type)
+                        .map((item: any) => (
+                          <Option key={item.key.toString()} value={item.key}>
+                            {item.label}
+                          </Option>
+                        ))}
                     </Select>
                 }
               </Form.Item>

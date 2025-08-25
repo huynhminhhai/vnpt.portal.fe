@@ -1,4 +1,4 @@
-import { Card, Collapse, Dropdown, List, message, Tag } from 'antd';
+import { Card, Collapse, List, message } from 'antd';
 
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
@@ -35,7 +35,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
           <AForm.Item
             className="m-0"
             label='Tên đơn vị'
-            name="keyword"
+            name="Keyword"
           >
             <AInput placeholder='Nhập tên đơn vị' />
           </AForm.Item>
@@ -79,26 +79,11 @@ const TenantManagePage = () => {
   const { scrollConfig, tableWrapperRef } = useTableScroll();
   const isMobile = useMobile();
   const [form] = AForm.useForm();
-  // const nav = useNavigate();
   const isTabletRes = useIsTabletResponsive();
 
   const [datas, setDatas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({});
-
-  const items: any = [
-    {
-      label: 'Hoạt động',
-      key: true,
-    },
-    {
-      type: 'divider',
-    },
-    {
-      label: 'Ngừng hoạt động',
-      key: false,
-    },
-  ];
 
   const handleStatusMenuClick = async (info: any, record: any) => {
     setLoading(true);
@@ -107,7 +92,7 @@ const TenantManagePage = () => {
 
       await UpdateTenant(dataSubmit);
 
-      message.success('Cập nhật trạng thái dịch vụ thành công!');
+      message.success('Cập nhật trạng thái đơn vị thành công!');
 
     } catch (error) {
       console.log(error);
@@ -123,9 +108,8 @@ const TenantManagePage = () => {
     setLoading(true);
     try {
       const apiParams = {
-        MaxResultCount: '9999',
+        MaxResultCount: 10,
         SkipCount: 0,
-        Sorting: null,
         IsActive: null,
         Keyword: '',
         ...params

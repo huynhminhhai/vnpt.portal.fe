@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
 import { CreateTenant } from '@/service/api';
+import { isActiveOptions } from '@/utils/options';
 
 const { Option } = Select;
 
@@ -26,7 +27,10 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      const dataSubmit = { ...values, adminEmailAddress: values?.tenancyName + '@gmail.com' };
+      const dataSubmit = {
+        ...values,
+        adminEmailAddress: values?.tenancyName + '@gmail.com'
+      };
 
       await CreateTenant(dataSubmit);
 
@@ -38,7 +42,6 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
 
       onClose();
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.log(error);
       message.error(error as string);
     } finally {
@@ -97,8 +100,13 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
                 rules={[{ message: 'Vui lòng chọn trạng thái', required: false }]}
               >
                 <Select placeholder="Chọn trạng thái" size="middle">
-                  <Option value={true}>Hoạt động</Option>
-                  <Option value={false}>Ngừng hoạt động</Option>
+                  {isActiveOptions
+                    .filter((item: any) => !item.type)
+                    .map((item: any) => (
+                      <Option key={item.key.toString()} value={item.key}>
+                        {item.label}
+                      </Option>
+                    ))}
                 </Select>
               </Form.Item>
             </Col>

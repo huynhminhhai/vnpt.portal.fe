@@ -4,7 +4,7 @@ const GlobalFooter = () => {
   return (
     <DarkModeContainer className="h-full flex-center border-t">
       <div>
-        © 2025 VNPT. All Rights Reserved
+        © 2025 VNPT
       </div>
     </DarkModeContainer>
   );

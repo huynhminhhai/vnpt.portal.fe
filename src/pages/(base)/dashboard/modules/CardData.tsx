@@ -37,8 +37,8 @@ function useGetCardData() {
       setIsLoading(true);
 
       try {
-        const response = await GetThongTinTongQuat();
-        const data = response?.data?.result;
+        // const response = await GetThongTinTongQuat();
+        // const data = response?.data?.result;
 
         // Map API data vào card
         const mappedData: CardDataProps[] = [
@@ -48,9 +48,9 @@ function useGetCardData() {
             icon: 'ant-design:bar-chart-outlined',
             image: wave3,
             key: 'soLuongSuDung',
-            title: t('page.home.visitCount'),
+            title: 'Đơn vị',
             unit: '',
-            value: data.soLuongSuDung
+            value: 100
           },
           {
             cardKey: 'soLuongMienPhi',
@@ -58,9 +58,9 @@ function useGetCardData() {
             icon: 'carbon:document-download',
             image: wave4,
             key: 'soLuongMienPhi',
-            title: t('page.home.freeCount'),
+            title: 'Người dùng',
             unit: '',
-            value: data.soLuongMienPhi
+            value: 100
           },
           {
             cardKey: 'soLuongTraPhi',
@@ -68,9 +68,9 @@ function useGetCardData() {
             icon: 'ant-design:trademark-circle-outlined',
             image: wave2,
             key: 'soLuongTraPhi',
-            title: t('page.home.paidCount'),
+            title: 'Nhóm dịch vụ',
             unit: '',
-            value: data.soLuongTraPhi
+            value: 100
           },
           {
             cardKey: 'danhThu',
@@ -78,9 +78,9 @@ function useGetCardData() {
             icon: 'ant-design:money-collect-outlined',
             image: wave5,
             key: 'danhThu',
-            title: t('page.home.turnover'),
-            unit: 'đ',
-            value: data.danhThu
+            title: 'Dịch vụ',
+            unit: '',
+            value: 100
           }
         ];
 

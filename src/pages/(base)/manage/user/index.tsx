@@ -111,9 +111,8 @@ const UserManagePage = () => {
     setLoading(true);
     try {
       const apiParams = {
-        MaxResultCount: '9999',
+        MaxResultCount: 10,
         SkipCount: 0,
-        Sorting: null,
         IsActive: null,
         Keyword: '',
         ...params
@@ -175,9 +174,8 @@ const UserManagePage = () => {
     const fetchGroups = async () => {
       setLoading(true);
       const apiParams = {
-        MaxResultCount: "9999",
+        MaxResultCount: 9999,
         SkipCount: 0,
-        Sorting: null,
         IsActive: true,
         Keyword: "",
       };
@@ -262,6 +260,7 @@ const UserManagePage = () => {
           <UserUpdateForm
             id={record.id}
             onSuccess={fetchList}
+            groupData={tenants}
           />
           <DeleteButton onClick={() => handleDelete(record.id)} />
         </div>
@@ -388,7 +387,7 @@ const UserManagePage = () => {
 
                           {/* Actions */}
                           <div className="flex justify-center gap-3 pt-3 border-t mt-3">
-                            <UserUpdateForm id={item.id} onSuccess={fetchList} />
+                            <UserUpdateForm id={item.id} onSuccess={fetchList} groupData={tenants} />
                             <DeleteButton onClick={() => handleDelete(item.id)} />
                           </div>
                         </Collapse.Panel>

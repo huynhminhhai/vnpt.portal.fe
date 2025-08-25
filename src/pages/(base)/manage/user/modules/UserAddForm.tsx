@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
 import { CreateUser } from '@/service/api';
+import { isActiveOptions } from '@/utils/options';
 
 const { Option } = Select;
 
@@ -91,12 +92,16 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
             <Col span={12}>
               <Form.Item
                 label="Đơn vị"
-                name=""
+                name="tenantId"
                 rules={[{ message: 'Vui lòng chọn đơn vị', required: true }]}
               >
-                <Select placeholder="Chọn đơn vị" size="middle" loading={loading} allowClear onChange={(value) => setTenantData(value)}>
+                <Select placeholder="Chọn đơn vị" size="middle" loading={loading} allowClear
+                  onChange={(_, option) =>
+                    setTenantData((option as any)?.key)
+                  }
+                >
                   {groupData.map((group) => (
-                    <Option key={group.tenancyName} value={group.tenancyName}>
+                    <Option key={group.tenancyName} value={group.id}>
                       {group.name}
                     </Option>
                   ))}
@@ -131,10 +136,39 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
                 rules={[{ message: 'Vui lòng chọn trạng thái', required: false }]}
               >
                 <Select placeholder="Chọn trạng thái" size="middle">
-                  <Option value={true}>Hoạt động</Option>
-                  <Option value={false}>Ngừng hoạt động</Option>
+                  {isActiveOptions
+                    .filter((item: any) => !item.type)
+                    .map((item: any) => (
+                      <Option key={item.key.toString()} value={item.key}>
+                        {item.label}
+                      </Option>
+                    ))}
                 </Select>
               </Form.Item>
+            </Col>
+            <Col span={24}>
+              <div>
+                <b className='text-sm'>
+                  Yêu cầu mật khẩu:
+                </b>
+                <ul className='text-xs list-disc pl-4 pt-1'>
+                  <li>
+                    Tối thiểu 8 ký tự
+                  </li>
+                  <li>
+                    Có ít nhất 1 chữ viết hoa
+                  </li>
+                  <li>
+                    Có ít nhất 1 chữ viết thường
+                  </li>
+                  <li>
+                    Có ít nhất 1 chữ số (0-9)
+                  </li>
+                  <li>
+                    Có ít nhất 1 ký tự đặc biệt (!, @, #, $, %)
+                  </li>
+                </ul>
+              </div>
             </Col>
           </Row>
           <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white'>
@@ -149,7 +183,7 @@ const UserAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
             </Button>
           </div>
         </Form>
-      </Drawer>
+      </Drawer >
     </>
   );
 };

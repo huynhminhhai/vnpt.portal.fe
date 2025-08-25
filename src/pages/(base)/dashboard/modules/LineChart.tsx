@@ -72,8 +72,9 @@ const LineChart = () => {
 
   async function fetchXuHuongData(nam: number) {
     try {
-      const response = await GetXuHuong(nam);
-      const result = response?.data?.result;
+      // const response = await GetXuHuong(nam);
+      const response = null;
+      const result = (response as any)?.data?.result;
 
       // Chuyển đổi dữ liệu
       const months = Array.from({ length: 12 }, (_, i) => `Tháng ${i + 1}`);
@@ -130,7 +131,7 @@ const LineChart = () => {
       className="card-wrapper"
       variant="borderless"
     >
-      <h5 className="text-center">Biểu đồ lượt cân</h5>
+      <h5 className="text-center">Biểu đồ line</h5>
       <Select
         className="absolute right-[10px] top-[10px] w-[150px]"
         options={generateYearOptions()}

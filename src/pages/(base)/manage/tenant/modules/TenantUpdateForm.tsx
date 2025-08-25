@@ -1,4 +1,5 @@
 import { GetTenantById, UpdateTenant } from '@/service/api';
+import { isActiveOptions } from '@/utils/options';
 import { Button, Col, Drawer, Form, Input, Row, Select, Tag, message } from 'antd';
 import React, { useState } from 'react';
 
@@ -128,8 +129,13 @@ const TenantUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
                       placeholder="Vui lòng chọn trạng thái"
                       size="middle"
                     >
-                      <Option value={true}>Hoạt động</Option>
-                      <Option value={false}>Ngừng hoạt động</Option>
+                      {isActiveOptions
+                        .filter((item: any) => !item.type)
+                        .map((item: any) => (
+                          <Option key={item.key.toString()} value={item.key}>
+                            {item.label}
+                          </Option>
+                        ))}
                     </Select>
                 }
               </Form.Item>

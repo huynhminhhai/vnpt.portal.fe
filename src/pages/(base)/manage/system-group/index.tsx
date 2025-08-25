@@ -92,9 +92,8 @@ const SystemGroupManagePage = () => {
     setLoading(true);
     try {
       const apiParams = {
-        MaxResultCount: '9999',
+        MaxResultCount: 10,
         SkipCount: 0,
-        Sorting: null,
         IsActive: null,
         Keyword: '',
         ...params

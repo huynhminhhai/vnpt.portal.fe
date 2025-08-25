@@ -123,9 +123,8 @@ const SystemManagePage = () => {
     setLoading(true);
     try {
       const apiParams = {
-        MaxResultCount: '9999',
+        MaxResultCount: 10,
         SkipCount: 0,
-        Sorting: null,
         IsActive: null,
         Keyword: '',
         ...params
@@ -187,9 +186,8 @@ const SystemManagePage = () => {
     const fetchGroups = async () => {
       setLoading(true);
       const apiParams = {
-        MaxResultCount: "9999",
+        MaxResultCount: 9999,
         SkipCount: 0,
-        Sorting: null,
         IsActive: null,
         Keyword: "",
       };

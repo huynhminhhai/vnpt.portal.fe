@@ -247,9 +247,9 @@ declare namespace Api {
       pId: number;
     };
     type paramsPhanTrang = {
-      Sorting: string | null;
+      Sorting?: string | null;
       SkipCount: number;
-      MaxResultCount: string;
+      MaxResultCount: number;
     }
     type responePhanTrang = {
       items: any[];

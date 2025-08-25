@@ -1,6 +1,7 @@
 const route: App.I18n.Schema['translation']['route'] = {
   '(base)_about': '关于',
   '(base)_home': '首页',
+  '(base)_dashboard': '仪表盘',
   '(base)_manage': '管理',
   '(base)_manage_system': '管理服务',
   '(base)_manage_system-group': '管理服务组',

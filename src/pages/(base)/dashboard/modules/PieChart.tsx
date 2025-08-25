@@ -84,8 +84,9 @@ const PieChart = () => {
 
   async function fetchChartData() {
     try {
-      const response = await GetThongTinTongQuat(); // thay URL bằng API thật
-      const data = response.data.result;
+      // const response = await GetThongTinTongQuat();
+      const response = null;
+      const data = (response as any).data.result;
 
       updateOptions(opts => {
         opts.series[0].data = [
@@ -133,7 +134,7 @@ const PieChart = () => {
       className="card-wrapper"
       variant="borderless"
     >
-      <h5 className="text-center">Biểu đồ tài khoản</h5>
+      <h5 className="text-center">Biểu đồ tròn</h5>
       <div
         className="h-360px overflow-hidden"
         ref={domRef}

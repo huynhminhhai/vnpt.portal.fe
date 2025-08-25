@@ -1,6 +1,7 @@
 const route: App.I18n.Schema['translation']['route'] = {
   '(base)_about': 'About',
   '(base)_home': 'Home',
+  '(base)_dashboard': 'Dashboard',
   '(base)_manage': 'Manage',
   '(base)_manage_system': 'System',
   '(base)_manage_system-group': 'System Group',

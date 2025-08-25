@@ -28,7 +28,7 @@ const UserAvatar = memo(() => {
     if (key === '1') {
       logout();
     } else {
-      navigate('/manage/system-group');
+      navigate('/dashboard');
     }
   }
 
@@ -45,7 +45,7 @@ const UserAvatar = memo(() => {
             className="text-icon"
             icon="ph:user-circle"
           />
-          Quản lý dịch vụ
+          Tổng quan
         </div>
       )
     },
