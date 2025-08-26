@@ -55,7 +55,12 @@ export const generatedRoutes: ElegantConstRoute[] = [
             matchedFiles: [null, null, null, null],
             name: '(base)_manage',
             path: '/manage',
-            handle: { i18nKey: 'route.(base)_manage', title: '(base)_manage', order: 3, icon: 'solar:layers-linear' },
+            handle: {
+              i18nKey: 'route.(base)_manage',
+              title: '(base)_manage',
+              order: 3,
+              icon: 'solar:layers-minimalistic-linear'
+            },
             children: [
               {
                 matchedFiles: [null, '/src/pages/(base)/manage/system/index.tsx', null, null],
@@ -99,6 +104,29 @@ export const generatedRoutes: ElegantConstRoute[] = [
                   title: '(base)_manage_user',
                   icon: 'solar:user-linear',
                   order: 4
+                }
+              }
+            ]
+          },
+          {
+            matchedFiles: [null, null, null, null],
+            name: '(base)_permission',
+            path: '/permission',
+            handle: {
+              i18nKey: 'route.(base)_permission',
+              title: '(base)_permission',
+              order: 4,
+              icon: 'solar:lock-keyhole-minimalistic-outline'
+            },
+            children: [
+              {
+                matchedFiles: [null, '/src/pages/(base)/permission/userSystem/index.tsx', null, null],
+                name: '(base)_permission_usersystem',
+                path: '/permission/usersystem',
+                handle: {
+                  i18nKey: 'route.(base)_permission_usersystem',
+                  title: '(base)_permission_usersystem',
+                  icon: 'solar:user-plus-linear'
                 }
               }
             ]

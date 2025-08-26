@@ -63,8 +63,6 @@ const GlobalTab = () => {
     navigate(tab.fullPath);
   }
 
-  console.log(tabs);
-
   return (
     <DarkModeContainer className="size-full flex-y-center px-16px shadow-tab">
       <div

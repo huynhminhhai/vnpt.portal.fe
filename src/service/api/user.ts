@@ -14,6 +14,16 @@ export interface UserType {
   password: string;
 }
 
+export const GetAllUserWithTenantInfo = async (params: Api.SystemManage.paramsPhanTrang) => {
+  const res = await newRequest<Api.SystemManage.GetAllUserWithTenantResponse>({
+    method: 'get',
+    params,
+    url: '/api/services/app/User/GetAllUserWithTenantInfo'
+  });
+
+  return res;
+};
+
 export const GetAllUser = async (params: Api.SystemManage.paramsPhanTrang) => {
   const res = await newRequest<Api.SystemManage.GetAllUserWithTenantResponse>({
     method: 'get',

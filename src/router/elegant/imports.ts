@@ -24,6 +24,7 @@ export const pages: Record<string, () => Promise<any>> = {
 "(base)_manage_system": () => import("@/pages/(base)/manage/system/index.tsx"),
 "(base)_manage_tenant": () => import("@/pages/(base)/manage/tenant/index.tsx"),
 "(base)_manage_user": () => import("@/pages/(base)/manage/user/index.tsx"),
+"(base)_permission_usersystem": () => import("@/pages/(base)/permission/userSystem/index.tsx"),
 "(base)_user-center": () => import("@/pages/(base)/user-center/index.tsx"),
 "(blank)_login-out": () => import("@/pages/(blank)/login-out/index.tsx"),
 "(blank)_login_code-login": () => import("@/pages/(blank)/login/code-login/index.tsx"),

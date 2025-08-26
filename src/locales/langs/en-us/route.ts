@@ -7,6 +7,8 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_manage_system-group': 'System Group',
   '(base)_manage_tenant': 'Tenant',
   '(base)_manage_user': 'User',
+  '(base)_permission': 'Permission',
+  '(base)_permission_usersystem': 'User System',
   '(base)_user-center': 'User Center',
   '(blank)_login': 'Login',
   '(blank)_login_code-login': 'Code Login',

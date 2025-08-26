@@ -7,6 +7,8 @@ const route: App.I18n.Schema['translation']['route'] = {
   '(base)_manage_system-group': '管理服务组',
   '(base)_manage_tenant': '租户管理',
   '(base)_manage_user': '用户管理',
+  '(base)_permission': '权限管理',
+  '(base)_permission_usersystem': '用户系统',
   '(base)_user-center': '个人中心',
   '(blank)_login': '登录',
   '(blank)_login_code-login': '验证码登录',

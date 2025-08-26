@@ -12,7 +12,7 @@ const HeroBanner = () => {
             <h1 className="text-[22px] md:text-[28px] leading:[34px] md:leading-[40px] font-semibold capitalize ">
               Cổng dịch vụ số <br /> Xã Cần Đước
             </h1>
-            <p className="mt-1 md:mt-2 max-w-[90%] md:max-w-[60%] text-[16px] font-normal leading-[26px]">
+            <p className="mt-1 md:mt-2 max-w-[90%] md:max-w-[60%] text-[15px] font-normal leading-[26px]">
               Nơi bạn có thể quản lý và sử dụng các giải pháp chuyển đổi số được thiết kế chuyên biệt cho địa phương của mình.
             </p>
           </div>

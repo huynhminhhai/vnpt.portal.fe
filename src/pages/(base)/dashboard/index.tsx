@@ -2,7 +2,7 @@ import CardData from "./modules/CardData";
 import LineChart from "./modules/LineChart";
 import PieChart from "./modules/PieChart";
 
-const Component = () => {
+const Dashboard = () => {
   return <ASpace
     className="w-full pb-4"
     direction="vertical"
@@ -44,4 +44,4 @@ const Component = () => {
 };
 
 
-export default Component;
+export default Dashboard;
