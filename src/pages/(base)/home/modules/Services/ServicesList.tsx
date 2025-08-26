@@ -1,65 +1,57 @@
-import { ThemeContext } from "@/features/theme";
-import ServicesItem, { ServicesItemProps } from "./ServicesItem"
+import ServicesItem from "./ServicesItem"
 import ServiceHeading from "./ServiceHeading";
 import { Icon } from "@iconify/react";
 import { Input, Select } from "antd";
-
-const servicesData: ServicesItemProps[] = [
-  // {
-  //   title: "Quản lý Bộ chỉ số",
-  //   link: "https://bochiso.vnpt.me",
-  //   desc: "Quản lý và theo dõi Bộ chỉ số cải cách hành chính cấp xã, cập nhật tiến độ và kết quả theo từng đợt đánh giá.",
-  //   gradientColor: "rgba(0, 89, 169, 1)",
-  //   logo: ""
-  // },
-  {
-    title: "Đặt lịch hẹn",
-    link: "https://lichhen.vnpt.me",
-    desc: "Quản lý hệ thống hỗ trợ đặt lịch hẹn, bốc số",
-    gradientColor: "rgba(0, 71, 171, 1)",
-    logo: "https://photo-logo-mapps.zadn.vn/2eb14e96e8d3018d58c2.jpg"
-  },
-  {
-    title: "Quản lý chợ",
-    link: "https://emarket.vnpt.me",
-    desc: "Phần mềm giúp tiết kiệm thời gian trong việc quản lý thu phí dịch vụ; tổng hợp, quản lý các số liệu về sổ bộ, kế hoạch, hóa đơn điện tử một các",
-    gradientColor: "rgba(0, 71, 171, 1)",
-    logo: "https://emarket.vnpt.me/assets/MatBang-usQaCZta.png"
-  },
-  {
-    title: "Quản lý thu phí cấp nước",
-    link: "https://capnuoccanduoc.vnpt.me",
-    desc: "Giải pháp số hóa quản lý và thu phí nước nhanh chóng, chính xác, hiệu quả.",
-    gradientColor: "rgba(139, 215, 250, 1)",
-    logo: "https://capnuoccanduoc.vnpt.me/assets/water-management-CfC5ER0q.png"
-  },
-  // {
-  //   title: "Khu phố thông minh",
-  //   link: "https://qlkhupho.vnpt.me",
-  //   desc: "Khu phố thông minh giúp cư dân dễ dàng quản lý thông tin, gửi yêu cầu, nhận thông báo và kết nối nhanh chóng với ban quản lý ngay trên Zalo.",
-  //   gradientColor: "rgba(0, 36, 70, 1)",
-  //   logo: "https://photo-logo-mapps.zadn.vn/4bde6285c4c02d9e74d1.jpg"
-  // },
-]
-
-const servicesDataOthers: ServicesItemProps[] = [
-  {
-    title: "Khu phố thông minh",
-    link: "https://qlkhupho.vnpt.me",
-    desc: "Khu phố thông minh giúp cư dân dễ dàng quản lý thông tin, gửi yêu cầu, nhận thông báo và kết nối nhanh chóng với ban quản lý ngay trên Zalo.",
-    gradientColor: "rgba(0, 36, 70, 1)",
-    logo: "https://photo-logo-mapps.zadn.vn/4bde6285c4c02d9e74d1.jpg"
-  },
-]
+import { localStg } from "@/utils/storage";
+import { GetAllSystemWeb } from "@/service/api";
 
 const ServicesList = () => {
 
-  const { darkMode } = useContext(ThemeContext);
   const { Search } = Input;
+  const userId = (localStg as any).get('userId');
+
+  console.log(userId);
 
   const [isShowAll, setIsShowAll] = useState(
     JSON.parse(localStorage.getItem("isShowAll") || "false")
   );
+  const [listSystem, setListSystem] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchListSystem = async () => {
+    setLoading(true);
+    try {
+
+      const apiParams = {
+        MaxResultCount: 9999,
+        SkipCount: 0,
+        IsActive: true,
+        Keyword: ''
+      };
+
+      const res = await GetAllSystemWeb(apiParams);
+
+      const resData = res.data as any;
+
+      if (resData && resData.result && resData.result.items) {
+        const data = resData.result.items;
+
+        setListSystem(data);
+      } else {
+        console.warn('API response format không đúng, sử dụng fallback data');
+        setListSystem([]);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setListSystem([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchListSystem();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("isShowAll", JSON.stringify(isShowAll));
@@ -75,7 +67,7 @@ const ServicesList = () => {
 
   return (
     <div
-      className="px-3 md:px-10 pt-[20px] pb-[60px] grow-[1]"
+      className="px-3 md:px-10 pt-[20px] pb-[20px] grow-[1]"
     >
       <ARow gutter={[16, 16]}>
 
@@ -134,12 +126,12 @@ const ServicesList = () => {
       {
         isShowAll ?
           <>
-            <ARow gutter={[16, 16]} className="mt-8">
+            <ARow gutter={[12, 12]} className="mt-8">
               {
-                [...servicesData, ...servicesDataOthers].map(({ ...rest }, index) => (
+                listSystem?.map((item, index) => (
                   <ServicesItem
                     key={index}
-                    {...rest}
+                    dataItem={item}
                   />
                 ))
               }
@@ -148,23 +140,12 @@ const ServicesList = () => {
           :
           <>
             <ServiceHeading title="Dịch vụ số" />
-            <ARow gutter={[16, 16]}>
+            <ARow gutter={[12, 12]} className="mt-8">
               {
-                servicesData.map(({ ...rest }, index) => (
+                listSystem?.map((item, index) => (
                   <ServicesItem
                     key={index}
-                    {...rest}
-                  />
-                ))
-              }
-            </ARow>
-            <ServiceHeading title="Dịch vụ khác" />
-            <ARow gutter={[16, 16]}>
-              {
-                servicesDataOthers.map(({ ...rest }, index) => (
-                  <ServicesItem
-                    key={index}
-                    {...rest}
+                    dataItem={item}
                   />
                 ))
               }

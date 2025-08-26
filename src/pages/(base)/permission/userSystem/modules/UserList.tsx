@@ -1,5 +1,6 @@
 import { AssignSystemPermissionsToUser, GetAllUserWithTenantInfo } from "@/service/api";
-import { message, Table, TableColumnsType } from "antd";
+import { message, Tree } from "antd";
+import { DataNode } from "antd/es/tree";
 
 interface UserListProps {
   selectedTenant: number | null,
@@ -24,6 +25,7 @@ const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, 
 
   const [datas, setDatas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingAssign, setLoadingAssign] = useState(false);
 
   const fetchList = async (params = {}) => {
     setLoading(true);
@@ -60,40 +62,18 @@ const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, 
     fetchList();
   }, []);
 
-  const data: TenantType[] = datas.map((tenant) => ({
-    key: tenant.tenantId,
-    tenantId: tenant.tenantId,
-    tenantName: tenant.name,
+  const treeData: DataNode[] = datas.map((tenant) => ({
+    title: tenant.name,
+    key: `${tenant.tenantId}`,
+    selectable: false,
     children: tenant.lstUser.map((user: UserType) => ({
-      key: user.id,
-      userName: user.userName,
-      name: user.name,
+      title: `${user.name} (${user.userName})`,
+      key: `${user.id}`,
     })),
   }));
 
-  const columns: TableColumnsType<any> = [
-    {
-      title: "Xã / Tài khoản",
-      dataIndex: "tenantName",
-      key: "tenantName",
-      render: (_, record: any) => record.tenantName || record.userName,
-    },
-  ];
-
-  const rowSelection = {
-    type: "radio" as const,
-    selectedRowKeys: selectedTenant ? [selectedTenant] : [],
-    onChange: (selectedRowKeys: React.Key[]) => {
-      setSelectedTenant(selectedRowKeys[0] as number);
-    },
-    getCheckboxProps: (record: any) => ({
-      style: record.tenantName ? { display: "none" } : {},
-      disabled: !!record.tenantName,
-    }),
-  };
-
   const handleSubmit = async (checkedList: number[]) => {
-    setLoading(true);
+    setLoadingAssign(true);
     try {
       const dataSubmit = {
         userId: selectedTenant as number,
@@ -109,27 +89,33 @@ const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, 
       console.log(error);
       message.error(error as string);
     } finally {
-      setLoading(false);
+      setLoadingAssign(false);
     }
   }
 
   return (
     <ACard
-      className="card-wrapper min-h-500px h-100px overflow-y-unset md:overflow-y-auto md:overflow-x-hidden table-custom card-wrapper
+      className="card-wrapper min-h-fit md:min-h-500px h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden table-custom card-wrapper
         [&_.ant-card-body]:flex [&_.ant-card-body]:flex-col [&_.ant-card-body]:h-full
         [&_.ant-card-body]:justify-between [&_.ant-card-body]:gap-3"
       variant="borderless"
+      loading={loading}
     >
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowSelection={rowSelection}
-        size="small"
-        loading={loading}
-        pagination={false}
+      <Tree
+        treeData={treeData}
+        showLine
+        selectable
+        multiple={false}
+        selectedKeys={selectedTenant ? [selectedTenant] : []}
+        onSelect={(keys) => {
+          if (keys.length && keys[0]) {
+            setSelectedTenant(keys[0] as number);
+          }
+        }}
+        defaultExpandAll
         className="grow-1"
       />
-      <AButton type="primary" className="w-full" onClick={() => handleSubmit(checkedList)} loading={loading}>
+      <AButton type="primary" className="w-full" onClick={() => handleSubmit(checkedList)} loading={loadingAssign}>
         Lưu lại
       </AButton>
     </ACard>

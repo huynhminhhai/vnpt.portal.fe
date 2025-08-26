@@ -1,7 +1,7 @@
 import { useLoading } from '@sa/hooks';
 
 import { globalConfig } from '@/config';
-import { getIsLogin, selectUserInfo } from '@/features/auth/authStore';
+import { getIsLogin, selectUserInfo, setUserId } from '@/features/auth/authStore';
 import { usePreviousRoute, useRouter } from '@/features/router';
 import { fetchLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
@@ -54,9 +54,11 @@ export function useInitAuth() {
 
     if (loginToken) {
       localStg.set('token', loginToken.result.accessToken);
+      (localStg as any).set('userId', loginToken.result.userId);
       localStg.set('refreshToken', loginToken.result.encryptedAccessToken);
 
       dispatch(setToken(loginToken.result.accessToken));
+      dispatch(setUserId(loginToken.result.userId));
 
       if (redirect) {
         if (redirectUrl) {

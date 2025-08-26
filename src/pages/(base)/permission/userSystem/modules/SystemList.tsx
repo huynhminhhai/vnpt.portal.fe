@@ -98,7 +98,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
 
   return (
     <ACard
-      className="card-wrapper min-h-500px h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden"
+      className="card-wrapper min-h-fit md:min-h-500px h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden"
       variant="borderless"
       loading={loading}
     >

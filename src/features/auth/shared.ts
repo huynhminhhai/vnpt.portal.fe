@@ -5,6 +5,11 @@ export function getToken() {
   return localStg.get('token') || '';
 }
 
+/** Get userId */
+export function getUserId() {
+  return (localStg as any).get('userId') || '';
+}
+
 /** Get user info */
 export function getUserInfo() {
   const emptyInfo: Api.Auth.UserInfo = {
@@ -28,4 +33,5 @@ export function clearAuthStorage() {
   localStg.remove('token');
   localStg.remove('refreshToken');
   localStg.remove('userInfo');
+  (localStg as any).remove('userId');
 }

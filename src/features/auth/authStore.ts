@@ -1,11 +1,12 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
-import { getToken, getUserInfo } from './shared';
+import { getToken, getUserId, getUserInfo } from './shared';
 
 const initialState = {
   token: getToken(),
-  userInfo: getUserInfo()
+  userInfo: getUserInfo(),
+  userId: getUserId(),
 };
 
 export const authSlice = createSlice({
@@ -16,19 +17,23 @@ export const authSlice = createSlice({
     setToken: (state, { payload }: PayloadAction<string>) => {
       state.token = payload;
     },
+    setUserId: (state, { payload }: PayloadAction<number>) => {
+      state.userId = payload;
+    },
     setUserInfo: (state, { payload }: PayloadAction<Api.Auth.UserInfo>) => {
       state.userInfo = payload;
     }
   },
   selectors: {
     selectToken: auth => auth.token,
+    selectUserId: auth => auth.userId,
     selectUserInfo: auth => auth.userInfo
   }
 });
 
-export const { resetAuth, setToken, setUserInfo } = authSlice.actions;
+export const { resetAuth, setToken, setUserInfo, setUserId } = authSlice.actions;
 
-export const { selectToken, selectUserInfo } = authSlice.selectors;
+export const { selectToken, selectUserId, selectUserInfo } = authSlice.selectors;
 
 /** Is login */
 export const getIsLogin = createSelector([selectToken], token => Boolean(token));

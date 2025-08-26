@@ -112,7 +112,7 @@ textarea.ant-input[disabled],
   height: 30px;
 }
 
-.table-custom .ant-table-row-selected > td {
+.table-custom .ant-tree-node-selected {
   background: #e6ebf0 !important;
 }
 

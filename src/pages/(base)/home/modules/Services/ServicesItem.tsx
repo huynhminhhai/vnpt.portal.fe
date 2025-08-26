@@ -2,32 +2,30 @@ import { ThemeContext } from "@/features/theme"
 import { toHostname } from "@/utils/number"
 import { Icon } from "@iconify/react"
 import { Image } from "antd"
+import React from "react"
 
 export interface ServicesItemProps {
-  cardKey?: string
-  title: string
-  link: string
-  desc: string
-  gradientColor: string
-  logo?: string
+  dataItem: any
 }
 
-const ServicesItem = (props: ServicesItemProps) => {
-
-  const { cardKey, title, link, desc, gradientColor, logo } = props
+const ServicesItem: React.FC<ServicesItemProps> = ({dataItem}) => {
 
   const { darkMode } = useContext(ThemeContext);
 
+  console.log(dataItem);
+
   return (
     <ACol
-      key={cardKey}
-      lg={6}
+      key={dataItem?.id}
+      xs={24}
+      sm={24}
       md={12}
-      span={24}
+      lg={8}
+      xl={6}
     >
       <div className="group relative transition-all duration-200 top-0 hover:-top-1 h-full">
         <a
-          href={link}
+          href={dataItem?.systemUrl}
           target="_blank"
           className="flex flex-col justify-between border-[1px] border-[#e0e0e0e] rounded-lg cursor-pointer relative transition-all duration-300 service-item overflow-hidden h-full"
           style={{
@@ -37,8 +35,8 @@ const ServicesItem = (props: ServicesItemProps) => {
         >
           <div className="absolute top-4 right-5">
             <Image
-              width={48}
-              src={logo || '/src/assets/imgs/vnpt.png'}
+              width={36}
+              src={dataItem?.iconUrl || '/src/assets/imgs/vnpt.png'}
               preview={false}
               className="rounded-lg logo"
             />
@@ -49,13 +47,13 @@ const ServicesItem = (props: ServicesItemProps) => {
                 className="text-[18px] leading-[24px] font-semibold mb-[4px]"
                 style={{ color: darkMode ? '#ffffffd9' : '#000000E0' }}
               >
-                {title}
+                {dataItem?.systemName}
               </h2>
               <div className="flex items-center gap-1 text-[13px] leading-[20px]"
                 style={{
                   color: darkMode ? '#ffffffd9' : '#6b7280'
                 }}>
-                {toHostname(link)}
+                {toHostname(dataItem?.systemUrl)}
                 <Icon icon='heroicons:arrow-top-right-on-square-20-solid' fontSize={16} />
               </div>
             </div>
@@ -65,7 +63,7 @@ const ServicesItem = (props: ServicesItemProps) => {
                 color: darkMode ? '#ffffffd9' : '#6b7280'
               }}
             >
-              {desc}
+              {dataItem?.systemDescription}
             </div>
           </div>
           <div className="px-4 py-3 flex items-center justify-between border-t-[1px] border-gray-200 group-hover:bg-primary group-hover:text-white">
