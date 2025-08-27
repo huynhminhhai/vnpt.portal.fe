@@ -78,6 +78,26 @@ declare namespace Api {
       roles: string[];
       userId: string;
       userName: string;
+      application: {
+        version: string;
+        releaseDate: string;
+        features: Record<string, unknown>;
+      },
+      user: {
+        name: string;
+        surname: string;
+        userName: string;
+        emailAddress: string;
+        id: number;
+      },
+      tenant: {
+        tenancyName: string;
+        name: string;
+        id: number;
+      },
+      grantedPermissions: string[];
+      hoTen: string | null;
+      roleNames: string[];
     }
 
     type Info = {
@@ -160,7 +180,7 @@ declare namespace Api {
     /** user search params */
     type UserSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.User, 'nickName' | 'status' | 'userEmail' | 'userGender' | 'userName' | 'userPhone'> &
-        CommonSearchParams
+      CommonSearchParams
     >;
 
 

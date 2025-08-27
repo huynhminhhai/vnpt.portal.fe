@@ -14,7 +14,7 @@ const Header = memo(() => {
         <SystemLogo className="mb-1 mr-2 mt-2 h-36px w-36px text-primary lt-sm:h-48px lt-sm:w-48px" />
 
         <FlipText
-          className="text-22px text-[#0059a9] font-500 lt-sm:text-22px"
+          className="text-28px text-[#0059a9] font-bold lt-sm:text-22px capitalize"
           word={t('system.title')}
         />
       </Space>

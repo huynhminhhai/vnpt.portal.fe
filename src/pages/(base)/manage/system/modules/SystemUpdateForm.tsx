@@ -190,7 +190,7 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
 
             {/* Nhóm 3: Cấu hình nâng cao */}
 
-            {/* <Col span={12}>
+            <Col span={12}>
               <Form.Item
                 label="Secret Key"
                 name="secretKey"
@@ -204,9 +204,9 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                     <Input placeholder="Nhập secret key" size="middle" disabled={!isEdit} />
                 }
               </Form.Item>
-            </Col> */}
+            </Col>
 
-            {/* <Col span={12}>
+            <Col span={12}>
               <Form.Item
                 label="Callback URL"
                 name="callbackUrl"
@@ -220,7 +220,7 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                     <Input placeholder="Nhập callback URL" size="middle" disabled={!isEdit} />
                 }
               </Form.Item>
-            </Col> */}
+            </Col>
 
             <Col span={12}>
               <Form.Item

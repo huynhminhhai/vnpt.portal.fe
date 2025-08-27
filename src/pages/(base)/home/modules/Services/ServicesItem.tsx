@@ -3,16 +3,24 @@ import { toHostname } from "@/utils/number"
 import { Icon } from "@iconify/react"
 import { Image } from "antd"
 import React from "react"
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export interface ServicesItemProps {
-  dataItem: any
+  dataItem: any,
+  index: number
 }
 
-const ServicesItem: React.FC<ServicesItemProps> = ({dataItem}) => {
+const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
 
   const { darkMode } = useContext(ThemeContext);
 
-  console.log(dataItem);
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  }, []);
 
   return (
     <ACol
@@ -22,18 +30,21 @@ const ServicesItem: React.FC<ServicesItemProps> = ({dataItem}) => {
       md={12}
       lg={8}
       xl={6}
+      data-aos="fade-up"
+      data-aos-delay={index * 100}
     >
-      <div className="group relative transition-all duration-200 top-0 hover:-top-1 h-full">
+      <div
+        className="group relative transition-all duration-200 top-0 hover:-top-1 h-full"
+      >
         <a
           href={dataItem?.systemUrl}
           target="_blank"
-          className="flex flex-col justify-between border-[1px] border-[#e0e0e0e] rounded-lg cursor-pointer relative transition-all duration-300 service-item overflow-hidden h-full"
+          className="flex flex-col justify-between border border-gray-200/50 rounded-xl cursor-pointer relative transition-all duration-300 overflow-hidden h-full hover:shadow-xl hover:scale-[1.01] bg-white dark:bg-zinc-900"
           style={{
-            backgroundColor: darkMode ? '#292929' : '#ffffff',
-            boxShadow: '0px 24px 84px 0px rgba(0,0,0,0.05)'
+            boxShadow: '0px 12px 32px rgba(0,0,0,0.05)',
           }}
         >
-          <div className="absolute top-4 right-5">
+          <div className="absolute top-5 right-5">
             <Image
               width={36}
               src={dataItem?.iconUrl || '/src/assets/imgs/vnpt.png'}

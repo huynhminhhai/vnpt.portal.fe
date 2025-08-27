@@ -3,7 +3,7 @@ import { Outlet, matchRoutes } from 'react-router-dom';
 import type { ShouldRevalidateFunctionArgs } from 'react-router-dom';
 
 import { isStaticSuper, selectUserInfo } from '@/features/auth/authStore';
-import { usePrevious, useRoute } from '@/features/router';
+import { usePrevious, useRoute, useRouter } from '@/features/router';
 import { allRoutes } from '@/router';
 import { localStg } from '@/utils/storage';
 
@@ -47,7 +47,7 @@ function createRouteGuard(to: Router.Route, roles: string[], isSuper: boolean, p
   const needLogin = !to.handle.constant;
   const routeRoles = to.handle.roles || [];
 
-  const hasRole = roles.some(role => routeRoles.includes(role));
+  const hasRole = roles?.some(role => routeRoles.includes(role));
 
   const hasAuth = isSuper || !routeRoles.length || hasRole;
 
@@ -76,6 +76,7 @@ function createRouteGuard(to: Router.Route, roles: string[], isSuper: boolean, p
 
 const RootLayout = () => {
   const route = useRoute();
+  const { replace } = useRouter();
 
   const previousRoute = usePrevious(route);
 
@@ -90,6 +91,14 @@ const RootLayout = () => {
   const { roles } = useAppSelector(selectUserInfo);
 
   const isSuper = useAppSelector(isStaticSuper);
+
+  console.log(isSuper);
+
+  useEffect(() => {
+  if (!isSuper) {
+    replace("/home");
+  }
+}, [isSuper]);
 
   const { t } = useTranslation();
 

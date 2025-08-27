@@ -43,6 +43,24 @@ export const GetUserById = (id: number) => {
   return res;
 };
 
+export const GetUserInfo = () => {
+  const res = newRequest<any>({
+    method: 'get',
+    url: `/api/services/app/User/GetUserInfo`
+  });
+
+  return res;
+};
+
+export const GetCurrentLoginInformations = () => {
+  const res = newRequest<any>({
+    method: 'get',
+    url: `/api/services/app/Session/GetCurrentLoginInformations`
+  });
+
+  return res;
+};
+
 export const CreateUser = (data: UserType) => {
   const res = newRequest<any>({
     data,

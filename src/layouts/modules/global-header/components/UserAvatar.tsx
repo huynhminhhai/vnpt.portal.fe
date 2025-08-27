@@ -1,15 +1,17 @@
 import type { MenuProps } from 'antd';
 
-import { selectToken, selectUserInfo } from '@/features/auth/authStore';
+import { isStaticSuper, selectToken, selectUserInfo } from '@/features/auth/authStore';
 import { useRouter } from '@/features/router';
 import { Icon } from '@iconify/react';
+import { useSelector } from 'react-redux';
 
 const UserAvatar = memo(() => {
   const token = useAppSelector(selectToken);
 
   const { t } = useTranslation();
 
-  const userInfo = useAppSelector(selectUserInfo);
+  const { user } = useAppSelector(selectUserInfo);
+  const isSuper = useSelector(isStaticSuper);
 
   const { navigate } = useRouter();
 
@@ -38,33 +40,29 @@ const UserAvatar = memo(() => {
   }
 
   const items: MenuProps['items'] = [
-    {
-      key: '0',
-      label: (
-        <div className="flex-center gap-8px">
-          <Icon
-            icon="solar:widget-5-linear"
-            fontSize={18}
-          />
-          Tổng quan
-        </div>
-      )
-    },
-    {
-      type: 'divider'
-    },
+    ...(isSuper
+      ? [
+        {
+          key: '0',
+          label: (
+            <div className="flex-center gap-8px">
+              <Icon icon="solar:widget-5-linear" fontSize={18} />
+              Tổng quan
+            </div>
+          ),
+        },
+        { type: 'divider' as const },
+      ]
+      : []),
     {
       key: '1',
       label: (
         <div className="flex-center gap-8px">
-          <Icon
-            icon="solar:logout-outline"
-            fontSize={22}
-          />
+          <Icon icon="mynaui:logout" fontSize={20} />
           {t('common.logout')}
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return token ? (
@@ -75,12 +73,8 @@ const UserAvatar = memo(() => {
     >
       <div>
         <ButtonIcon className="px-12px">
-          {/* <SvgIcon
-            className="text-icon-large"
-            icon="ph:user-circle"
-          /> */}
           <img src="/src/assets/imgs/vnpt.webp" alt="vnpt" className="w-28px h-28px rounded-full border border-primary" />
-          <span className="text-14px capitalize">Admin Xã Cần Đước</span>
+          <span className="text-14px capitalize">{user?.name}</span>
         </ButtonIcon>
       </div>
     </ADropdown>

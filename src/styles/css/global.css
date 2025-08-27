@@ -60,6 +60,10 @@ input[type='number']::-webkit-inner-spin-button {
   margin: 0;
 }
 
+#tsparticles canvas {
+  position: absolute !important;
+}
+
 /* .ant-input[disabled],
 .ant-input-number-input[disabled],
 textarea.ant-input[disabled],

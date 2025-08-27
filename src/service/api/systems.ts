@@ -41,6 +41,15 @@ export const GetSystemWebById = (id: number) => {
   return res;
 };
 
+export const GetSystemWebsByUser = () => {
+  const res = newRequest<any>({
+    method: 'get',
+    url: `/api/services/app/SystemWeb/GetSystemWebsByUser`
+  });
+
+  return res;
+};
+
 export const CreateSystemWeb = (data: SystemWebType) => {
   const res = newRequest<any>({
     data,

@@ -27,6 +27,7 @@ declare global {
   const AList: typeof import('antd')['List']
   const AMenu: typeof import('antd')['Menu']
   const AModal: typeof import('antd')['Modal']
+  const AOS: typeof import('antd')['OS']
   const APopconfirm: typeof import('antd')['Popconfirm']
   const APopover: typeof import('antd')['Popover']
   const ARadio: typeof import('antd')['Radio']
