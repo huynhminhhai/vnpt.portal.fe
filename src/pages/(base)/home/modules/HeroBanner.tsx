@@ -3,7 +3,6 @@ import { loadFull } from "tsparticles";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { selectUserInfo } from "@/features/auth/authStore";
-import FlipText from "@/components/FilpText";
 
 const HeroBanner = () => {
 
@@ -49,9 +48,9 @@ const HeroBanner = () => {
             },
           },
           particles: {
-            color: { value: "#ffffff" },
+            color: { value: "#e0e0e0" },
             links: {
-              color: "#ffffff",
+              color: "#e0e0e0",
               distance: 150,
               enable: true,
               opacity: 0.4,
@@ -78,10 +77,12 @@ const HeroBanner = () => {
       >
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <FlipText
-              className="text-[22px] md:text-[32px] leading:[34px] md:leading-[42px] font-semibold capitalize"
-              word={tenant ? "Portal " + tenant?.name : "Portal " + "Cấp Xã"}
-            />
+            <h1 className="text-[22px] md:text-[32px] leading:[34px] md:leading-[42px] font-semibold capitalize" data-aos="fade-right" data-aos-delay="100">
+              Portal
+              {
+                tenant ? " " + tenant?.name : " " + "Cấp Xã"
+              }
+            </h1>
             <div className="mt-1 md:mt-4 max-w-[90%] md:max-w-[60%] text-[15px] font-normal leading-[26px]" data-aos="fade-right" data-aos-delay="200">
               <div className="h-[1.5px] w-[15%] bg-white mb-[6px] opacity-80"></div>
               Nơi bạn có thể quản lý và sử dụng các giải pháp chuyển đổi số được thiết kế chuyên biệt cho địa phương của mình.

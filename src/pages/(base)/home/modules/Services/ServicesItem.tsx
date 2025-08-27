@@ -3,8 +3,6 @@ import { toHostname } from "@/utils/number"
 import { Icon } from "@iconify/react"
 import { Image } from "antd"
 import React from "react"
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 export interface ServicesItemProps {
   dataItem: any,
@@ -15,13 +13,6 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
 
   const { darkMode } = useContext(ThemeContext);
 
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
-  }, []);
-
   return (
     <ACol
       key={dataItem?.id}
@@ -30,11 +21,10 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
       md={12}
       lg={8}
       xl={6}
-      data-aos="fade-up"
-      data-aos-delay={index * 100}
     >
       <div
-        className="group relative transition-all duration-200 top-0 hover:-top-1 h-full"
+        className="group relative transition-all duration-200 top-0 hover:-top-1 h-full fade-up-css"
+        style={{ animationDelay: `${index * 0.2}s` }}
       >
         <a
           href={dataItem?.systemUrl}
@@ -79,7 +69,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
           </div>
           <div className="px-4 py-3 flex items-center justify-between border-t-[1px] border-gray-200 group-hover:bg-primary group-hover:text-white">
             <div className="text-[14px] leading-[1] text-primary font-medium dark:text-white group-hover:text-white">Truy cập ngay</div>
-            <Icon icon='si:arrow-right-line' fontSize={24} className="text-primary dark:text-white group-hover:text-white" />
+            <Icon icon='solar:round-arrow-right-down-line-duotone' fontSize={26} className="text-primary dark:text-white group-hover:text-white" />
           </div>
         </a >
       </div>

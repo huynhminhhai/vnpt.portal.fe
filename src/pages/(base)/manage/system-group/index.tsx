@@ -1,4 +1,4 @@
-import { Card, Collapse, Dropdown, List, MenuProps, message, Tag } from 'antd';
+import { Card, Collapse, List, message } from 'antd';
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
 import SystemGroupAddForm from './modules/SystemGroupAddForm';
@@ -6,7 +6,7 @@ import SystemGroupUpdateForm from './modules/SystemGroupUpdateForm';
 import { formatDate } from '@/utils/date';
 import { DeleteGroupSystem, GetAllSystemGroup, UpdateSystemGroup } from '@/service/api';
 import { useIsTabletResponsive } from '@/utils/responsive';
-import { statusOptions } from '@/utils/options';
+import { isActiveOptions } from '@/utils/options';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
@@ -208,10 +208,10 @@ const SystemGroupManagePage = () => {
       align: 'center' as const,
       key: 'status',
       render: (_: any, record: any) =>
-        <StatusDropdown
+        <IsActiveDropdown
           record={record}
-          isActive={record.status}
-          statusOptions={statusOptions}
+          isActive={record.isActive}
+          isActiveOptions={isActiveOptions}
           handleStatusMenuClick={handleStatusMenuClick}
         />,
       title: 'Trạng thái',
@@ -321,10 +321,10 @@ const SystemGroupManagePage = () => {
                             <span className="text-xs font-semibold text-primary">#{item.id}</span>
                           </div>
                         </div>
-                        <StatusDropdown
+                        <IsActiveDropdown
                           record={item}
-                          isActive={item.status}
-                          statusOptions={statusOptions}
+                          isActive={item.isActive}
+                          isActiveOptions={isActiveOptions}
                           handleStatusMenuClick={handleStatusMenuClick}
                         />
                       </div>

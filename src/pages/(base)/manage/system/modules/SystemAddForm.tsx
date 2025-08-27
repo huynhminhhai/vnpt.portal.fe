@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
 import { CreateSystemWeb } from '@/service/api';
-import { statusOptions } from '@/utils/options';
+import { isActiveOptions } from '@/utils/options';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -70,7 +70,7 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
           layout="vertical"
           onFinish={onFinish}
           initialValues={{
-            systemStatus: 1,
+            isActive: true,
           }}
         >
           <Row gutter={16}>
@@ -177,11 +177,11 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
             <Col span={12}>
               <Form.Item
                 label="Trạng thái"
-                name="systemStatus"
+                name="isActive"
                 rules={[{ message: 'Vui lòng chọn trạng thái', required: false }]}
               >
                 <Select placeholder="Chọn trạng thái" size="middle">
-                  {statusOptions
+                  {isActiveOptions
                     .filter((item: any) => !item.type)
                     .map((item: any) => (
                       <Option key={item.key.toString()} value={item.key}>

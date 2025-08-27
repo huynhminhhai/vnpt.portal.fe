@@ -92,8 +92,6 @@ const RootLayout = () => {
 
   const isSuper = useAppSelector(isStaticSuper);
 
-  console.log(isSuper);
-
   useEffect(() => {
   if (!isSuper) {
     replace("/home");

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
 import { CreateSystemGroup } from '@/service/api';
-import { statusOptions } from '@/utils/options';
+import { isActiveOptions } from '@/utils/options';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -67,7 +67,7 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
           layout="vertical"
           onFinish={onFinish}
           initialValues={{
-            status: 1
+            isActive: true
           }}
         >
           <Row gutter={16}>
@@ -86,14 +86,14 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
             <Col span={12}>
               <Form.Item
                 label="Trạng thái"
-                name="status"
+                name="isActive"
                 rules={[{ message: 'Vui lòng chọn trạng thái', required: true }]}
               >
                 <Select
                   placeholder="Vui lòng chọn trạng thái"
                   size="middle"
                 >
-                  {statusOptions
+                  {isActiveOptions
                     .filter((item: any) => !item.type)
                     .map((item: any) => (
                       <Option key={item.key.toString()} value={item.key}>

@@ -9,11 +9,6 @@ const Home = () => {
   return (
     <div
       className="w-full min-h-[calc(100vh-56px)] flex flex-col"
-      // direction="vertical"
-      // size={[0, 0]}
-      style={{
-        backgroundColor: darkMode ? '#1c1c1c' : '#ffffff'
-      }}
     >
       <HeroBanner />
       <ServicesList />

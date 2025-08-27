@@ -41,9 +41,10 @@ export const GetSystemWebById = (id: number) => {
   return res;
 };
 
-export const GetSystemWebsByUser = () => {
-  const res = newRequest<any>({
+export const GetSystemWebsByUser = (params: Api.SystemManage.paramsPhanTrang) => {
+  const res = newRequest<Api.SystemManage.GetAllUserWithTenantResponse>({
     method: 'get',
+    params,
     url: `/api/services/app/SystemWeb/GetSystemWebsByUser`
   });
 
@@ -65,6 +66,15 @@ export const UpdateSystemWeb = (data: SystemWebType) => {
     data,
     method: 'put',
     url: '/api/services/app/SystemWeb/UpdateSystemWeb'
+  });
+
+  return res;
+};
+
+export const UpdateActiveSystemWeb = (systemWebId: number, isActive: boolean) => {
+  const res = newRequest<any>({
+    method: 'put',
+    url: `/api/services/app/SystemWeb/UpdateActiveSystemWeb?systemWebId=${systemWebId}&isActive=${isActive}`
   });
 
   return res;

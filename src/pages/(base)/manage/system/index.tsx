@@ -1,16 +1,19 @@
-import { Card, Collapse, Dropdown, List, MenuProps, message, Tag } from 'antd';
+import { Card, Collapse, Dropdown, List, MenuProps, message, Select, Tag } from 'antd';
 
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
-import { DeleteSystemWeb, GetAllSystemGroup, GetAllSystemWeb, UpdateSystemWeb } from '@/service/api';
+import { DeleteSystemWeb, GetAllSystemGroup, GetAllSystemWeb, UpdateActiveSystemWeb, UpdateSystemWeb } from '@/service/api';
 import SystemAddForm from './modules/SystemAddForm';
 import SystemUpdateForm from './modules/SystemUpdateForm';
 import { useIsTabletResponsive } from '@/utils/responsive';
 import { formatDate } from '@/utils/date';
-import { statusOptions } from '@/utils/options';
+import { isActiveOptions } from '@/utils/options';
+import { Icon } from '@iconify/react';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
+
+  const { Option } = Select;
 
   return (
     <AForm
@@ -28,21 +31,38 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
       >
         <ACol
           lg={8}
-          md={12}
+          md={16}
           sm={24}
           span={24}
         >
-          <AForm.Item
-            className="m-0"
-            label='Tên dịch vụ'
-            name="keyword"
-          >
-            <AInput placeholder='Nhập tên dịch vụ' />
-          </AForm.Item>
+          <div className='flex items-center gap-3 w-full'>
+            <AForm.Item
+              className="m-0 w-full"
+              label=''
+              name="Keyword"
+            >
+              <AInput placeholder='Nhập tên dịch vụ' prefix={<Icon icon="ant-design:search-outlined" />} />
+            </AForm.Item>
+            <AForm.Item
+              className="m-0 w-full"
+              label=''
+              name="IsActive"
+            >
+              <Select placeholder="Chọn trạng thái" size="middle">
+                {isActiveOptions
+                  .filter((item: any) => !item.type)
+                  .map((item: any) => (
+                    <Option key={item.key.toString()} value={item.key}>
+                      {item.label}
+                    </Option>
+                  ))}
+              </Select>
+            </AForm.Item>
+          </div>
         </ACol>
 
         <ACol
-          lg={8}
+          lg={6}
           md={12}
           span={24}
         >
@@ -90,9 +110,7 @@ const SystemManagePage = () => {
   const handleStatusMenuClick = async (info: any, record: any) => {
     setLoading(true);
     try {
-      const dataSubmit = { ...record, systemStatus: info.key };
-
-      await UpdateSystemWeb(dataSubmit);
+      await UpdateActiveSystemWeb(record.id, info.key);
 
       message.success('Cập nhật trạng thái dịch vụ thành công!');
 
@@ -235,10 +253,10 @@ const SystemManagePage = () => {
       align: 'center' as const,
       key: 'systemStatus',
       render: (_: any, record: any) =>
-        <StatusDropdown
+        <IsActiveDropdown
           record={record}
-          isActive={record.systemStatus}
-          statusOptions={statusOptions}
+          isActive={record.isActive}
+          isActiveOptions={isActiveOptions}
           handleStatusMenuClick={handleStatusMenuClick}
         />,
       title: 'Trạng thái',
@@ -316,7 +334,10 @@ const SystemManagePage = () => {
                 pageSizeOptions: ['10', '20', '50', '100'],
                 showQuickJumper: true,
                 showSizeChanger: true,
-                showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`
+                showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`,
+                onChange: (page, pageSize) => {
+                  fetchList({ SkipCount: (page - 1) * pageSize, MaxResultCount: pageSize });
+                },
               }}
             /> :
             <div className='h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden'>
@@ -335,7 +356,10 @@ const SystemManagePage = () => {
                   showQuickJumper: true,
                   showTotal: (total, range) =>
                     `${range[0]}-${range[1]} của ${total} mục`,
-                  pageSizeOptions: ['6', '12', '24', '48']
+                  pageSizeOptions: ['6', '12', '24', '48'],
+                  onChange: (page, pageSize) => {
+                    fetchList({ SkipCount: (page - 1) * pageSize, MaxResultCount: pageSize });
+                  },
                 }}
                 renderItem={(item: any) => (
                   <List.Item className='!mb-2'>
@@ -349,10 +373,10 @@ const SystemManagePage = () => {
                             <span className="text-xs font-semibold text-primary">#{item.systemCode}</span>
                           </div>
                         </div>
-                        <StatusDropdown
+                        <IsActiveDropdown
                           record={item}
-                          isActive={item.systemStatus}
-                          statusOptions={statusOptions}
+                          isActive={item.isActive}
+                          isActiveOptions={isActiveOptions}
                           handleStatusMenuClick={handleStatusMenuClick}
                         />
                       </div>

@@ -1,7 +1,7 @@
 import { GetSystemGroupById, UpdateSystemGroup } from '@/service/api';
 import { formatDate } from '@/utils/date';
-import { statusOptions } from '@/utils/options';
-import { Button, Col, Drawer, Form, Input, InputNumber, Row, Select, Space, Tag, message } from 'antd';
+import { isActiveOptions } from '@/utils/options';
+import { Button, Col, Drawer, Form, Input, Row, Select, Tag, message } from 'antd';
 import React, { useState } from 'react';
 
 const { Option } = Select;
@@ -105,20 +105,20 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
             <Col span={12}>
               <Form.Item
                 label="Trạng thái"
-                name="status"
+                name="isActive"
                 rules={[{ message: 'Vui lòng chọn trạng thái', required: true }]}
               >
                 {
                   !isEdit
                     ?
-                    <div>{detailData?.status === 1 ? <Tag color="green">Hoạt động</Tag> : <Tag color="orange">Ngừng hoạt động</Tag>}</div>
+                    <div>{detailData?.isActive ? <Tag color="green">Hoạt động</Tag> : <Tag color="orange">Ngừng hoạt động</Tag>}</div>
                     :
                     <Select
                       disabled={!isEdit}
                       placeholder="Vui lòng chọn trạng thái"
                       size="middle"
                     >
-                      {statusOptions
+                      {isActiveOptions
                         .filter((item: any) => !item.type)
                         .map((item: any) => (
                           <Option key={item.key.toString()} value={item.key}>

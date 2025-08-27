@@ -85,7 +85,8 @@ export const newRequest = createFlatRequest<Api.SystemManage.ApiResponse, Reques
   {
     baseURL: globalConfig.serviceBaseURL,
     headers: {
-      apifoxToken: 'XL299LiMEDZ0H5h3A29PxwQXdMJqWyY2'
+      apifoxToken: 'XL299LiMEDZ0H5h3A29PxwQXdMJqWyY2',
+      'ngrok-skip-browser-warning': 'true',
     }
   },
   {

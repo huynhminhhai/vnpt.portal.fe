@@ -2,38 +2,29 @@ import ServicesItem from "./ServicesItem"
 import ServiceHeading from "./ServiceHeading";
 import { Icon } from "@iconify/react";
 import { Input, Select } from "antd";
-import { GetAllSystemWeb, GetSystemWebsByUser } from "@/service/api";
+import { GetSystemWebsByUser } from "@/service/api";
 import ServiceSkeleton from "./ServiceSkeleton";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useSelector } from "react-redux";
-import { isStaticSuper } from "@/features/auth/authStore";
 
 const ServicesList = () => {
 
   const { Search } = Input;
-  const isSuper = useSelector(isStaticSuper);
 
   const [isShowAll, setIsShowAll] = useState(
     JSON.parse(localStorage.getItem("isShowAll") || "false")
   );
   const [listSystem, setListSystem] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [searchParam, setSearchParam] = useState({});
 
   const fetchListSystem = async () => {
     setLoading(true);
     try {
+      const apiParams = { MaxResultCount: 9999, SkipCount: 0, IsActive: true, Keyword: '', ...searchParam };
 
-      let data: any[] = [];
-
-      if (!isSuper) {
-        const res = await GetSystemWebsByUser();
-        data = res.data?.result || [];
-      } else {
-        const apiParams = { MaxResultCount: 9999, SkipCount: 0, IsActive: true, Keyword: '' };
-        const res = await GetAllSystemWeb(apiParams);
-        data = res.data?.result?.items || [];
-      }
+      const res = await GetSystemWebsByUser(apiParams);
+      const data = res.data?.result || [];
 
       setListSystem(data);
 
@@ -47,7 +38,7 @@ const ServicesList = () => {
 
   useEffect(() => {
     fetchListSystem();
-  }, []);
+  }, [searchParam]);
 
   useEffect(() => {
     localStorage.setItem("isShowAll", JSON.stringify(isShowAll));
@@ -70,7 +61,7 @@ const ServicesList = () => {
 
   return (
     <div
-      className="px-3 md:px-10 pt-[20px] pb-[20px] grow-[1] relative z-10 bg-[#f7f9fc] dark:bg-transparent"
+      className="px-3 md:px-10 pt-[20px] pb-[20px] grow-[1] relative z-10"
     >
       <ARow gutter={[16, 16]}>
 
@@ -87,11 +78,12 @@ const ServicesList = () => {
               className="px-6px text-2xl border-[1px] border-[#e0e0e0] h-32px bg-white dark:bg-[#1c1c1c]"
               icon={isShowAll ? "circum:grid-4-1" : 'circum:grid-3-2'}
               tooltipContent={isShowAll ? 'Chế độ xem tất cả' : 'Chế độ xem theo loại'}
+              tooltipPlacement="right"
               onClick={handleToggleShowAll}
             />
           </div>
         </ACol>
-        <ACol
+        {/* <ACol
           lg={4}
           md={12}
           span={24}
@@ -119,7 +111,7 @@ const ServicesList = () => {
               },
             ]}
           />
-        </ACol>
+        </ACol> */}
         <ACol
           lg={6}
           md={12}
@@ -127,12 +119,12 @@ const ServicesList = () => {
           data-aos="fade-left"
           data-aos-delay="100"
         >
-          <Search className="w-full" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="middle" />
+          <Search className="w-full" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="middle" onSearch={(value) => setSearchParam({ Keyword: value })} />
         </ACol>
       </ARow>
       {
         loading ?
-          <ARow gutter={[12, 12]} className="mt-8">
+          <ARow gutter={[16, 16]} className="mt-8">
             {Array.from({ length: 4 }).map((_, index) => (
               <ACol
                 key={index}
@@ -149,32 +141,34 @@ const ServicesList = () => {
           :
           isShowAll ?
             <>
-              <ARow gutter={[12, 12]} className="mt-6">
-                {
-                  listSystem?.map((item, index) => (
+              <ARow gutter={[16, 16]} className="mt-6">
+                {listSystem.map((group) =>
+                  group.systemWebDtos.map((system: any, index: number) => (
                     <ServicesItem
                       key={index}
                       index={index}
-                      dataItem={item}
+                      dataItem={system}
                     />
                   ))
-                }
+                )}
               </ARow>
             </>
             :
             <>
-              <ServiceHeading title="Dịch vụ số" />
-              <ARow gutter={[12, 12]} className="mt-6">
-                {
-                  listSystem?.map((item, index) => (
-                    <ServicesItem
-                      key={index}
-                      index={index}
-                      dataItem={item}
-                    />
-                  ))
-                }
-              </ARow>
+              {listSystem.map((group) => (
+                <div key={group.id}>
+                  <ServiceHeading title={group?.displayName} />
+                  <ARow gutter={[16, 16]} className="mt-6">
+                    {group.systemWebDtos.map((system: any, index: number) => (
+                      <ServicesItem
+                        key={index}
+                        index={index}
+                        dataItem={system}
+                      />
+                    ))}
+                  </ARow>
+                </div>
+              ))}
             </>
       }
 

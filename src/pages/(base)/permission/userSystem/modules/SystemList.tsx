@@ -98,31 +98,21 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
 
   return (
     <ACard
-      className="card-wrapper min-h-fit md:min-h-500px h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden"
+      className="card-wrapper h-500px overflow-y-unset md:overflow-y-auto md:overflow-x-hidden"
       variant="borderless"
       loading={loading}
     >
-      <List
-        grid={{
-          gutter: [12, 12],
-          xs: 1,
-          sm: 1,
-          md: 2,
-          lg: 2,
-          xl: 3,
-        }}
-        dataSource={listSystem}
-        // pagination={{
-        //   pageSize: 10,
-        //   showSizeChanger: true,
-        //   showQuickJumper: true,
-        //   showTotal: (total, range) =>
-        //     `${range[0]}-${range[1]} của ${total} mục`,
-        //   pageSizeOptions: ['6', '12', '24', '48'],
-        // }}
-        renderItem={(item: any) => (
-          <List.Item className="!mb-0">
-            <label className="block group relative transition-all duration-200 top-0 hover:-top-1 h-full cursor-pointer sle">
+      <ARow gutter={[12, 12]}>
+        {listSystem.map((item: any, index: number) => (
+          <ACol
+            key={item.id || index}
+            xs={24}
+            sm={24}
+            md={12}
+            lg={12}
+            xl={8}
+          >
+            <label className="block group relative transition-all duration-200 top-0 hover:-top-1 h-full cursor-pointer w-full">
               <div
                 className="flex flex-col justify-between border border-[#e0e0e0] rounded-lg relative transition-all duration-300 service-item overflow-hidden h-full"
                 style={{
@@ -133,8 +123,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                       : "#ffffff",
                 }}
               >
-                {
-                  selectedTenant &&
+                {selectedTenant && (
                   <div className="absolute top-1 right-2">
                     <Checkbox
                       checked={checkedList.includes(item.id)}
@@ -144,7 +133,8 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                       onClick={(e) => e.stopPropagation()}
                     />
                   </div>
-                }
+                )}
+
                 <div className="px-4 pt-3 pb-3 flex items-center gap-4">
                   <div>
                     <Image
@@ -179,9 +169,10 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                 </div>
               </div>
             </label>
-          </List.Item>
-        )}
-      />
+          </ACol>
+        ))}
+      </ARow>
+
     </ACard>
   )
 }
