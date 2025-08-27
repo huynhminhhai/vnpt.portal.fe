@@ -99,13 +99,19 @@ const SystemManagePage = () => {
   const { scrollConfig, tableWrapperRef } = useTableScroll();
   const isMobile = useMobile();
   const [form] = AForm.useForm();
-  // const nav = useNavigate();
   const isTabletRes = useIsTabletResponsive();
 
-  const [datas, setDatas] = useState<any[]>([]);
+  const defaultParams = {
+    MaxResultCount: 10,
+    SkipCount: 0,
+    IsActive: null,
+    Keyword: "",
+  };
+
+  const [searchParams, setSearchParams] = useState(defaultParams);
+  const [datas, setDatas] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState<any[]>([]);
-  const [searchParams, setSearchParams] = useState({});
 
   const handleStatusMenuClick = async (info: any, record: any) => {
     setLoading(true);
@@ -119,28 +125,21 @@ const SystemManagePage = () => {
       message.error(error as string);
     } finally {
       setLoading(false);
-      fetchList();
+      fetchList(searchParams);
     }
   };
 
   // Fetch data function
-  const fetchList = async (params = {}) => {
+  const fetchList = async (params: any) => {
     setLoading(true);
     try {
-      const apiParams = {
-        MaxResultCount: 10,
-        SkipCount: 0,
-        IsActive: null,
-        Keyword: '',
-        ...params
-      };
 
-      const res = await GetAllSystemWeb(apiParams);
+      const res = await GetAllSystemWeb(params);
 
       const resData = res.data as any;
 
-      if (resData && resData.result && resData.result.items) {
-        const data = resData.result.items;
+      if (resData && resData.result) {
+        const data = resData.result;
 
         setDatas(data);
       } else {
@@ -158,20 +157,21 @@ const SystemManagePage = () => {
   // Search functions
   const reset = () => {
     form.resetFields();
-    setSearchParams({});
-    fetchList();
+    setSearchParams(defaultParams);
   };
 
   const search = () => {
     const values = form.getFieldsValue();
-    setSearchParams(values);
-    fetchList(values);
+    setSearchParams({
+      ...defaultParams,
+      ...values,
+    });
   };
 
   // Initial data fetch
   useEffect(() => {
-    fetchList();
-  }, []);
+    fetchList(searchParams);
+  }, [searchParams]);
 
   // Action handlers
   const handleDelete = async (id: number) => {
@@ -180,7 +180,7 @@ const SystemManagePage = () => {
 
       message.success('Xóa dịch vụ thành công!');
 
-      fetchList();
+      fetchList(searchParams);
     } catch (error) {
       console.log(error);
       message.error(error as string);
@@ -193,7 +193,7 @@ const SystemManagePage = () => {
       const apiParams = {
         MaxResultCount: 9999,
         SkipCount: 0,
-        IsActive: null,
+        IsActive: true,
         Keyword: "",
       };
 
@@ -269,7 +269,7 @@ const SystemManagePage = () => {
         <div className="flex-center gap-8px">
           <SystemUpdateForm
             id={record.id}
-            onSuccess={fetchList}
+            onSuccess={() => fetchList(searchParams)}
             groupData={groups}
           />
           <DeleteButton onClick={() => handleDelete(record.id)} />
@@ -308,12 +308,12 @@ const SystemManagePage = () => {
         variant="borderless"
         extra={
           <TableHeaderOperation
-            addForm={<SystemAddForm onSuccess={fetchList} groupData={groups} />}
+            addForm={<SystemAddForm onSuccess={() => fetchList(searchParams)} groupData={groups} />}
             columns={columns}
             disabledDelete={true}
             isShowDelete={false}
             loading={loading}
-            refresh={() => fetchList()}
+            refresh={() => fetchList(searchParams)}
             setColumnChecks={() => { }}
             onDelete={() => { }}
           />
@@ -324,19 +324,26 @@ const SystemManagePage = () => {
             <ATable
               bordered
               columns={columns}
-              dataSource={datas}
+              dataSource={datas?.items}
               loading={loading}
               rowKey="id"
               scroll={scrollConfig}
               size="small"
               pagination={{
-                defaultPageSize: 10,
-                pageSizeOptions: ['10', '20', '50', '100'],
-                showQuickJumper: true,
+                current: searchParams.SkipCount / searchParams.MaxResultCount + 1,
+                pageSize: searchParams.MaxResultCount,
+                pageSizeOptions: ["10", "20", "50", "100"],
+                showQuickJumper: false,
                 showSizeChanger: true,
-                showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`,
+                total: datas?.totalCount,
+                showTotal: (total: number, range: number[]) =>
+                  `${range[0]}-${range[1]} of ${total} items`,
                 onChange: (page, pageSize) => {
-                  fetchList({ SkipCount: (page - 1) * pageSize, MaxResultCount: pageSize });
+                  setSearchParams({
+                    ...searchParams,
+                    SkipCount: (page - 1) * pageSize,
+                    MaxResultCount: pageSize,
+                  });
                 },
               }}
             /> :
@@ -349,16 +356,23 @@ const SystemManagePage = () => {
                   md: 2,
                   xl: 3,
                 }}
-                dataSource={datas}
+                dataSource={datas?.items}
+                loading={loading}
                 pagination={{
-                  pageSize: 10,
+                  current: searchParams.SkipCount / searchParams.MaxResultCount + 1,
+                  pageSize: searchParams.MaxResultCount,
+                  pageSizeOptions: ["10", "20", "50", "100"],
+                  showQuickJumper: false,
                   showSizeChanger: true,
-                  showQuickJumper: true,
-                  showTotal: (total, range) =>
-                    `${range[0]}-${range[1]} của ${total} mục`,
-                  pageSizeOptions: ['6', '12', '24', '48'],
+                  total: datas?.totalCount,
+                  showTotal: (total: number, range: number[]) =>
+                    `${range[0]}-${range[1]} of ${total} items`,
                   onChange: (page, pageSize) => {
-                    fetchList({ SkipCount: (page - 1) * pageSize, MaxResultCount: pageSize });
+                    setSearchParams({
+                      ...searchParams,
+                      SkipCount: (page - 1) * pageSize,
+                      MaxResultCount: pageSize,
+                    });
                   },
                 }}
                 renderItem={(item: any) => (
@@ -432,7 +446,7 @@ const SystemManagePage = () => {
 
                           {/* Actions */}
                           <div className="flex justify-center gap-3 pt-3 border-t mt-3">
-                            <SystemUpdateForm id={item.id} onSuccess={fetchList} groupData={groups} />
+                            <SystemUpdateForm id={item.id} onSuccess={() => fetchList(searchParams)} groupData={groups} />
                             <DeleteButton onClick={() => handleDelete(item.id)} />
                           </div>
                         </Collapse.Panel>

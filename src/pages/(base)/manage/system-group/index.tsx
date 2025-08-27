@@ -1,4 +1,4 @@
-import { Card, Collapse, List, message } from 'antd';
+import { Card, Collapse, List, message, Select } from 'antd';
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
 import SystemGroupAddForm from './modules/SystemGroupAddForm';
@@ -7,9 +7,12 @@ import { formatDate } from '@/utils/date';
 import { DeleteGroupSystem, GetAllSystemGroup, UpdateSystemGroup } from '@/service/api';
 import { useIsTabletResponsive } from '@/utils/responsive';
 import { isActiveOptions } from '@/utils/options';
+import { Icon } from '@iconify/react';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
+
+  const { Option } = Select;
 
   return (
     <AForm
@@ -27,23 +30,39 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
       >
         <ACol
           lg={8}
-          md={12}
+          md={16}
           sm={24}
           span={24}
         >
-          <AForm.Item
-            className="m-0"
-            label='Tên nhóm'
-            name="keyword"
-          >
-            <AInput placeholder='Nhập tên nhóm' />
-          </AForm.Item>
+          <div className='flex items-center gap-3 w-full'>
+            <AForm.Item
+              className="m-0 w-full"
+              label=''
+              name="Keyword"
+            >
+              <AInput placeholder='Nhập tên nhóm dịch vụ' prefix={<Icon icon="ant-design:search-outlined" />} />
+            </AForm.Item>
+            <AForm.Item
+              className="m-0 w-full"
+              label=''
+              name="IsActive"
+            >
+              <Select placeholder="Chọn trạng thái" size="middle">
+                {isActiveOptions
+                  .filter((item: any) => !item.type)
+                  .map((item: any) => (
+                    <Option key={item.key.toString()} value={item.key}>
+                      {item.label}
+                    </Option>
+                  ))}
+              </Select>
+            </AForm.Item>
+          </div>
         </ACol>
 
         <ACol
-          lg={8}
+          lg={6}
           md={12}
-          sm={24}
           span={24}
         >
           <AFlex
@@ -77,35 +96,31 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
 const SystemGroupManagePage = () => {
   const { t } = useTranslation();
   const { scrollConfig, tableWrapperRef } = useTableScroll();
-
-  // const nav = useNavigate();
-  const [datas, setDatas] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
   const isMobile = useMobile();
   const isTabletRes = useIsTabletResponsive();
-
-  // Form state
   const [form] = AForm.useForm();
-  const [searchParams, setSearchParams] = useState({});
+
+  const defaultParams = {
+    MaxResultCount: 10,
+    SkipCount: 0,
+    IsActive: null,
+    Keyword: "",
+  };
+
+  const [searchParams, setSearchParams] = useState(defaultParams);
+  const [datas, setDatas] = useState<any>();
+  const [loading, setLoading] = useState(false);
 
   // Fetch data function
-  const fetchList = async (params = {}) => {
+  const fetchList = async (params: any) => {
     setLoading(true);
     try {
-      const apiParams = {
-        MaxResultCount: 10,
-        SkipCount: 0,
-        IsActive: null,
-        Keyword: '',
-        ...params
-      };
-
-      const res = await GetAllSystemGroup(apiParams);
+      const res = await GetAllSystemGroup(params);
 
       const resData = res.data as any;
 
-      if (resData && resData.result && resData.result.items) {
-        const data = (resData.result.items).reverse();
+      if (resData && resData.result) {
+        const data = resData.result;
 
         setDatas(data);
       } else {
@@ -123,25 +138,26 @@ const SystemGroupManagePage = () => {
   // Search functions
   const reset = () => {
     form.resetFields();
-    setSearchParams({});
-    fetchList();
+    setSearchParams(defaultParams);
   };
 
   const search = () => {
     const values = form.getFieldsValue();
-    setSearchParams(values);
-    fetchList(values);
+    setSearchParams({
+      ...defaultParams,
+      ...values,
+    });
   };
 
   // Initial data fetch
   useEffect(() => {
-    fetchList();
-  }, []);
+    fetchList(searchParams);
+  }, [searchParams]);
 
   const handleStatusMenuClick = async (info: any, record: any) => {
     setLoading(true);
     try {
-      const dataSubmit = { ...record, status: info.key };
+      const dataSubmit = { ...record, isActive: info.key };
 
       await UpdateSystemGroup(dataSubmit);
 
@@ -152,7 +168,7 @@ const SystemGroupManagePage = () => {
       message.error(error as string);
     } finally {
       setLoading(false);
-      fetchList();
+      fetchList(searchParams);
     }
   };
 
@@ -162,7 +178,7 @@ const SystemGroupManagePage = () => {
       await DeleteGroupSystem(id);
       message.success('Xóa nhóm dịch vụ thành công!');
 
-      fetchList();
+      fetchList(searchParams);
     } catch (error) {
       console.log(error);
       message.error(error as string);
@@ -224,7 +240,7 @@ const SystemGroupManagePage = () => {
         <div className="flex-center gap-8px">
           <SystemGroupUpdateForm
             id={record.id}
-            onSuccess={fetchList}
+            onSuccess={() => fetchList(searchParams)}
           />
           <DeleteButton onClick={() => handleDelete(record.id)} />
         </div>
@@ -262,12 +278,12 @@ const SystemGroupManagePage = () => {
         variant="borderless"
         extra={
           <TableHeaderOperation
-            addForm={<SystemGroupAddForm onSuccess={fetchList} />}
+            addForm={<SystemGroupAddForm onSuccess={() => fetchList(searchParams)} />}
             columns={columns}
             disabledDelete={true}
             isShowDelete={false}
             loading={loading}
-            refresh={() => fetchList()}
+            refresh={() => fetchList(searchParams)}
             setColumnChecks={() => { }}
             onDelete={() => { }}
           />
@@ -278,17 +294,27 @@ const SystemGroupManagePage = () => {
             <ATable
               bordered
               columns={columns}
-              dataSource={datas}
+              dataSource={datas?.items}
               loading={loading}
               rowKey="id"
               scroll={scrollConfig}
               size="small"
               pagination={{
-                defaultPageSize: 10,
-                pageSizeOptions: ['10', '20', '50', '100'],
-                showQuickJumper: true,
+                current: searchParams.SkipCount / searchParams.MaxResultCount + 1,
+                pageSize: searchParams.MaxResultCount,
+                pageSizeOptions: ["10", "20", "50", "100"],
+                showQuickJumper: false,
                 showSizeChanger: true,
-                showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`
+                total: datas?.totalCount,
+                showTotal: (total: number, range: number[]) =>
+                  `${range[0]}-${range[1]} of ${total} items`,
+                onChange: (page, pageSize) => {
+                  setSearchParams({
+                    ...searchParams,
+                    SkipCount: (page - 1) * pageSize,
+                    MaxResultCount: pageSize,
+                  });
+                },
               }}
             /> :
             <div className='h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden'>
@@ -300,14 +326,23 @@ const SystemGroupManagePage = () => {
                   md: 2,
                   xl: 3,
                 }}
-                dataSource={datas}
+                dataSource={datas?.items}
                 pagination={{
-                  pageSize: 10,
+                  current: searchParams.SkipCount / searchParams.MaxResultCount + 1,
+                  pageSize: searchParams.MaxResultCount,
+                  pageSizeOptions: ["10", "20", "50", "100"],
+                  showQuickJumper: false,
                   showSizeChanger: true,
-                  showQuickJumper: true,
-                  showTotal: (total, range) =>
-                    `${range[0]}-${range[1]} của ${total} mục`,
-                  pageSizeOptions: ['6', '12', '24', '48']
+                  total: datas?.totalCount,
+                  showTotal: (total: number, range: number[]) =>
+                    `${range[0]}-${range[1]} of ${total} items`,
+                  onChange: (page, pageSize) => {
+                    setSearchParams({
+                      ...searchParams,
+                      SkipCount: (page - 1) * pageSize,
+                      MaxResultCount: pageSize,
+                    });
+                  },
                 }}
                 renderItem={(item: any) => (
                   <List.Item className='!mb-2'>
@@ -371,7 +406,7 @@ const SystemGroupManagePage = () => {
 
                           {/* Actions */}
                           <div className="flex justify-center gap-3 pt-3 border-t mt-3">
-                            <SystemGroupUpdateForm id={item.id} onSuccess={fetchList} />
+                            <SystemGroupUpdateForm id={item.id} onSuccess={() => fetchList(searchParams)} />
                             <DeleteButton onClick={() => handleDelete(item.id)} />
                           </div>
                         </Collapse.Panel>

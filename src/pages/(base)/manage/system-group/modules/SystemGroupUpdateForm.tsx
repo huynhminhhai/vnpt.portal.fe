@@ -76,6 +76,7 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
           }
         }}
         onClose={onClose}
+        loading={loadingDetail}
       >
         <Form
           form={form}
