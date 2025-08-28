@@ -126,7 +126,7 @@ textarea.ant-input[disabled],
 
 .ant-form-item-label {
   padding-bottom: 4px !important;
-  height: 30px;
+  height: 24px;
 }
 
 .table-custom .ant-tree-node-selected {
@@ -140,6 +140,18 @@ textarea.ant-input[disabled],
 
 .table-custom .ant-table {
   height: calc(100% - 40px);
+}
+
+.table-custom .ant-table-thead > tr > th {
+  background-color: #e6ebf0;
+}
+
+.ant-form .ant-form-item {
+  margin-bottom: 12px;
+}
+
+.ant-form-item-explain-error {
+  font-size: 12px;
 }
 
 @media screen and (max-width: 991px) {

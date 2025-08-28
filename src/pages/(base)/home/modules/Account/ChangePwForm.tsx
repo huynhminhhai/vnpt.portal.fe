@@ -1,3 +1,4 @@
+import { ChangePassword } from '@/service/api';
 import { Button, Col, Form, Input, Row, message } from 'antd';
 
 const ChangePwForm = () => {
@@ -8,12 +9,14 @@ const ChangePwForm = () => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      const dataSubmit = { ...values };
+      const dataSubmit = {
+        currentPassword: values?.currentPassword,
+        newPassword: values?.newPassword
+      };
 
-      // await CreateSystemWeb(dataSubmit);
-      // console.log(dataSubmit)
+      await ChangePassword(dataSubmit);
 
-      message.success('Thêm dịch vụ thành công!');
+      message.success('Cập nhật mật khẩu thành công!');
 
       form.resetFields();
     } catch (error) {
@@ -42,30 +45,61 @@ const ChangePwForm = () => {
           <Row gutter={2}>
             <Col span={24}>
               <Form.Item
-                label="Tên người dùng"
-                name="name"
-                rules={[{ message: 'Vui lòng nhập tên người dùng', required: true }]}
-                preserve={false}
+                label="Mật khẩu hiện tại"
+                name="currentPassword"
+                rules={[
+                  { message: 'Vui lòng nhập mật khẩu hiện tại', required: true }, {
+                    pattern:
+                      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+                    message:
+                      "Mật khẩu sai định dạng",
+                  }
+                ]}
               >
-                <Input placeholder="Nhập tên người dùng" size="middle" />
+                <Input.Password placeholder="Nhập mật khẩu hiện tại" size="middle" />
               </Form.Item>
             </Col>
             <Col span={24}>
               <Form.Item
-                label="Email"
-                name="emailAddress"
-                rules={[{ message: 'Vui lòng nhập email', required: true }]}
+                label="Mật khẩu mới"
+                name="newPassword"
+                rules={[
+                  { message: 'Vui lòng nhập mật khẩu mới', required: true }, {
+                    pattern:
+                      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+                    message:
+                      "Mật khẩu sai định dạng",
+                  }
+                ]}
               >
-                <Input placeholder="Nhập email" size="middle" />
+                <Input.Password placeholder="Nhập mật khẩu mới" size="middle" />
               </Form.Item>
             </Col>
             <Col span={24}>
               <Form.Item
-                label="Tên đăng nhập"
-                name="userName"
-                rules={[{ message: 'Vui lòng nhập tên đăng nhập', required: true }]}
+                label="Xác nhận mật khẩu"
+                name="confirmPassword"
+                dependencies={["newPassword"]}
+                rules={[
+                  { required: true, message: "Vui lòng xác nhận mật khẩu" },
+                  {
+                    pattern:
+                      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+                    message: "Mật khẩu sai định dạng",
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("newPassword") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error("Mật khẩu xác nhận không khớp với mật khẩu mới")
+                      );
+                    },
+                  }),
+                ]}
               >
-                <Input placeholder="Nhập tên đăng nhập" size="middle" disabled />
+                <Input.Password placeholder="Nhập lại mật khẩu" size="middle" />
               </Form.Item>
             </Col>
             <Col span={24}>
@@ -80,6 +114,26 @@ const ChangePwForm = () => {
                   Lưu lại
                 </Button>
               </div>
+            </Col>
+            <Col span={24}>
+              <b>Yêu cầu mật khẩu:</b>
+              <ul className='list-disc list-inside'>
+                <li>
+                  Ít nhất 8 ký tự
+                </li>
+                <li>
+                  Chứa ít nhất một chữ hoa
+                </li>
+                <li>
+                  Chứa ít nhất một chữ thường
+                </li>
+                <li>
+                  Chứa ít nhất một số
+                </li>
+                <li>
+                  Chứa ít nhất một ký tự đặc biệt
+                </li>
+              </ul>
             </Col>
           </Row>
         </div>

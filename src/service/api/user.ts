@@ -89,3 +89,18 @@ export const DeleteUser = (id: number) => {
 
   return res;
 };
+
+interface ChangePasswordType {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export const ChangePassword = (data: ChangePasswordType) => {
+  const res = newRequest<any>({
+    data,
+    method: 'post',
+    url: '/api/services/app/User/ChangePassword'
+  });
+
+  return res;
+};

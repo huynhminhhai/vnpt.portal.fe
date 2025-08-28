@@ -25,8 +25,10 @@ const AccountDrawer: React.FC<Props> = ({ onSuccess, open, setOpen }) => {
         }}
         onClose={() => setOpen(false)}
       >
-        <UserInforForm />
-        <ChangePwForm />
+        <div className='flex flex-col gap-6'>
+          <UserInforForm />
+          <ChangePwForm />
+        </div>
       </Drawer>
     </>
   );

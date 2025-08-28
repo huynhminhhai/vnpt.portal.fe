@@ -47,15 +47,15 @@ const UserAvatar = memo(() => {
   }
 
   const items: MenuProps['items'] = [
-    // {
-    //   key: '2',
-    //   label: (
-    //     <div className="flex-center gap-8px">
-    //       <Icon icon="solar:user-linear" fontSize={16} />
-    //       Tài khoản
-    //     </div>
-    //   ),
-    // },
+    {
+      key: '2',
+      label: (
+        <div className="flex-center gap-8px">
+          <Icon icon="solar:user-linear" fontSize={16} />
+          Tài khoản
+        </div>
+      ),
+    },
     { type: 'divider' as const },
     ...(isSuper
       ? [
