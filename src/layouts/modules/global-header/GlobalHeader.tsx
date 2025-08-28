@@ -89,9 +89,7 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
 
         <ThemeSchemaSwitch className="px-12px" />
 
-        {
-          pathname !== '/home' && <ThemeButton />
-        }
+        <ThemeButton />
 
         <UserAvatar />
       </div>

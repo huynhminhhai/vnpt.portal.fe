@@ -10,6 +10,7 @@ import { formatDate } from '@/utils/date';
 import { isActiveOptions } from '@/utils/options';
 import { Icon } from '@iconify/react';
 import { getPaginationConfig } from '../modules/CommonPagination';
+import vnpt from '@/assets/imgs/vnpt.png';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
@@ -222,30 +223,30 @@ const SystemManagePage = () => {
       align: 'center' as const,
       key: 'iconUrl',
       width: 80,
-      render: (_: any, record: any) => <div className='w-full flex items-center justify-center'><AImage className='rounded-md' width={24} src={record.iconUrl || '/src/assets/imgs/vnpt.png'} /></div>,
+      render: (_: any, record: any) => <div className='w-full flex items-center justify-center'><AImage className='rounded-md' width={20} src={record.iconUrl || vnpt} /></div>,
       title: 'Logo'
     },
     {
-      align: 'center' as const,
+      align: 'left' as const,
       key: 'systemCode',
       width: 160,
       render: (_: any, record: any) => record.systemCode || '-',
       title: 'Mã dịch vụ'
     },
     {
-      align: 'center' as const,
+      align: 'left' as const,
       key: 'systemName',
       render: (_: any, record: any) => record.systemName || '-',
       title: 'Tên hiển thị'
     },
     {
-      align: 'center' as const,
+      align: 'left' as const,
       key: 'systemUrl',
       render: (_: any, record: any) => record.systemUrl || '-',
       title: 'Đường dẫn'
     },
     {
-      align: 'center' as const,
+      align: 'left' as const,
       title: "Nhóm dịch vụ",
       key: "groupSystemId",
       render: (_: any, record: any) => record?.groupSystemFk?.displayName || "-"
@@ -391,7 +392,7 @@ const SystemManagePage = () => {
                             <div className="flex items-center gap-2">
                               <span className="text-sm text-gray-600">Logo: </span>
                               <p className="text-sm font-medium">
-                                <AImage className='rounded-md' width={24} src={item?.iconUrl || '/src/assets/imgs/vnpt.png'} />
+                                <AImage className='rounded-md' width={24} src={item?.iconUrl || vnpt} />
                               </p>
                             </div>
                             <div className="flex items-center gap-2">

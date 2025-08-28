@@ -68,7 +68,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
         'base-text': 'rgb(31, 31, 31)',
         container: 'rgb(255, 255, 255)',
         inverted: 'rgb(0, 20, 40)',
-        layout: '#f7f9fc'
+        layout: '#f6f7fb'
       }
     }
   },

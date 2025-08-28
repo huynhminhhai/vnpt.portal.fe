@@ -229,19 +229,19 @@ const UserManagePage = () => {
       width: 64
     },
     {
-      align: 'center' as const,
+      align: 'left' as const,
       key: 'name',
       render: (_: any, record: any) => record.name || '-',
       title: 'Tên người dùng'
     },
     {
-      align: 'center' as const,
+      align: 'left' as const,
       key: 'userName',
       render: (_: any, record: any) => record.userName || '-',
       title: 'Tên đăng nhập'
     },
     {
-      align: 'center' as const,
+      align: 'left' as const,
       key: 'name',
       render: (_: any, record: any) => {
         const tenancyKey = record.userName?.split(".")[0];

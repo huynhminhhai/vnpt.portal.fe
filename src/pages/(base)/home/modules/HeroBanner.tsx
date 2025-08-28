@@ -1,16 +1,11 @@
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { selectUserInfo } from "@/features/auth/authStore";
+import map from '@/assets/imgs/map-2.png';
 
 const HeroBanner = () => {
 
   const { tenant } = useAppSelector(selectUserInfo);
-
-  const particlesInit = async (main: any) => {
-    await loadFull(main);
-  };
 
   useEffect(() => {
     AOS.init({
@@ -24,54 +19,6 @@ const HeroBanner = () => {
       className="relative"
       id="particles-js"
     >
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        className="absolute inset-0 z-1 h-full w-full"
-        options={{
-          background: { color: "transparent" },
-          fpsLimit: 60,
-          interactivity: {
-            events: {
-              onHover: { enable: true, mode: "grab" },
-              onClick: { enable: true, mode: "push" },
-              resize: true,
-            },
-            modes: {
-              repulse: { distance: 120, duration: 0.4 },
-              grab: {
-                distance: 200,
-                line_linked: {
-                  opacity: 0.5,
-                },
-              },
-            },
-          },
-          particles: {
-            color: { value: "#e0e0e0" },
-            links: {
-              color: "#e0e0e0",
-              distance: 150,
-              enable: true,
-              opacity: 0.4,
-              width: 1,
-            },
-            move: {
-              enable: true,
-              speed: 0.8,
-              outModes: "bounce",
-            },
-            number: {
-              density: { enable: true, area: 800 },
-              value: 50,
-            },
-            opacity: { value: 0.6 },
-            shape: { type: "circle" },
-            size: { value: { min: 1, max: 4 } },
-          },
-          detectRetina: true,
-        }}
-      />
       <ACard
         className="relative overflow-hidden border-none px-0 md:px-10 py-[12px] md:py-[20px] rounded-0 bg-[#08254f] dark:bg-[#2b2b2b] text-white"
       >
@@ -90,7 +37,7 @@ const HeroBanner = () => {
           </div>
         </div>
         <div className="absolute z-[1] top-1/2 right-[-65%] md:right-[100px] transform -translate-y-[50%]">
-          <img data-aos="zoom-in-left" className="w-[620px] h-auto invert brightness-0" src="https://prometheoncloud.com/wp-content/uploads/2022/06/map-2.png" alt="vnpt" />
+          <img data-aos="zoom-in-left" className="w-[620px] h-auto invert brightness-0" src={map} alt="vnpt" />
         </div>
       </ACard>
     </div>

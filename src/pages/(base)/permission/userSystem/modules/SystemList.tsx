@@ -2,6 +2,7 @@ import { GetAllSystemWeb, GetUserSystemPermissions } from "@/service/api";
 import { toHostname } from "@/utils/number";
 import { Icon } from "@iconify/react";
 import { Checkbox, Image, Input, Skeleton } from "antd";
+import vnpt from '@/assets/imgs/vnpt.png';
 
 interface SystemListProps {
   selectedTenant: number | null,
@@ -173,7 +174,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                     rounded-lg border transition-all duration-300 overflow-hidden
                     hover:scale-[1.01]
                     ${checkedList.includes(item.id)
-                          ? "bg-blue-50 border-[#01336899] shadow-md"
+                          ? "bg-blue-50 border-primary shadow-md"
                           : "bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-700"}
                   `}
                       style={{
@@ -208,7 +209,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                         {/* Logo */}
                         <Image
                           width={28}
-                          src={item?.iconUrl || "/src/assets/imgs/vnpt.png"}
+                          src={item?.iconUrl || vnpt}
                           preview={false}
                           className="rounded-md shadow-sm"
                         />

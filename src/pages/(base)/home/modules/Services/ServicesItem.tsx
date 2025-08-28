@@ -3,6 +3,7 @@ import { toHostname } from "@/utils/number"
 import { Icon } from "@iconify/react"
 import { Image } from "antd"
 import React from "react"
+import vnpt from '@/assets/imgs/vnpt.png';
 
 export interface ServicesItemProps {
   dataItem: any,
@@ -37,7 +38,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
           <div className="absolute top-5 right-5">
             <Image
               width={36}
-              src={dataItem?.iconUrl || '/src/assets/imgs/vnpt.png'}
+              src={dataItem?.iconUrl || vnpt}
               preview={false}
               className="rounded-lg logo"
             />

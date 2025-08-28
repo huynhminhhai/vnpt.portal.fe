@@ -38,7 +38,7 @@ const ButtonScrollTop = () => {
       className="fixed z-[99] bottom-[60px] right-6 p-3 rounded-full bg-primary text-white shadow-md hover:shadow-2xl hover:scale-[1.04] transition-all duration-300"
       style={{ opacity: visible ? 1 : 0, visibility: visible ? 'visible' : 'hidden' }}
     >
-      <Icon icon="solar:arrow-up-broken" fontSize={24} />
+      <Icon icon="solar:arrow-up-broken" fontSize={22} />
     </button>
   )
 }

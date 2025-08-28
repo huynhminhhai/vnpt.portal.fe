@@ -196,7 +196,7 @@ const SystemGroupManagePage = () => {
       width: 64
     },
     {
-      align: 'center' as const,
+      align: 'left' as const,
       key: 'displayName',
       render: (_: any, record: any) => <div>{record.displayName}</div>,
       title: 'Tên nhóm dịch vụ'

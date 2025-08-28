@@ -4,6 +4,8 @@ import { isStaticSuper, selectToken, selectUserInfo } from '@/features/auth/auth
 import { useRouter } from '@/features/router';
 import { Icon } from '@iconify/react';
 import { useSelector } from 'react-redux';
+import AccountDrawer from '@/pages/(base)/home/modules/Account/AccountDrawer';
+import vnpt from '@/assets/imgs/vnpt.webp';
 
 const UserAvatar = memo(() => {
   const token = useAppSelector(selectToken);
@@ -14,6 +16,8 @@ const UserAvatar = memo(() => {
   const isSuper = useSelector(isStaticSuper);
 
   const { navigate } = useRouter();
+
+  const [open, setOpen] = useState(false);
 
   function logout() {
     window?.$modal?.confirm({
@@ -30,7 +34,10 @@ const UserAvatar = memo(() => {
   function onClick({ key }: { key: string }) {
     if (key === '1') {
       logout();
-    } else {
+    } else if (key === '2') {
+      setOpen(true);
+    }
+    else {
       navigate('/dashboard');
     }
   }
@@ -40,13 +47,23 @@ const UserAvatar = memo(() => {
   }
 
   const items: MenuProps['items'] = [
+    // {
+    //   key: '2',
+    //   label: (
+    //     <div className="flex-center gap-8px">
+    //       <Icon icon="solar:user-linear" fontSize={16} />
+    //       Tài khoản
+    //     </div>
+    //   ),
+    // },
+    { type: 'divider' as const },
     ...(isSuper
       ? [
         {
           key: '0',
           label: (
             <div className="flex-center gap-8px">
-              <Icon icon="solar:widget-5-linear" fontSize={18} />
+              <Icon icon="solar:widget-5-linear" fontSize={14} />
               Tổng quan
             </div>
           ),
@@ -58,7 +75,7 @@ const UserAvatar = memo(() => {
       key: '1',
       label: (
         <div className="flex-center gap-8px">
-          <Icon icon="mynaui:logout" fontSize={20} />
+          <Icon icon="mynaui:logout" fontSize={16} />
           {t('common.logout')}
         </div>
       ),
@@ -66,18 +83,22 @@ const UserAvatar = memo(() => {
   ];
 
   return token ? (
-    <ADropdown
-      menu={{ items, onClick }}
-      placement="bottomRight"
-      trigger={['click']}
-    >
-      <div>
-        <ButtonIcon className="px-12px">
-          <img src="/src/assets/imgs/vnpt.webp" alt="vnpt" className="w-28px h-28px rounded-full border border-primary" />
-          <span className="text-14px capitalize">{user?.name}</span>
-        </ButtonIcon>
-      </div>
-    </ADropdown>
+    <>
+      <ADropdown
+        menu={{ items, onClick }}
+        placement="bottomRight"
+        trigger={['click']}
+      >
+        <div>
+          <ButtonIcon className="px-12px">
+            <img src={vnpt} alt="vnpt" className="w-28px h-28px rounded-full border border-primary" />
+            <span className="text-15px text-primary font-medium capitalize">{user?.name}</span>
+          </ButtonIcon>
+        </div>
+      </ADropdown>
+
+      <AccountDrawer open={open} setOpen={setOpen} />
+    </>
   ) : (
     <AButton onClick={loginOrRegister}>{t('page.login.common.loginOrRegister')}</AButton>
   );
