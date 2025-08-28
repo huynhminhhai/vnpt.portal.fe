@@ -1,4 +1,5 @@
 import { AssignSystemPermissionsToUser, GetAllUserWithTenantInfo } from "@/service/api";
+import { Icon } from "@iconify/react";
 import { message, Tree } from "antd";
 import { DataNode } from "antd/es/tree";
 
@@ -6,6 +7,7 @@ interface UserListProps {
   selectedTenant: number | null,
   setSelectedTenant: React.Dispatch<React.SetStateAction<number | null>>
   checkedList: number[],
+  oldChecked: number[]
 }
 
 interface UserType {
@@ -21,7 +23,7 @@ interface TenantType {
   children: UserType[];
 }
 
-const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, checkedList }) => {
+const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, checkedList, oldChecked }) => {
 
   const [datas, setDatas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -94,31 +96,34 @@ const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, 
   }
 
   return (
-    <ACard
-      className="card-wrapper min-h-fit md:min-h-500px h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden table-custom card-wrapper
-        [&_.ant-card-body]:flex [&_.ant-card-body]:flex-col [&_.ant-card-body]:h-full
-        [&_.ant-card-body]:justify-between [&_.ant-card-body]:gap-3"
-      variant="borderless"
-      loading={loading}
-    >
-      <Tree
-        treeData={treeData}
-        showLine
-        selectable
-        multiple={false}
-        selectedKeys={selectedTenant ? [selectedTenant] : []}
-        onSelect={(keys) => {
-          if (keys.length && keys[0]) {
-            setSelectedTenant(keys[0] as number);
-          }
-        }}
-        defaultExpandAll
-        className="grow-1"
-      />
-      <AButton type="primary" className="w-full" onClick={() => handleSubmit(checkedList)} loading={loadingAssign}>
-        Lưu lại
-      </AButton>
-    </ACard>
+    <div className="flex flex-col gap-3">
+      <ACard
+        className="card-wrapper [&_.ant-card-body]:!overflow-y-auto [&_.ant-card-body]:overflow-x-hidden table-custom card-wrapper
+          [&_.ant-card-body]:flex [&_.ant-card-body]:flex-col [&_.ant-card-body]:h-[calc(100vh-210px)]
+          [&_.ant-card-body]:justify-between [&_.ant-card-body]:gap-3"
+        variant="borderless"
+        loading={loading}
+      >
+        <Tree
+          treeData={treeData}
+          showLine
+          selectable
+          multiple={false}
+          selectedKeys={selectedTenant ? [selectedTenant] : []}
+          onSelect={(keys) => {
+            if (keys.length && keys[0]) {
+              setSelectedTenant(keys[0] as number);
+            }
+          }}
+          className="grow-1"
+        />
+      </ACard>
+      <ACard>
+        <AButton disabled={oldChecked.length === checkedList.length && oldChecked.every(v => checkedList.includes(v))} size="middle" type="primary" className="w-full" onClick={() => handleSubmit(checkedList)} loading={loadingAssign}>
+          Lưu lại
+        </AButton>
+      </ACard>
+    </div>
   )
 }
 

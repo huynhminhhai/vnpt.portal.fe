@@ -107,7 +107,7 @@ const BaseLayout = () => {
     <AdminLayout
       fixedFooter={themeSettings.footer.fixed}
       fixedTop={themeSettings.fixedHeaderAndTab}
-      Footer={<GlobalFooter />}
+      Footer={ pathname === '/home' ? <GlobalFooter /> : null }
       footerHeight={themeSettings.footer.height}
       footerVisible={themeSettings.footer.visible}
       fullContent={fullContent}
@@ -121,7 +121,7 @@ const BaseLayout = () => {
       siderCollapsedWidth={siderCollapsedWidth}
       siderVisible={siderVisible}
       siderWidth={siderWidth}
-      Tab={ pathname !== '/home' ? <GlobalTab /> : null}
+      Tab={ pathname !== '/home' ? <GlobalTab /> : null }
       tabHeight={themeSettings.tab.height}
       tabVisible={themeSettings.tab.visible}
       updateSiderCollapse={updateSiderCollapse}

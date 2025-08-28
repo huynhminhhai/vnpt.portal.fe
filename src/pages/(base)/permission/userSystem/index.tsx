@@ -5,6 +5,7 @@ const PermissionSystem = () => {
 
   const [selectedTenant, setSelectedTenant] = useState<number | null>(null);
   const [checkedList, setCheckedList] = useState<number[]>([]);
+  const [oldChecked, setOldChecked] = useState<number[]>([]);
 
   return <ASpace
     className="w-full pb-4"
@@ -21,6 +22,7 @@ const PermissionSystem = () => {
           selectedTenant={selectedTenant}
           setSelectedTenant={setSelectedTenant}
           checkedList={checkedList}
+          oldChecked={oldChecked}
         />
       </ACol>
       <ACol
@@ -31,6 +33,7 @@ const PermissionSystem = () => {
           selectedTenant={selectedTenant}
           checkedList={checkedList}
           setCheckedList={setCheckedList}
+          setOldChecked={setOldChecked}
         />
       </ACol>
     </ARow>

@@ -1,23 +1,23 @@
-import { ThemeContext } from "@/features/theme";
 import { GetAllSystemWeb, GetUserSystemPermissions } from "@/service/api";
 import { toHostname } from "@/utils/number";
 import { Icon } from "@iconify/react";
-import { Checkbox, Image, Input, List } from "antd";
+import { Checkbox, Image, Input } from "antd";
 
 interface SystemListProps {
   selectedTenant: number | null,
   checkedList: number[],
   setCheckedList: React.Dispatch<React.SetStateAction<number[]>>
+  setOldChecked: React.Dispatch<React.SetStateAction<number[]>>
 }
 
-const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, setCheckedList }) => {
-  const { darkMode } = useContext(ThemeContext);
+const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, setCheckedList, setOldChecked }) => {
+  const { Search } = Input;
 
   const [datas, setDatas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [listSystem, setListSystem] = useState<any[]>([]);
 
-  const fetchListSystem = async () => {
+  const fetchListSystem = async (params = {}) => {
     setLoading(true);
     try {
 
@@ -25,7 +25,8 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
         MaxResultCount: 9999,
         SkipCount: 0,
         IsActive: true,
-        Keyword: ''
+        Keyword: '',
+        ...params
       };
 
       const res = await GetAllSystemWeb(apiParams);
@@ -60,6 +61,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
         // default checked = danh sách systemWebId trong datas
         const defaultChecked = resData.result.map((d: any) => d.systemWebId);
         setCheckedList(defaultChecked);
+        setOldChecked(defaultChecked);
       } else {
         setDatas([]);
         setCheckedList([]);
@@ -98,11 +100,15 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
 
   return (
     <ACard
-      className="card-wrapper h-500px overflow-y-unset md:overflow-y-auto md:overflow-x-hidden"
+      className="card-wrapper h-[calc(100vh-144px)] overflow-y-unset md:overflow-y-auto md:overflow-x-hidden"
       variant="borderless"
       loading={loading}
     >
-      <ARow gutter={[12, 12]}>
+      <div className="flex items-center justify-end mb-4">
+          <Search className="w-full md:w-[300px]" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="middle" onSearch={(value) => fetchListSystem({ Keyword: value })} />
+      </div>
+
+      <ARow gutter={[6, 6]}>
         {listSystem.map((item: any, index: number) => (
           <ACol
             key={item.id || index}
@@ -112,63 +118,74 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
             lg={12}
             xl={8}
           >
-            <label className="block group relative transition-all duration-200 top-0 hover:-top-1 h-full cursor-pointer w-full">
+            <label className="group relative cursor-pointer block h-full w-full fade-up-css"
+              style={{ animationDelay: `${index * 0.02}s` }}
+            >
               <div
-                className="flex flex-col justify-between border border-[#e0e0e0] rounded-lg relative transition-all duration-300 service-item overflow-hidden h-full"
+                className={`
+                    flex flex-col justify-between relative h-full
+                    rounded-lg border transition-all duration-300 overflow-hidden
+                    hover:scale-[1.01]
+                    ${checkedList.includes(item.id)
+                    ? "bg-blue-50 border-[#01336899] shadow-md"
+                    : "bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-700"}
+                  `}
                 style={{
-                  backgroundColor: checkedList.includes(item.id)
-                    ? "#e6ebf0"
-                    : darkMode
-                      ? "#292929"
-                      : "#ffffff",
+                  boxShadow: '0px 12px 32px rgba(0,0,0,0.05)',
                 }}
               >
+                {/* Check icon khi chọn */}
+                {checkedList.includes(item.id) && (
+                  <div className="absolute top-2 right-2">
+                    <Icon
+                      icon="solar:check-circle-line-duotone"
+                      fontSize={20}
+                      className="text-primary"
+                    />
+                  </div>
+                )}
+
+                {/* Checkbox ẩn (khi có tenant) */}
                 {selectedTenant && (
-                  <div className="absolute top-1 right-2">
+                  <div className="absolute top-2 left-2">
                     <Checkbox
+                      className="hidden"
                       checked={checkedList.includes(item.id)}
-                      onChange={(e) =>
-                        handleCheckboxChange(e.target.checked, item.id)
-                      }
+                      onChange={(e) => handleCheckboxChange(e.target.checked, item.id)}
                       onClick={(e) => e.stopPropagation()}
                     />
                   </div>
                 )}
 
-                <div className="px-4 pt-3 pb-3 flex items-center gap-4">
-                  <div>
-                    <Image
-                      width={28}
-                      src={item?.iconUrl || "/src/assets/imgs/vnpt.png"}
-                      preview={false}
-                      className="rounded-sm logo"
-                    />
-                  </div>
-                  <div className="max-w-[80%]">
+                {/* Nội dung card */}
+                <div className="flex items-center gap-4 px-4 py-3">
+                  {/* Logo */}
+                  <Image
+                    width={28}
+                    src={item?.iconUrl || "/src/assets/imgs/vnpt.png"}
+                    preview={false}
+                    className="rounded-md shadow-sm"
+                  />
+
+                  {/* Text */}
+                  <div className="flex-1 min-w-0">
                     <h2
-                      className="text-[16px] leading-[22px] font-semibold mb-[2px]"
-                      style={{
-                        color: darkMode ? "#ffffffd9" : "#000000E0",
-                      }}
+                      className="text-sm font-semibold truncate text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors"
                     >
                       {item?.systemName}
                     </h2>
-                    <div
-                      className="flex items-center gap-1 text-[13px] leading-[20px]"
-                      style={{
-                        color: darkMode ? "#ffffffd9" : "#6b7280",
-                      }}
-                    >
+                    <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 truncate">
                       {toHostname(item?.systemUrl)}
                       <Icon
                         icon="heroicons:arrow-top-right-on-square-20-solid"
-                        fontSize={16}
+                        fontSize={12}
                       />
                     </div>
                   </div>
                 </div>
               </div>
             </label>
+
           </ACol>
         ))}
       </ARow>

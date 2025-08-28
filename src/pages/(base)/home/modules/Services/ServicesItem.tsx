@@ -24,7 +24,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
     >
       <div
         className="group relative transition-all duration-200 top-0 hover:-top-1 h-full fade-up-css"
-        style={{ animationDelay: `${index * 0.2}s` }}
+        style={{ animationDelay: `${index * 0.1}s` }}
       >
         <a
           href={dataItem?.systemUrl}

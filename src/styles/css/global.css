@@ -133,6 +133,15 @@ textarea.ant-input[disabled],
   background: #e6ebf0 !important;
 }
 
+.table-custom .ant-spin-nested-loading,
+.table-custom .ant-spin-container {
+  height: 100%;
+}
+
+.table-custom .ant-table {
+  height: calc(100% - 40px);
+}
+
 @media screen and (max-width: 991px) {
   .ant-table-cell {
     white-space: nowrap;

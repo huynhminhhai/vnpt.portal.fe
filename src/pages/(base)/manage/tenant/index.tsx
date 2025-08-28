@@ -1,4 +1,4 @@
-import { Card, Collapse, List, message } from 'antd';
+import { Card, Collapse, List, message, Select } from 'antd';
 
 import { DeleteButton } from '@/components/button';
 import { TableHeaderOperation, useTableScroll } from '@/features/table';
@@ -8,9 +8,13 @@ import TenantAddForm from './modules/TenantAddForm';
 import TenantUpdateForm from './modules/TenantUpdateForm';
 import IsActiveDropdown from '@/components/dropdown/IsActiveDropdown';
 import { isActiveOptions } from '@/utils/options';
+import { Icon } from '@iconify/react';
+import { getPaginationConfig } from '../modules/CommonPagination';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
+
+  const { Option } = Select;
 
   return (
     <AForm
@@ -28,21 +32,38 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
       >
         <ACol
           lg={8}
-          md={12}
+          md={16}
           sm={24}
           span={24}
         >
-          <AForm.Item
-            className="m-0"
-            label='Tên đơn vị'
-            name="Keyword"
-          >
-            <AInput placeholder='Nhập tên đơn vị' />
-          </AForm.Item>
+          <div className='flex items-center gap-3 w-full'>
+            <AForm.Item
+              className="m-0 w-full"
+              label=''
+              name="Keyword"
+            >
+              <AInput placeholder='Tìm kiếm nhanh' prefix={<Icon icon="ant-design:search-outlined" />} />
+            </AForm.Item>
+            <AForm.Item
+              className="m-0 w-full"
+              label=''
+              name="IsActive"
+            >
+              <Select placeholder="Chọn trạng thái" size="middle">
+                {isActiveOptions
+                  .filter((item: any) => !item.type)
+                  .map((item: any) => (
+                    <Option key={item.key.toString()} value={item.key}>
+                      {item.label}
+                    </Option>
+                  ))}
+              </Select>
+            </AForm.Item>
+          </div>
         </ACol>
 
         <ACol
-          lg={8}
+          lg={6}
           md={12}
           span={24}
         >
@@ -81,9 +102,16 @@ const TenantManagePage = () => {
   const [form] = AForm.useForm();
   const isTabletRes = useIsTabletResponsive();
 
-  const [datas, setDatas] = useState<any[]>([]);
+  const defaultParams = {
+    MaxResultCount: 10,
+    SkipCount: 0,
+    IsActive: null,
+    Keyword: "",
+  };
+
+  const [searchParams, setSearchParams] = useState(defaultParams);
+  const [datas, setDatas] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const [searchParams, setSearchParams] = useState({});
 
   const handleStatusMenuClick = async (info: any, record: any) => {
     setLoading(true);
@@ -99,28 +127,21 @@ const TenantManagePage = () => {
       message.error(error as string);
     } finally {
       setLoading(false);
-      fetchList();
+      fetchList(searchParams);
     }
   };
 
   // Fetch data function
-  const fetchList = async (params = {}) => {
+  const fetchList = async (params: any) => {
     setLoading(true);
     try {
-      const apiParams = {
-        MaxResultCount: 10,
-        SkipCount: 0,
-        IsActive: null,
-        Keyword: '',
-        ...params
-      };
 
-      const res = await GetAllTenant(apiParams);
+      const res = await GetAllTenant(params);
 
       const resData = res.data as any;
 
-      if (resData && resData.result && resData.result.items) {
-        const data = resData.result.items;
+      if (resData && resData.result) {
+        const data = resData.result;
 
         setDatas(data);
       } else {
@@ -138,20 +159,21 @@ const TenantManagePage = () => {
   // Search functions
   const reset = () => {
     form.resetFields();
-    setSearchParams({});
-    fetchList();
+    setSearchParams(defaultParams);
   };
 
   const search = () => {
     const values = form.getFieldsValue();
-    setSearchParams(values);
-    fetchList(values);
+    setSearchParams({
+      ...defaultParams,
+      ...values,
+    });
   };
 
   // Initial data fetch
   useEffect(() => {
-    fetchList();
-  }, []);
+    fetchList(searchParams);
+  }, [searchParams]);
 
   // Action handlers
   const handleDelete = async (id: number) => {
@@ -160,7 +182,7 @@ const TenantManagePage = () => {
 
       message.success('Xóa đơn vị thành công!');
 
-      fetchList();
+      fetchList(searchParams);
     } catch (error) {
       console.log(error);
       message.error(error as string);
@@ -209,7 +231,7 @@ const TenantManagePage = () => {
         <div className="flex-center gap-8px">
           <TenantUpdateForm
             id={record.id}
-            onSuccess={fetchList}
+            onSuccess={() => fetchList(searchParams)}
           />
           <DeleteButton onClick={() => handleDelete(record.id)} />
         </div>
@@ -247,12 +269,12 @@ const TenantManagePage = () => {
         variant="borderless"
         extra={
           <TableHeaderOperation
-            addForm={<TenantAddForm onSuccess={fetchList} />}
+            addForm={<TenantAddForm onSuccess={() => fetchList(searchParams)} />}
             columns={columns}
             disabledDelete={true}
             isShowDelete={false}
             loading={loading}
-            refresh={() => fetchList()}
+            refresh={() => fetchList(searchParams)}
             setColumnChecks={() => { }}
             onDelete={() => { }}
           />
@@ -263,18 +285,12 @@ const TenantManagePage = () => {
             <ATable
               bordered
               columns={columns}
-              dataSource={datas}
+              dataSource={datas?.items}
               loading={loading}
               rowKey="id"
               scroll={scrollConfig}
               size="small"
-              pagination={{
-                defaultPageSize: 10,
-                pageSizeOptions: ['10', '20', '50', '100'],
-                showQuickJumper: true,
-                showSizeChanger: true,
-                showTotal: (total: number, range: number[]) => `${range[0]}-${range[1]} of ${total} items`
-              }}
+              pagination={getPaginationConfig({ searchParams, setSearchParams, total: datas?.totalCount })}
             /> :
             <div className='h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden'>
               <List
@@ -285,15 +301,8 @@ const TenantManagePage = () => {
                   md: 2,
                   xl: 3,
                 }}
-                dataSource={datas}
-                pagination={{
-                  pageSize: 10,
-                  showSizeChanger: true,
-                  showQuickJumper: true,
-                  showTotal: (total, range) =>
-                    `${range[0]}-${range[1]} của ${total} mục`,
-                  pageSizeOptions: ['6', '12', '24', '48']
-                }}
+                dataSource={datas?.items}
+                pagination={getPaginationConfig({ searchParams, setSearchParams, total: datas?.totalCount })}
                 renderItem={(item: any) => (
                   <List.Item className='!mb-2'>
                     <Card
@@ -336,7 +345,7 @@ const TenantManagePage = () => {
 
                           {/* Actions */}
                           <div className="flex justify-center gap-3 pt-3 border-t mt-3">
-                            <TenantUpdateForm id={item.id} onSuccess={fetchList} />
+                            <TenantUpdateForm id={item.id} onSuccess={() => fetchList(searchParams)} />
                             <DeleteButton onClick={() => handleDelete(item.id)} />
                           </div>
                         </Collapse.Panel>

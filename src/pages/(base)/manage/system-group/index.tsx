@@ -8,6 +8,7 @@ import { DeleteGroupSystem, GetAllSystemGroup, UpdateSystemGroup } from '@/servi
 import { useIsTabletResponsive } from '@/utils/responsive';
 import { isActiveOptions } from '@/utils/options';
 import { Icon } from '@iconify/react';
+import { getPaginationConfig } from '../modules/CommonPagination';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
@@ -40,7 +41,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
               label=''
               name="Keyword"
             >
-              <AInput placeholder='Nhập tên nhóm dịch vụ' prefix={<Icon icon="ant-design:search-outlined" />} />
+              <AInput placeholder='Tìm kiếm nhanh' prefix={<Icon icon="ant-design:search-outlined" />} />
             </AForm.Item>
             <AForm.Item
               className="m-0 w-full"
@@ -299,23 +300,7 @@ const SystemGroupManagePage = () => {
               rowKey="id"
               scroll={scrollConfig}
               size="small"
-              pagination={{
-                current: searchParams.SkipCount / searchParams.MaxResultCount + 1,
-                pageSize: searchParams.MaxResultCount,
-                pageSizeOptions: ["10", "20", "50", "100"],
-                showQuickJumper: false,
-                showSizeChanger: true,
-                total: datas?.totalCount,
-                showTotal: (total: number, range: number[]) =>
-                  `${range[0]}-${range[1]} of ${total} items`,
-                onChange: (page, pageSize) => {
-                  setSearchParams({
-                    ...searchParams,
-                    SkipCount: (page - 1) * pageSize,
-                    MaxResultCount: pageSize,
-                  });
-                },
-              }}
+              pagination={getPaginationConfig({ searchParams, setSearchParams, total: datas?.totalCount })}
             /> :
             <div className='h-full overflow-y-unset md:overflow-y-auto md:overflow-x-hidden'>
               <List
@@ -327,23 +312,7 @@ const SystemGroupManagePage = () => {
                   xl: 3,
                 }}
                 dataSource={datas?.items}
-                pagination={{
-                  current: searchParams.SkipCount / searchParams.MaxResultCount + 1,
-                  pageSize: searchParams.MaxResultCount,
-                  pageSizeOptions: ["10", "20", "50", "100"],
-                  showQuickJumper: false,
-                  showSizeChanger: true,
-                  total: datas?.totalCount,
-                  showTotal: (total: number, range: number[]) =>
-                    `${range[0]}-${range[1]} of ${total} items`,
-                  onChange: (page, pageSize) => {
-                    setSearchParams({
-                      ...searchParams,
-                      SkipCount: (page - 1) * pageSize,
-                      MaxResultCount: pageSize,
-                    });
-                  },
-                }}
+                pagination={getPaginationConfig({ searchParams, setSearchParams, total: datas?.totalCount })}
                 renderItem={(item: any) => (
                   <List.Item className='!mb-2'>
                     <Card

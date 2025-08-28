@@ -142,14 +142,21 @@ const ServicesList = () => {
           isShowAll ?
             <>
               <ARow gutter={[16, 16]} className="mt-6">
-                {listSystem.map((group) =>
-                  group.systemWebDtos.map((system: any, index: number) => (
-                    <ServicesItem
-                      key={index}
-                      index={index}
-                      dataItem={system}
-                    />
-                  ))
+                {listSystem.map((group, groupIndex) =>
+                  group.systemWebDtos.map((system: any, systemIndex: number) => {
+                    const globalIndex =
+                      listSystem
+                        .slice(0, groupIndex)
+                        .reduce((sum, g) => sum + g.systemWebDtos.length, 0) + systemIndex;
+
+                    return (
+                      <ServicesItem
+                        key={globalIndex}
+                        index={globalIndex}
+                        dataItem={system}
+                      />
+                    );
+                  })
                 )}
               </ARow>
             </>
