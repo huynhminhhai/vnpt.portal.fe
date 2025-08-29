@@ -78,6 +78,8 @@ const RootLayout = () => {
   const route = useRoute();
   const { replace } = useRouter();
 
+  const isLogin = Boolean(localStg.get('token'));
+
   const previousRoute = usePrevious(route);
 
   const { handle, id, pathname } = route;
@@ -93,7 +95,7 @@ const RootLayout = () => {
   const isSuper = useAppSelector(isStaticSuper);
 
   useEffect(() => {
-  if (!isSuper) {
+  if (!isSuper && isLogin) {
     replace("/home");
   }
 }, [isSuper]);

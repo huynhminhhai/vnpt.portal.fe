@@ -36,8 +36,8 @@ const HeroBanner = () => {
             </div>
           </div>
         </div>
-        <div className="absolute z-[1] top-1/2 right-[-65%] md:right-[100px] transform -translate-y-[50%]">
-          <img data-aos="zoom-in-left" className="w-[620px] h-auto invert brightness-0" src={map} alt="vnpt" />
+        <div className="absolute z-[1] top-1/2 right-[-55%] md:right-[100px] transform -translate-y-[50%]">
+          <img data-aos="zoom-in-left" className="w-[320px] md:w-[620px] h-auto invert brightness-0" src={map} alt="vnpt" />
         </div>
       </ACard>
     </div>
