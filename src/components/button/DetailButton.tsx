@@ -13,7 +13,7 @@ const DetailButton = ({ onClick }: DetailButtonProps) => {
       onClick={onClick}
     >
       <Icon
-        className="!text-blue-700"
+        className="text-primary"
         fontSize={20}
         icon="solar:eye-outline"
       />

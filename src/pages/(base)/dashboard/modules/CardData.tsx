@@ -153,12 +153,12 @@ const CardData = () => {
   const { darkMode } = useContext(ThemeContext);
 
   return (
-    <ACard
-      className="card-wrapper"
-      size="small"
-      variant="borderless"
+    <div
+      // className="card-wrapper"
+      // size="small"
+      // variant="borderless"
     >
-      <ARow gutter={[16, 16]}>
+      <ARow gutter={[24, 16]}>
         {isLoading ? (
           <>
             <CardSkeleton darkMode={darkMode} />
@@ -175,7 +175,7 @@ const CardData = () => {
           ))
         )}
       </ARow>
-    </ACard>
+    </div>
   );
 };
 

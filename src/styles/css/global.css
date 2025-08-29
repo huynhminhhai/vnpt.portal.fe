@@ -142,9 +142,9 @@ textarea.ant-input[disabled],
   height: calc(100% - 40px);
 }
 
-.table-custom .ant-table-thead > tr > th {
+/* .table-custom .ant-table-thead > tr > th {
   background-color: #e6ebf0;
-}
+} */
 
 .ant-form .ant-form-item {
   margin-bottom: 12px;
