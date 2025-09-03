@@ -45,7 +45,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
       lg={8}
       xl={6}
     >
-      <div className="w-full max-w-sm mx-auto fade-up-css"
+      <div className="w-full fade-up-css"
         style={{ animationDelay: `${index * 0.1}s` }}
       >
         <a

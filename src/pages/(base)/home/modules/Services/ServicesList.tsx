@@ -63,7 +63,7 @@ const ServicesList = () => {
     <div
       className="px-3 md:px-10 pt-[20px] pb-[20px] grow-[1] relative z-10"
     >
-      <ARow gutter={[16, 16]}>
+      <ARow gutter={[22, 22]}>
 
         <ACol
           lg={4}
@@ -124,7 +124,7 @@ const ServicesList = () => {
       </ARow>
       {
         loading ?
-          <ARow gutter={[16, 16]} className="mt-8">
+          <ARow gutter={[22, 22]} className="mt-8">
             {Array.from({ length: 4 }).map((_, index) => (
               <ACol
                 key={index}
@@ -141,7 +141,7 @@ const ServicesList = () => {
           :
           isShowAll ?
             <>
-              <ARow gutter={[16, 16]} className="mt-6">
+              <ARow gutter={[22, 22]} className="mt-6">
                 {listSystem.map((group, groupIndex) =>
                   group.systemWebDtos.map((system: any, systemIndex: number) => {
                     const globalIndex =
@@ -165,7 +165,7 @@ const ServicesList = () => {
               {listSystem.map((group) => (
                 <div key={group.id}>
                   <ServiceHeading title={group?.displayName} />
-                  <ARow gutter={[16, 16]} className="mt-6">
+                  <ARow gutter={[22, 22]} className="mt-6">
                     {group.systemWebDtos.map((system: any, index: number) => (
                       <ServicesItem
                         key={index}
