@@ -36,7 +36,7 @@ const LoginLayout = () => {
 
   return (
     <div
-      className="relative size-full flex-center overflow-hidden bg-[#08254f] dark:bg-[#2b2b2b]"
+      className="relative size-full flex-center overflow-hidden bg-gradient-to-r from-primary to-blue-900 dark:bg-[#2b2b2b]"
     >
       <div className='absolute top-0 left-0 w-full h-full'>
         <img data-aos="zoom-in-up" src={map} alt="vnpt bg" className='w-full h-full object-contain invert brightness-50' />
