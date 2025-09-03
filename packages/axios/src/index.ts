@@ -26,7 +26,16 @@ function createCommonRequest<ResponseData = any>(
   const abortControllerMap = new Map<string, AbortController>();
 
   // config axios retry
-  const retryOptions = createRetryOptions(axiosConf);
+  // const retryOptions = createRetryOptions(axiosConf);
+  const retryOptions = {
+    retries: 2, // 👈 chỉ thử lại 1 lần
+    retryDelay: (retryCount: number) => retryCount * 1000, // mỗi lần retry cách nhau 1s
+    retryCondition: (error: AxiosError) => {
+      // chỉ retry khi network error hoặc 5xx
+      return axiosRetry.isNetworkOrIdempotentRequestError(error);
+    },
+    ...createRetryOptions(axiosConf), // cho phép custom bên ngoài ghi đè
+  };
   axiosRetry(instance, retryOptions);
 
   instance.interceptors.request.use(conf => {
@@ -180,5 +189,40 @@ export function createFlatRequest<ResponseData = any, State = Record<string, unk
 
   return flatRequest;
 }
+
+export function newCreateFlatRequest<ResponseData = any, State = Record<string, unknown>>(
+  axiosConfig?: CreateAxiosDefaults,
+  options?: Partial<RequestOption<ResponseData>>
+) {
+  const { cancelAllRequest, cancelRequest, instance, opts } = createCommonRequest<ResponseData>(axiosConfig, options);
+
+  const flatRequest: FlatRequestInstance<State, ResponseData> = async function flatRequest<
+    T = any,
+    R extends ResponseType = 'json'
+  >(config: CustomAxiosRequestConfig) {
+    try {
+      const response: AxiosResponse<ResponseData> = await instance(config);
+
+      const responseType = response.config?.responseType || 'json';
+
+      if (responseType === 'json') {
+        const data = opts.transformBackendResponse(response);
+        return { data, error: null, response };
+      }
+
+      return { data: response.data as MappedType<R, T>, error: null };
+    } catch (error) {
+      // ✅ ném error ra ngoài để onFinish có thể catch
+      throw error;
+    }
+  } as FlatRequestInstance<State, ResponseData>;
+
+  flatRequest.cancelRequest = cancelRequest;
+  flatRequest.cancelAllRequest = cancelAllRequest;
+  flatRequest.state = {} as State;
+
+  return flatRequest;
+}
+
 export { BACKEND_ERROR_CODE, REQUEST_ID_KEY };
 export type { AxiosError, CreateAxiosDefaults };

@@ -1,4 +1,4 @@
-import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '@sa/axios';
+import { BACKEND_ERROR_CODE, createFlatRequest, createRequest, newCreateFlatRequest } from '@sa/axios';
 
 import { globalConfig } from '@/config';
 import { localStg } from '@/utils/storage';
@@ -81,7 +81,7 @@ export const demoRequest = createRequest<App.Service.DemoResponse>(
 );
 
 // Request mới cho API format với response.data
-export const newRequest = createFlatRequest<Api.SystemManage.ApiResponse, RequestInstanceState>(
+export const newRequest = newCreateFlatRequest<Api.SystemManage.ApiResponse, RequestInstanceState>(
   {
     baseURL: globalConfig.serviceBaseURL,
     headers: {
