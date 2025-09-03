@@ -82,9 +82,32 @@ textarea.ant-input[disabled],
     opacity: 0;
     transform: translateY(30px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  100% {
+    transform: translateY(-10px) rotate(180deg);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.8;
   }
 }
 
@@ -176,6 +199,7 @@ textarea.ant-input[disabled],
 }
 
 @media screen and (max-width: 576px) {
+
   .table-custom .ant-card-body,
   .table-custom .ant-card-head {
     padding-inline: 10px !important;
@@ -190,15 +214,15 @@ textarea.ant-input[disabled],
     width: 100%;
   }
 
-  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space {
+  .table-custom .ant-card-head-wrapper .ant-card-extra>.ant-space {
     width: 100%;
     margin-top: 6px;
     flex-direction: row;
     flex-wrap: nowrap !important;
   }
 
-  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space button,
-  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space .ant-space-item {
+  .table-custom .ant-card-head-wrapper .ant-card-extra>.ant-space button,
+  .table-custom .ant-card-head-wrapper .ant-card-extra>.ant-space .ant-space-item {
     width: 100%;
   }
 }

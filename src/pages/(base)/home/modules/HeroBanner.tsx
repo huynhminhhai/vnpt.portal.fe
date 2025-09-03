@@ -2,6 +2,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { selectUserInfo } from "@/features/auth/authStore";
 import map from '@/assets/imgs/map-2.png';
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
 
 const HeroBanner = () => {
 
@@ -14,13 +16,65 @@ const HeroBanner = () => {
     });
   }, []);
 
+  const particlesInit = async (main: any) => {
+    await loadFull(main);
+  };
+
   return (
     <div
       className="relative"
       id="particles-js"
     >
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        className="absolute inset-0 z-1 h-full w-full"
+        options={{
+          background: { color: "transparent" },
+          fpsLimit: 60,
+          interactivity: {
+            events: {
+              onHover: { enable: true, mode: "grab" },
+              // onClick: { enable: true, mode: "push" },
+              resize: true,
+            },
+            modes: {
+              repulse: { distance: 120, duration: 0.4 },
+              grab: {
+                distance: 200,
+                line_linked: {
+                  opacity: 0.5,
+                },
+              },
+            },
+          },
+          particles: {
+            color: { value: "#ffffff" },
+            links: {
+              color: "#ffffff",
+              distance: 150,
+              enable: true,
+              opacity: 0.4,
+              width: 1,
+            },
+            move: {
+              enable: true,
+              speed: 0.8,
+              outModes: "bounce",
+            },
+            number: {
+              density: { enable: true, area: 800 },
+              value: 5,
+            },
+            opacity: { value: 0.6 },
+            shape: { type: "circle" },
+            size: { value: { min: 1, max: 4 } },
+          },
+          detectRetina: true,
+        }}
+      />
       <ACard
-        className="relative overflow-hidden border-none px-0 md:px-10 py-[12px] md:py-[20px] rounded-0 bg-[#08254f] dark:bg-[#2b2b2b] text-white"
+        className="relative overflow-hidden border-none px-0 md:px-10 py-[12px] md:py-[20px] rounded-0 bg-gradient-to-r from-primary to-blue-900 dark:bg-[#111826] text-white"
       >
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
