@@ -107,7 +107,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
             {/* Digital animated background particles */}
             <div className="absolute top-0px inset-0 overflow-hidden pointer-events-none">
               {/* Circuit-like lines */}
-              <svg className="absolute top-32px inset-0 w-full h-full" style={{ opacity: isHovered ? 0.4 : 0.1 }}>
+              <svg className="absolute top-34px inset-0 w-full h-full" style={{ opacity: isHovered ? 0.4 : 0.1 }}>
                 <defs>
                   <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.8" />
@@ -159,7 +159,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                   ${isHovered ? 'scale-125 opacity-20 rotate-45' : 'scale-100 opacity-10 rotate-12'}
                   -top-8 -right-8
                 `}>
-                <div className="w-full h-full bg-gradient-to-br from-blue-500 to-cyan-400 opacity-60"
+                <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-400 opacity-60"
                   style={{
                     clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)'
                   }}
@@ -231,7 +231,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
 
                   {/* Orbital ring effect */}
                   <div className={`
-                      absolute inset-0 rounded-lg border-2 border-cyan-400/30 transition-all duration-1000
+                      absolute inset-0 rounded-lg border-2 border-blue-400/30 transition-all duration-1000
                       ${isHovered ? 'scale-125 opacity-100 animate-spin' : 'scale-100 opacity-0'}
                     `}
                     style={{ animationDuration: '8s' }} />
@@ -251,55 +251,81 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
               </div>
 
               {/* Tech CTA Footer */}
-              <div className={`
+              <div
+                className={`
                   px-6 py-2.5 mt-auto transition-all duration-700 relative overflow-hidden
                   ${isHovered
-                  ? 'bg-gradient-to-r from-primary via-blue-800 to-blue-500'
-                  : darkMode
-                    ? 'bg-gray-800/50'
-                    : 'bg-gradient-to-r from-blue-800/15 to-blue-200/25'
-                }
-                `}>
+                    ? 'bg-gradient-to-r from-primary via-blue-800 to-blue-500'
+                    : darkMode
+                      ? 'bg-gray-800/50'
+                      : 'bg-gradient-to-r from-blue-800/15 to-blue-200/25'}
+                `}
+              >
                 {/* Digital scan line animation */}
-                <div className={`
+                <div
+                  className={`
                     absolute inset-0 transition-all duration-1000
                     ${isHovered ? 'opacity-100' : 'opacity-0'}
-                  `}>
+                  `}
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 animate-pulse" />
+                </div>
+
+                {/* White arrow background animation */}
+                <div
+                  className={`absolute z-0 top-1/2 left-[32px] -translate-y-1/2
+                    transition-all duration-300 ${isHovered ? 'animate-arrow-move' : ''}`}
+                >
+                  <div
+                    className={`flex items-center scale-[2.2]  ${isHovered ? 'opacity-10' : 'opacity-20'}`}
+                  >
+                    <Icon icon={'pixel:angle-right'} fontSize={48} color="white" />
+                    <Icon icon={'pixel:angle-right'} fontSize={48} color="white" className="transform -translate-x-9" />
+                  </div>
                 </div>
 
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className={`
+                    <div
+                      className={`
                         w-2 h-2 rounded-full transition-all duration-500
                         ${isHovered ? 'bg-white animate-pulse scale-125' : darkMode ? 'bg-cyan-400' : 'bg-primary'}
-                      `} />
-                    <span className={`
+                      `}
+                    />
+                    <span
+                      className={`
                         text-xs font-bold transition-all duration-500 tracking-wide
                         ${isHovered ? 'text-white' : darkMode ? 'text-white' : 'text-primary'}
-                      `}>
+                      `}
+                    >
                       Truy Cập Ngay
                     </span>
                   </div>
 
-                  <div className={`
+                  <div
+                    className={`
                       p-2 rounded-lg transition-all duration-500 relative overflow-hidden
                       ${isHovered
-                      ? 'bg-white/20 backdrop-blur-sm scale-110'
-                      : darkMode
-                        ? 'bg-blue-500/20'
-                        : 'bg-blue-100'
-                    }
-                    `}>
-                    <div className={`
+                        ? 'bg-white/20 backdrop-blur-sm scale-110'
+                        : darkMode
+                          ? 'bg-blue-500/20'
+                          : 'bg-blue-100'}
+                    `}
+                  >
+                    <div
+                      className={`
                         flex items-center justify-center w-4 h-4 transition-all duration-500
                         ${isHovered ? 'text-white rotate-45' : darkMode ? 'text-cyan-400' : 'text-blue-600'}
-                      `}>
-                      <Icon icon={'solar:link-bold-duotone'} fontSize={16} />
+                      `}
+                    >
+                      <Icon icon={'solar:link-bold-duotone'} fontSize={18} />
                     </div>
                   </div>
                 </div>
               </div>
+
+
+
             </div>
           </div>
         </a>

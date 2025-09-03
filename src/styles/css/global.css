@@ -100,7 +100,6 @@ textarea.ant-input[disabled],
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     opacity: 0.2;
@@ -109,6 +108,31 @@ textarea.ant-input[disabled],
   50% {
     opacity: 0.8;
   }
+}
+
+@keyframes arrow-move {
+  0% {
+    transform: translateX(-50px) translateY(-50%);
+    opacity: 0.3; /* mặc định mờ */
+  }
+
+  10% {
+    opacity: 1; /* sáng rõ khi bắt đầu chạy */
+  }
+
+  60% {
+    transform: translateX(250px) translateY(-50%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(300px) translateY(-50%);
+    opacity: 0.3; /* trở lại mờ */
+  }
+}
+
+.animate-arrow-move {
+  animation: arrow-move 1.5s ease-in-out infinite;
 }
 
 .line-clamp-3 {
@@ -199,7 +223,6 @@ textarea.ant-input[disabled],
 }
 
 @media screen and (max-width: 576px) {
-
   .table-custom .ant-card-body,
   .table-custom .ant-card-head {
     padding-inline: 10px !important;
@@ -214,15 +237,15 @@ textarea.ant-input[disabled],
     width: 100%;
   }
 
-  .table-custom .ant-card-head-wrapper .ant-card-extra>.ant-space {
+  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space {
     width: 100%;
     margin-top: 6px;
     flex-direction: row;
     flex-wrap: nowrap !important;
   }
 
-  .table-custom .ant-card-head-wrapper .ant-card-extra>.ant-space button,
-  .table-custom .ant-card-head-wrapper .ant-card-extra>.ant-space .ant-space-item {
+  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space button,
+  .table-custom .ant-card-head-wrapper .ant-card-extra > .ant-space .ant-space-item {
     width: 100%;
   }
 }
