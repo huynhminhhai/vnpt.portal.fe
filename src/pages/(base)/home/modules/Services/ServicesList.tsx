@@ -68,17 +68,17 @@ const ServicesList = () => {
         <ACol
           lg={4}
           md={12}
-          span={24}
+          span={3}
           className="mr-auto flex justify-start"
           data-aos="fade-right"
         >
-          <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <ButtonIcon
               triggerParent
               className="px-6px text-2xl border-[1px] border-[#e0e0e0] h-32px bg-white dark:bg-[#1c1c1c]"
               icon={isShowAll ? "circum:grid-4-1" : 'circum:grid-3-2'}
               tooltipContent={isShowAll ? 'Chế độ xem tất cả' : 'Chế độ xem theo loại'}
-              tooltipPlacement="right"
+              tooltipPlacement="top"
               onClick={handleToggleShowAll}
             />
           </div>
@@ -115,7 +115,7 @@ const ServicesList = () => {
         <ACol
           lg={6}
           md={12}
-          span={24}
+          span={21}
           data-aos="fade-left"
           data-aos-delay="100"
         >

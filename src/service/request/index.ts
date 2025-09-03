@@ -126,18 +126,26 @@ export const newRequest = newCreateFlatRequest<Api.SystemManage.ApiResponse, Req
       });
 
       let message = error.message || 'Network error';
-
       const data = error.response?.data;
 
+      // check 401 -> logout
+      if (error.response?.status === 401) {
+        // show thông báo
 
+        // redirect login
+        window.location.href = '/login-out';
+
+        window.$message?.error('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
+
+        return;
+      }
+
+      // check lỗi từ backend
       if (data?.error) {
-        console.log(data?.error);
-        // Bắt lỗi chi tiết từ API
         const { message: msg, details } = data.error as any;
         message = details ? `${msg} - ${details}` : msg || message;
 
         window.$message?.error(message);
-
         return;
       }
 

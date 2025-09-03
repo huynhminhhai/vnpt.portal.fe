@@ -55,7 +55,7 @@ export function useInitAuth() {
     if (loginToken) {
       localStg.set('token', loginToken.result.accessToken);
       (localStg as any).set('userId', loginToken.result.userId);
-      localStg.set('refreshToken', loginToken.result.encryptedAccessToken);
+      localStg.set('refreshToken', loginToken.result.refreshToken);
 
       dispatch(setToken(loginToken.result.accessToken));
       dispatch(setUserId(loginToken.result.userId));

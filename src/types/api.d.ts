@@ -65,6 +65,7 @@ declare namespace Api {
         encryptedAccessToken: string;
         expireInSeconds: number;
         userId: number;
+        refreshToken: string;
       };
       targetUrl: string | null;
       success: boolean;

@@ -169,9 +169,9 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
               <div className={`
                   absolute w-12 h-12 transition-all duration-1000 delay-200
                   ${isHovered ? 'scale-110 opacity-25 -rotate-45' : 'scale-100 opacity-15 -rotate-12'}
-                  -bottom-6 -left-6
+                  bottom-18 -left-8
                 `}>
-                <div className="w-full h-full bg-gradient-to-br from-purple-500 to-blue-400 opacity-40"
+                <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-400 opacity-40"
                   style={{
                     clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)'
                   }}
@@ -258,7 +258,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                     ? 'bg-gradient-to-r from-primary via-blue-800 to-blue-500'
                     : darkMode
                       ? 'bg-gray-800/50'
-                      : 'bg-gradient-to-r from-blue-800/15 to-blue-200/25'}
+                      : 'bg-gradient-to-r from-blue-800/20 to-blue-200/25'}
                 `}
               >
                 {/* Digital scan line animation */}
