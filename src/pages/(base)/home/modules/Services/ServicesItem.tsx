@@ -54,24 +54,24 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
           rel="noreferrer"
           className={`
               group block relative transition-all duration-700 ease-out transform
-              hover:scale-[1.04] hover:-translate-y-3
+              hover:-translate-y-2
               ${isHovered ? 'z-10' : 'z-0'}
             `}
           style={{
             animationDelay: `${index * 0.15}s`,
-            filter: isHovered ? 'drop-shadow(0 30px 60px rgba(59, 130, 246, 0.3))' : 'none'
+            // filter: isHovered ? 'drop-shadow(0 30px 60px rgba(59, 130, 246, 0.3))' : 'none'
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Outer glow effect */}
           <div className={`
-              absolute inset-0 rounded-2xl transition-all duration-700
+              absolute inset-0 rounded-2xl transition-all duration-700 group-hover:scale-[1.04]
               ${isHovered ? 'bg-gradient-to-br from-[#dbeafe]/50 via-[#ecfeff]/40 to-[#bfdbfe]/50 blur-xl scale-110' : ''}
             `} />
 
           {/* Digital grid background */}
-          <div className={`
+          {/* <div className={`
               absolute inset-0 rounded-2xl transition-all duration-700
               ${isHovered ? 'opacity-100' : 'opacity-30'}
             `}
@@ -82,7 +82,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
               `,
               backgroundSize: '20px 20px',
               backgroundPosition: '0 0, 0 0'
-            }} />
+            }} /> */}
 
           {/* Main card */}
           <div className={`
