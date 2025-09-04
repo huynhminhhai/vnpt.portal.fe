@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 import wave2 from '@/assets/imgs/wave-2.webp';
 import wave3 from '@/assets/imgs/wave-3.png';
 import wave4 from '@/assets/imgs/wave-4.webp';
@@ -7,7 +5,9 @@ import wave5 from '@/assets/imgs/wave-5.avif';
 import NumberTicker from '@/components/NumberTicker';
 import CardSkeleton from '@/components/Skeleton/CardSkeleton';
 import { ThemeContext } from '@/features/theme';
-import { GetThongTinTongQuat } from '@/service/api';
+import { Icon } from '@iconify/react';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 interface CardDataProps {
   cardKey: string;
@@ -44,8 +44,8 @@ function useGetCardData() {
         const mappedData: CardDataProps[] = [
           {
             cardKey: 'soLuongSuDung',
-            color: { end: '#f1f2f7', start: '#f1f2f7' },
-            icon: 'ant-design:bar-chart-outlined',
+            color: { end: 'rgba(0, 114, 254, 0.6)', start: '#0071fe' },
+            icon: 'solar:buildings-2-bold-duotone',
             image: wave3,
             key: 'soLuongSuDung',
             title: 'Đơn vị',
@@ -54,8 +54,8 @@ function useGetCardData() {
           },
           {
             cardKey: 'soLuongMienPhi',
-            color: { end: '#f1f2f7', start: '#f1f2f7' },
-            icon: 'carbon:document-download',
+            color: { end: 'rgba(5, 213, 199, 0.6)', start: '#05d5c7' },
+            icon: 'solar:user-bold-duotone',
             image: wave4,
             key: 'soLuongMienPhi',
             title: 'Người dùng',
@@ -64,8 +64,8 @@ function useGetCardData() {
           },
           {
             cardKey: 'soLuongTraPhi',
-            color: { end: '#f1f2f7', start: '#f1f2f7' },
-            icon: 'ant-design:trademark-circle-outlined',
+            color: { end: 'rgba(147, 132, 255, 0.6)', start: '#9384ff' },
+            icon: 'solar:server-2-bold-duotone',
             image: wave2,
             key: 'soLuongTraPhi',
             title: 'Nhóm dịch vụ',
@@ -74,8 +74,8 @@ function useGetCardData() {
           },
           {
             cardKey: 'danhThu',
-            color: { end: '#f1f2f7', start: '#f1f2f7' },
-            icon: 'ant-design:money-collect-outlined',
+            color: { end: 'rgba(56, 159, 234, 0.6)', start: '#389fea' },
+            icon: 'streamline:web-solid',
             image: wave5,
             key: 'danhThu',
             title: 'Dịch vụ',
@@ -99,9 +99,16 @@ function useGetCardData() {
   return { cardData, isLoading };
 }
 
-const CardItem = (props: CardDataProps) => {
+const CardItem = (props: CardDataProps & { index: number }) => {
   const { darkMode } = useContext(ThemeContext);
-  const { cardKey, image, title, unit, value } = props;
+  const { cardKey, title, unit, value, icon, color, index } = props;
+
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  }, []);
 
   return (
     <ACol
@@ -109,38 +116,35 @@ const CardItem = (props: CardDataProps) => {
       lg={6}
       md={12}
       span={24}
+      data-aos="fade-up"
+      data-aos-delay={index * 100}
     >
       <div
-        className="relative w-[100%] overflow-hidden rounded-xl bg-blue-50 p-3 py-6"
+        className={`relative w-[100%] overflow-hidden rounded-xl bg-blue-50 p-6 shadow-sm border-4 border-white`}
         style={{
-          backgroundColor: darkMode ? '#292929' : '#fcfdfe',
-          boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px'
+          background: darkMode ? `linear-gradient(135deg, #292929, #292929)` : `linear-gradient(135deg, ${color.start}, ${color.end})`,
         }}
       >
-        <div className="absolute top-[60%] w-[100%] translate-y-[-50%] transform -left-[-18%]">
-          <motion.img
-            alt="shape"
-            animate={{ opacity: 0.25, WebkitMaskSize: '100% 100%' }}
-            className="rotate-[-25deg] scale-[1]"
-            initial={{ opacity: 0, WebkitMaskSize: '0% 100%' }}
-            src={image}
-            transition={{ duration: 1.5, ease: 'easeInOut' }}
-          />
+        <div className="absolute -bottom-3 -right-3" data-aos="zoom-in-left" data-aos-delay={index * 150}>
+          <Icon icon={icon} className='text-white/60' fontSize={80} />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <div className='flex items-center justify-center bg-white w-12 h-12 rounded-full'>
+            <Icon icon={icon} color={color.start} fontSize={24} />
+          </div>
           <div>
-            <h5
-              className="mb-1 text-16px text-primary font-medium"
-              style={{ color: darkMode ? '#ffffffd9' : '#000000E0' }}
-            >
-              {title}
-            </h5>
             <NumberTicker
-              className="font-number text-26px font-semibold"
-              style={{ color: darkMode ? '#ffffffd9' : '#0059a9' }}
+              className="font-number text-24px leading-[28px] font-bold"
+              style={{ color: darkMode ? '#ffffff' : '#ffffff' }}
               suffix={unit}
               value={value}
             />
+            <h5
+              className="text-14px text-primary font-semibold"
+              style={{ color: darkMode ? '#ffffffd9' : '#ffffffd9' }}
+            >
+              {title}
+            </h5>
           </div>
         </div>
       </div>
@@ -154,9 +158,6 @@ const CardData = () => {
 
   return (
     <div
-      // className="card-wrapper"
-      // size="small"
-      // variant="borderless"
     >
       <ARow gutter={[24, 16]}>
         {isLoading ? (
@@ -167,8 +168,9 @@ const CardData = () => {
             <CardSkeleton darkMode={darkMode} />
           </>
         ) : (
-          data.map(({ key: cardKey, ...rest }) => (
+          data.map(({ key: cardKey, ...rest }, index) => (
             <CardItem
+              index={index}
               key={cardKey}
               {...rest}
             />

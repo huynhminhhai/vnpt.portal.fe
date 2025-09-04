@@ -107,7 +107,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
             {/* Digital animated background particles */}
             <div className="absolute top-0px inset-0 overflow-hidden pointer-events-none">
               {/* Circuit-like lines */}
-              <svg className="absolute top-34px inset-0 w-full h-full" style={{ opacity: isHovered ? 0.4 : 0.1 }}>
+              <svg className="absolute top-34px inset-0 w-full h-full" style={{ opacity: isHovered ? 0.4 : 0.6 }}>
                 <defs>
                   <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.8" />
@@ -157,7 +157,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
               <div className={`
                   absolute w-15 h-15 transition-all duration-1000
                   ${isHovered ? 'scale-125 opacity-20 rotate-45' : 'scale-100 opacity-10 rotate-12'}
-                  -top-8 -right-8
+                  -top-9 -right-9
                 `}>
                 <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-400 opacity-60"
                   style={{
@@ -169,7 +169,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
               <div className={`
                   absolute w-12 h-12 transition-all duration-1000 delay-200
                   ${isHovered ? 'scale-110 opacity-25 -rotate-45' : 'scale-100 opacity-15 -rotate-12'}
-                  bottom-18 -left-8
+                  bottom-8 -left-8
                 `}>
                 <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-400 opacity-40"
                   style={{
@@ -258,7 +258,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                     ? 'bg-gradient-to-r from-primary via-blue-800 to-blue-500'
                     : darkMode
                       ? 'bg-gray-800/50'
-                      : 'bg-gradient-to-r from-blue-800/20 to-blue-200/25'}
+                      : 'bg-gradient-to-r from-primary/95 via-blue-800/95 to-blue-700/95'}
                 `}
               >
                 {/* Digital scan line animation */}
@@ -277,7 +277,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                     transition-all duration-300 ${isHovered ? 'animate-arrow-move' : ''}`}
                 >
                   <div
-                    className={`flex items-center scale-[2.2]  ${isHovered ? 'opacity-10' : 'opacity-20'}`}
+                    className={`flex items-center scale-[2.2]  ${isHovered ? 'opacity-10' : 'opacity-05'}`}
                   >
                     <Icon icon={'pixel:angle-right'} fontSize={48} color="white" />
                     <Icon icon={'pixel:angle-right'} fontSize={48} color="white" className="transform -translate-x-9" />
@@ -289,13 +289,13 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                     <div
                       className={`
                         w-2 h-2 rounded-full transition-all duration-500
-                        ${isHovered ? 'bg-white animate-pulse scale-125' : darkMode ? 'bg-cyan-400' : 'bg-primary'}
+                        ${isHovered ? 'bg-white animate-pulse scale-125' : darkMode ? 'bg-cyan-400' : 'bg-white'}
                       `}
                     />
                     <span
                       className={`
                         text-xs font-bold transition-all duration-500 tracking-wide
-                        ${isHovered ? 'text-white' : darkMode ? 'text-white' : 'text-primary'}
+                        ${isHovered ? 'text-white' : darkMode ? 'text-white' : 'text-white'}
                       `}
                     >
                       Truy Cập Ngay

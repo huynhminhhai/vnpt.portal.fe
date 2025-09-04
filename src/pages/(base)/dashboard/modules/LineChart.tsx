@@ -1,13 +1,9 @@
-import { Select } from 'antd';
-import { type JSX } from 'react';
-
 import { useLang } from '@/features/lang';
-import { GetXuHuong } from '@/service/api';
 
 const LineChart = () => {
-  const { locale } = useLang();
+  const { t } = useTranslation();
 
-  const [year, setYear] = useState(new Date().getFullYear());
+  const { locale } = useLang();
 
   const { domRef, updateOptions } = useEcharts(() => ({
     grid: {
@@ -17,7 +13,7 @@ const LineChart = () => {
       right: '4%'
     },
     legend: {
-      data: ['Lượt cân']
+      data: [t('page.home.downloadCount'), t('page.home.registerCount')]
     },
     series: [
       {
@@ -25,7 +21,7 @@ const LineChart = () => {
           color: {
             colorStops: [
               {
-                color: '#0798d7',
+                color: '#0071fe',
                 offset: 0.25
               },
               {
@@ -40,12 +36,42 @@ const LineChart = () => {
             y2: 1
           }
         },
-        color: '#0798d7',
+        color: '#0071fe',
         data: [] as number[],
         emphasis: {
           focus: 'series'
         },
-        name: '',
+        name: t('page.home.downloadCount'),
+        smooth: true,
+        stack: 'Total',
+        type: 'line'
+      },
+      {
+        areaStyle: {
+          color: {
+            colorStops: [
+              {
+                color: '#05d5c7',
+                offset: 0.25
+              },
+              {
+                color: '#fff',
+                offset: 1
+              }
+            ],
+            type: 'linear',
+            x: 0,
+            x2: 0,
+            y: 0,
+            y2: 1
+          }
+        },
+        color: '#05d5c7',
+        data: [],
+        emphasis: {
+          focus: 'series'
+        },
+        name: t('page.home.registerCount'),
         smooth: true,
         stack: 'Total',
         type: 'line'
@@ -70,26 +96,22 @@ const LineChart = () => {
     }
   }));
 
-  async function fetchXuHuongData(nam: number) {
-    try {
-      // const response = await GetXuHuong(nam);
-      const response = null;
-      const result = (response as any)?.data?.result;
+  async function mockData() {
+    await new Promise(resolve => {
+      setTimeout(resolve, 1000);
+    });
 
-      // Chuyển đổi dữ liệu
-      const months = Array.from({ length: 12 }, (_, i) => `Tháng ${i + 1}`);
-      const data = months.map((_, i) => result[`thang${i + 1}`] || 0);
+    updateOptions(opts => {
+      opts.xAxis.data = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+      opts.series[0].data = [4623, 6145, 6268, 6411, 1890, 4251, 2978, 3880, 3606, 4311, 4668, 4985];
+      opts.series[1].data = [2208, 2016, 2916, 4512, 8281, 2008, 1963, 2367, 2956, 678, 345, 345];
 
-      // Cập nhật biểu đồ
-      updateOptions(opts => {
-        opts.xAxis.data = months;
-        opts.series[0].data = data;
-        return opts;
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Lỗi khi lấy dữ liệu xu hướng:', error);
-    }
+      return opts;
+    });
+  }
+
+  function init() {
+    mockData();
   }
 
   function updateLocale() {
@@ -97,49 +119,25 @@ const LineChart = () => {
       const originOpts = factory();
       opts.legend.data = originOpts.legend.data;
       opts.series[0].name = originOpts.series[0].name;
+      opts.series[1].name = originOpts.series[1].name;
 
       return opts;
     });
   }
+  // init
 
-  useEffect(() => {
-    fetchXuHuongData(year);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [year]);
+  useMount(() => {
+    init();
+  });
 
   useUpdateEffect(() => {
     updateLocale();
-  }, [locale, year]);
-
-  const generateYearOptions = (): { label: JSX.Element; value: string }[] => {
-    const currentYear = new Date().getFullYear();
-    const years: { label: JSX.Element; value: string }[] = [];
-
-    // eslint-disable-next-line no-plusplus
-    for (let y = 2023; y <= currentYear; y++) {
-      years.push({
-        label: <span>{y}</span>,
-        value: String(y)
-      });
-    }
-
-    return years.reverse(); // Nếu muốn năm hiện tại hiển thị đầu tiên
-  };
-
+  }, [locale]);
   return (
     <ACard
       className="card-wrapper"
       variant="borderless"
     >
-      <h5 className="text-center">Biểu đồ line</h5>
-      <Select
-        className="absolute right-[10px] top-[10px] w-[150px]"
-        options={generateYearOptions()}
-        value={String(year)}
-        onChange={value => {
-          setYear(Number(value));
-        }}
-      />
       <div
         className="h-360px overflow-hidden"
         ref={domRef}

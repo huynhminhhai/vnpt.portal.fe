@@ -1,5 +1,4 @@
 import { useLang } from '@/features/lang';
-import { GetThongTinTongQuat } from '@/service/api';
 
 const PieChart = () => {
   const { t } = useTranslation();
@@ -8,44 +7,27 @@ const PieChart = () => {
 
   const { domRef, updateOptions } = useEcharts(() => ({
     legend: {
-      bottom: '0%',
-      icon: 'circle',
-      itemHeight: 10,
-      itemWidth: 10,
-      left: 'center',
-      textStyle: {
-        color: '#6b7280',
-        fontSize: 12
-      }
+      bottom: '1%',
+      itemStyle: {
+        borderWidth: 0
+      },
+      left: 'center'
     },
     series: [
       {
-        center: ['50%', '45%'],
-        color: ['#4eb1e4', '#0c90d3'],
-        data: [
-          { name: t('page.home.freeCount'), value: 0 },
-          { name: t('page.home.paidCount'), value: 0 }
-        ],
+        avoidLabelOverlap: false,
+        color: ['#0071fe', '#05d5c7', '#9384ff', '#389fea'],
+        data: [] as { name: string; value: number }[],
         emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowColor: 'rgba(0, 0, 0, 0.1)',
-            shadowOffsetX: 0
-          },
           label: {
-            color: '#3e3e3e',
-            fontSize: 16,
-            fontWeight: 'normal',
-            formatter: '{b}\n{d}%',
+            fontSize: '12',
             show: true
-          },
-          scale: true,
-          scaleSize: 10
+          }
         },
         itemStyle: {
-          borderColor: '#ffffff',
+          borderColor: '#fff',
           borderRadius: 10,
-          borderWidth: 10
+          borderWidth: 1
         },
         label: {
           position: 'center',
@@ -54,87 +36,66 @@ const PieChart = () => {
         labelLine: {
           show: false
         },
-        name: 'Tài khoản',
-        radius: ['42%', '70%'],
+        name: t('page.home.schedule'),
+        radius: ['45%', '75%'],
         type: 'pie'
       }
     ],
-    // title: {
-    //   left: 'center',
-    //   text: 'Biểu đồ tài khoản',
-    //   textStyle: {
-    //     color: '#111827',
-    //     fontSize: 12,
-    //     fontWeight: 'normal'
-    //   },
-    //   top: '0%'
-    // },
     tooltip: {
-      backgroundColor: '#ffffff',
-      borderColor: '#e5e7eb',
-      borderWidth: 1,
-      formatter: '{b}: {c} ({d}%)',
-      textStyle: {
-        color: '#111827',
-        fontSize: 12
-      },
       trigger: 'item'
     }
   }));
 
-  async function fetchChartData() {
-    try {
-      // const response = await GetThongTinTongQuat();
-      const response = null;
-      const data = (response as any).data.result;
+  async function mockData() {
+    await new Promise(resolve => {
+      setTimeout(resolve, 1000);
+    });
 
-      updateOptions(opts => {
-        opts.series[0].data = [
-          { name: t('page.home.freeCount'), value: data.soLuongMienPhi },
-          { name: t('page.home.paidCount'), value: data.soLuongTraPhi }
-        ];
-        return opts;
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Lỗi khi gọi API dữ liệu biểu đồ:', error);
-    }
-  }
-
-  function updateLocale() {
-    updateOptions((opts, factory) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const originOpts = factory();
-
-      // Giữ nguyên dữ liệu, chỉ cập nhật tên theo ngôn ngữ
-      opts.series[0].data = opts.series[0].data.map(item => {
-        if (item.name.includes('free')) {
-          return { ...item, name: t('page.home.freeCount') };
-        }
-        if (item.name.includes('paid')) {
-          return { ...item, name: t('page.home.paidCount') };
-        }
-        return item;
-      });
+    updateOptions(opts => {
+      opts.series[0].data = [
+        { name: t('page.home.study'), value: 20 },
+        { name: t('page.home.entertainment'), value: 10 },
+        { name: t('page.home.work'), value: 40 },
+        { name: t('page.home.rest'), value: 30 }
+      ];
 
       return opts;
     });
   }
 
+  function updateLocale() {
+    updateOptions((opts, factory) => {
+      const originOpts = factory();
+
+      opts.series[0].name = originOpts.series[0].name;
+
+      opts.series[0].data = [
+        { name: t('page.home.study'), value: 20 },
+        { name: t('page.home.entertainment'), value: 10 },
+        { name: t('page.home.work'), value: 40 },
+        { name: t('page.home.rest'), value: 30 }
+      ];
+
+      return opts;
+    });
+  }
+
+  async function init() {
+    mockData();
+  }
+
   useMount(() => {
-    fetchChartData();
+    init();
   });
 
   useUpdateEffect(() => {
     updateLocale();
   }, [locale]);
-
   return (
     <ACard
       className="card-wrapper"
       variant="borderless"
     >
-      <h5 className="text-center">Biểu đồ tròn</h5>
       <div
         className="h-360px overflow-hidden"
         ref={domRef}
