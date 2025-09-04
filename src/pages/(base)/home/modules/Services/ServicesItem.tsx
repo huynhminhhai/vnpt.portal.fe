@@ -258,7 +258,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                     ? 'bg-gradient-to-r from-primary via-blue-800 to-blue-500'
                     : darkMode
                       ? 'bg-gray-800/50'
-                      : 'bg-gradient-to-r from-primary/95 via-blue-800/95 to-blue-700/95'}
+                      : 'bg-gradient-to-r from-primary via-blue-900 to-blue-800'}
                 `}
               >
                 {/* Digital scan line animation */}
