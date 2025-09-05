@@ -242,7 +242,7 @@ const SystemManagePage = () => {
     {
       align: 'left' as const,
       key: 'systemUrl',
-      render: (_: any, record: any) => record.systemUrl || '-',
+      render: (_: any, record: any) => <div className='line-clamp-1'> {record.systemUrl || '-'} </div>,
       title: 'Đường dẫn'
     },
     {

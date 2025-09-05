@@ -1,6 +1,6 @@
 // import type { SVGProps } from 'react';
 // props: SVGProps<SVGSVGElement>
-import logo from '@/assets/imgs/vnpt.png';
+import logo from '@/assets/imgs/logo.png';
 
 const SystemLogo = (props: any) => {
   // return <IconLocalLogo {...props} />;

@@ -149,7 +149,7 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                 {
                   !isEdit
                     ?
-                    <div className='font-medium'>{detailData?.systemUrl || '-'}</div>
+                    <div className='font-medium line-clamp-1'>{detailData?.systemUrl || '-'}</div>
                     :
                     <Input placeholder="Nhập đường dẫn dịch vụ" size="middle" disabled={!isEdit} />
                 }

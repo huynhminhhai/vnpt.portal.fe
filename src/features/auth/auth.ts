@@ -50,50 +50,56 @@ export function useInitAuth() {
     if (loading) return;
 
     startLoading();
-    const loginToken = await fetchLogin(userName, password);
 
-    if (loginToken) {
-      localStg.set('token', loginToken.result.accessToken);
-      (localStg as any).set('userId', loginToken.result.userId);
-      localStg.set('refreshToken', loginToken.result.refreshToken);
+    try {
+      const loginToken = await fetchLogin(userName, password);
 
-      dispatch(setToken(loginToken.result.accessToken));
-      dispatch(setUserId(loginToken.result.userId));
+      if (loginToken) {
+        localStg.set('token', loginToken.result.accessToken);
+        (localStg as any).set('userId', loginToken.result.userId);
+        localStg.set('refreshToken', loginToken.result.refreshToken);
 
-      if (redirect) {
-        if (redirectUrl) {
-          replace(redirectUrl);
-        } else {
-          replace(globalConfig.homePath);
+        dispatch(setToken(loginToken.result.accessToken));
+        dispatch(setUserId(loginToken.result.userId));
+
+        if (redirect) {
+          if (redirectUrl) {
+            replace(redirectUrl);
+          } else {
+            replace(globalConfig.homePath);
+          }
         }
+
+        // const { data: info, error: userInfoError } = await fetchGetUserInfo();
+
+        // if (!userInfoError) {
+        //   // 2. store user info
+        //   localStg.set('userInfo', info);
+
+        //   dispatch(setToken(loginToken.result.accessToken));
+        //   dispatch(setUserInfo(info));
+
+        //   if (redirect) {
+        //     if (redirectUrl) {
+        //       replace(redirectUrl);
+        //     } else {
+        //       replace(globalConfig.homePath);
+        //     }
+        //   }
+
+        // }
+
+        window.$notification?.success({
+          description: t('page.login.common.welcomeBack'),
+          message: t('page.login.common.loginSuccess')
+        });
       }
-
-      // const { data: info, error: userInfoError } = await fetchGetUserInfo();
-
-      // if (!userInfoError) {
-      //   // 2. store user info
-      //   localStg.set('userInfo', info);
-
-      //   dispatch(setToken(loginToken.result.accessToken));
-      //   dispatch(setUserInfo(info));
-
-      //   if (redirect) {
-      //     if (redirectUrl) {
-      //       replace(redirectUrl);
-      //     } else {
-      //       replace(globalConfig.homePath);
-      //     }
-      //   }
-
-      // }
-
-      window.$notification?.success({
-        description: t('page.login.common.welcomeBack'),
-        message: t('page.login.common.loginSuccess')
-      });
+    } catch (error) {
+      console.log(error)
+    } finally {
+      endLoading();
     }
 
-    endLoading();
   }
 
   return {

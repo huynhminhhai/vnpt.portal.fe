@@ -95,6 +95,7 @@ const ServicesList = () => {
                       placeholder="Tìm kiếm nhanh..."
                       className="text-primary dark:text-white"
                       prefix={<Icon fontSize={20} icon="lucide:search" className="text-primary dark:text-white mr-2" />}
+                      onClear={() => setSearchParam({...searchParam, Keyword: ''})}
                     />
                   </AForm.Item>
                 </div>
@@ -143,7 +144,7 @@ const ServicesList = () => {
           :
           isShowAll ?
             <>
-              <ARow gutter={[22, 22]} className="mt-6">
+              <ARow gutter={[22, 22]} className="mt-10">
                 {listSystem.map((group, groupIndex) =>
                   group.systemWebDtos.map((system: any, systemIndex: number) => {
                     const globalIndex =
