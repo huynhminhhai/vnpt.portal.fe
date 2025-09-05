@@ -8,7 +8,7 @@ interface Props extends Omit<LinkProps, 'to'> {
   /** Whether to show the title */
   showTitle?: boolean;
 }
-const GlobalLogo: FC<Props> = memo(({ className, showTitle = true, ...props }) => {
+const GlobalLogo: FC<Props> = memo(({ className, showTitle = true, title, ...props }) => {
   const { t } = useTranslation();
 
   return (
@@ -19,10 +19,12 @@ const GlobalLogo: FC<Props> = memo(({ className, showTitle = true, ...props }) =
     >
       <SystemLogo className="mb-[1px] mr-1 h-auto w-[18px] text-32px text-primary dark:invert dark:brightness-0" />
       <h2
-        className="pl-4px text-16px text-primary dark:text-white font-bold capitalize transition duration-300 ease-in-out"
+        className="pl-4px text-16px text-primary dark:text-white font-bold transition duration-300 ease-in-out"
         style={{ display: showTitle ? 'block' : 'none' }}
       >
-        {t('system.title')}
+        {
+          title || t('system.title')
+        }
       </h2>
     </Link>
   );

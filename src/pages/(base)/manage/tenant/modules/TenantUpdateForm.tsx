@@ -44,7 +44,7 @@ const TenantUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      const dataSubmit = { ...detailData, ...values };
+      const dataSubmit = { ...detailData, ...values, displayName: values?.displayName || values?.name };
 
       await UpdateTenant(dataSubmit);
 
@@ -109,6 +109,55 @@ const TenantUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
                     <div className='font-medium'>{detailData?.tenancyName}</div>
                     :
                     <Input placeholder="Nhập mã đơn vị (ví dụ: lichhen)" size="middle" disabled={!isEdit} />
+                }
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Tiêu đề header"
+                name="title"
+                rules={[{ message: 'Vui lòng nhập tiêu đề header', required: true }]}
+              >
+                {
+                  !isEdit
+                    ?
+                    <div className='font-medium'>{detailData?.title}</div>
+                    :
+                    <Input placeholder="Nhập tiêu đề header" size="middle" />
+                }
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Tiêu đề banner"
+                name="displayName"
+                rules={[{ message: 'Vui lòng nhập tiêu đề banner', required: false }]}
+                help="✻ Nếu không nhập, hệ thống sẽ tự động dùng tên đơn vị."
+              >
+                {
+                  !isEdit
+                    ?
+                    <div className='font-medium'>{detailData?.displayName}</div>
+                    :
+                    <Input placeholder="Nhập tiêu đề banner" size="middle" />
+                }
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Nội dung banner"
+                name="description"
+                rules={[{ message: 'Vui lòng nhập nội dung banner', required: true }]}
+              >
+                {
+                  !isEdit
+                    ?
+                    <div className='font-medium'>{detailData?.description}</div>
+                    :
+                    <Input.TextArea rows={3} maxLength={255} placeholder="Nhập nội dung banner" size="middle" />
                 }
               </Form.Item>
             </Col>

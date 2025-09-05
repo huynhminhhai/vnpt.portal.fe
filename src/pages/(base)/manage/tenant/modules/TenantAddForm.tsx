@@ -29,7 +29,8 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
     try {
       const dataSubmit = {
         ...values,
-        adminEmailAddress: values?.tenancyName + '@gmail.com'
+        adminEmailAddress: values?.tenancyName + '@gmail.com',
+        displayName: values?.displayName || values?.name
       };
 
       await CreateTenant(dataSubmit);
@@ -70,6 +71,8 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
           onFinish={onFinish}
           initialValues={{
             isActive: true,
+            title: 'Cổng chuyển đổi số cấp xã tỉnh Tây Ninh',
+            description: 'Nơi bạn có thể quản lý và sử dụng các giải pháp chuyển đổi số được thiết kế chuyên biệt cho địa phương của mình.'
           }}
         >
           <Row gutter={16}>
@@ -90,6 +93,37 @@ const TenantAddForm: React.FC<Props> = ({ onSuccess }) => {
                 rules={[{ message: 'Vui lòng nhập mã đơn vị', required: true }]}
               >
                 <Input placeholder="Nhập mã đơn vị" size="middle" />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Tiêu đề header"
+                name="title"
+                rules={[{ message: 'Vui lòng nhập tiêu đề header', required: true }]}
+              >
+                <Input placeholder="Nhập tiêu đề header" size="middle" />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Tiêu đề banner"
+                name="displayName"
+                rules={[{ message: 'Vui lòng nhập tiêu đề banner', required: false }]}
+                help="✻ Nếu không nhập, hệ thống sẽ tự động dùng tên đơn vị."
+              >
+                <Input placeholder="Nhập tiêu đề banner" size="middle" />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Nội dung banner"
+                name="description"
+                rules={[{ message: 'Vui lòng nhập nội dung banner', required: true }]}
+              >
+                <Input.TextArea rows={3} maxLength={255} placeholder="Nhập nội dung banner" size="middle" />
               </Form.Item>
             </Col>
 

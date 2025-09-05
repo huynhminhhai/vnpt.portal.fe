@@ -12,6 +12,7 @@ import GlobalBreadcrumb from './components/Breadcrumb';
 import ThemeButton from './components/ThemeButton';
 import UserAvatar from './components/UserAvatar';
 import { useLocation } from "react-router-dom";
+import { selectUserInfo } from '@/features/auth/authStore';
 
 interface Props {
   isMobile: boolean;
@@ -48,6 +49,8 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
 
   const { pathname } = useLocation();
 
+  const { tenant } = useAppSelector(selectUserInfo);
+
   const { showLogo, showMenu, showMenuToggler } = HEADER_PROPS_CONFIG[mode];
 
   const showToggler = reverse ? true : showMenuToggler;
@@ -55,10 +58,25 @@ const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) =
   return (
     <DarkModeContainer className="h-full flex-y-center px-12px shadow-header">
       {showLogo && (
-        <GlobalLogo
-          className="h-full"
-          style={{ width: `${siderWidth}px` }}
-        />
+        pathname === '/home' ? (
+          <GlobalLogo
+            className="h-full"
+            title={
+              tenant?.title || 'Cổng Chuyển đổi số cấp xã tỉnh Tây Ninh'
+            }
+            style={{
+              width: 'fit-content',
+              paddingLeft: '48px',
+            }}
+          />
+        ) : (
+          <GlobalLogo
+            className="h-full"
+            style={{
+              width: `${siderWidth}px`,
+            }}
+          />
+        )
       )}
       <div>{reverse ? true : showMenuToggler}</div>
 

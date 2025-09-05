@@ -179,6 +179,14 @@ textarea.ant-input[disabled],
   height: 24px;
 }
 
+.ant-form-item-explain > div {
+  font-size: 12px;
+}
+
+.ant-btn {
+  box-shadow: none;
+}
+
 .table-custom .ant-tree-node-selected {
   background: #e6ebf0 !important;
 }

@@ -211,6 +211,18 @@ const TenantManagePage = () => {
       title: 'Tên đơn vị'
     },
     {
+      align: 'left' as const,
+      key: 'title',
+      render: (_: any, record: any) => record.title || '-',
+      title: 'Tiêu đề header',
+    },
+    {
+      align: 'left' as const,
+      key: 'displayName',
+      render: (_: any, record: any) => record.displayName || '-',
+      title: 'Tiêu đề banner',
+    },
+    {
       align: 'center' as const,
       key: 'isActive',
       render: (_: any, record: any) =>

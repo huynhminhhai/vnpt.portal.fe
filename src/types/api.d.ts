@@ -95,6 +95,9 @@ declare namespace Api {
         tenancyName: string;
         name: string;
         id: number;
+        displayName: string;
+        title: string;
+        description: string;
       },
       grantedPermissions: string[];
       hoTen: string | null;

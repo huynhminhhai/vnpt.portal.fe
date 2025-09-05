@@ -24,17 +24,14 @@ const HeroBanner = () => {
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <h1 className="text-[22px] md:text-[32px] leading:[34px] md:leading-[42px] font-semibold" data-aos="fade-right" data-aos-delay="100">
-              Cổng chuyển đổi số
-              {tenant
-                ? tenant.tenancyName === "ttcntt"
-                  ? " cấp xã "
-                  : " " + tenant.name + " "
-                : " cấp xã "}
-              tỉnh Tây Ninh
+              {tenant?.displayName || tenant?.name || 'Trung tâm công nghệ thông tin VNPT - Tây Ninh'}
             </h1>
             <div className="mt-1 md:mt-4 max-w-[90%] md:max-w-[60%] text-[15px] font-normal leading-[26px]" data-aos="fade-right" data-aos-delay="200">
               <div className="h-[1.5px] w-[15%] bg-white mb-[6px] opacity-80"></div>
-              Nơi bạn có thể quản lý và sử dụng các giải pháp chuyển đổi số được thiết kế chuyên biệt cho địa phương của mình.
+              {
+                tenant?.description ||
+                'Nơi bạn có thể quản lý và sử dụng các giải pháp chuyển đổi số được thiết kế chuyên biệt cho địa phương của mình.'
+              }
             </div>
           </div>
         </div>
