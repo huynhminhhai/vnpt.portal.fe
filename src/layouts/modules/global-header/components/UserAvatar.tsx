@@ -47,16 +47,6 @@ const UserAvatar = memo(() => {
   }
 
   const items: MenuProps['items'] = [
-    {
-      key: '2',
-      label: (
-        <div className="flex-center gap-8px">
-          <Icon icon="solar:user-linear" fontSize={16} />
-          Tài khoản
-        </div>
-      ),
-    },
-    { type: 'divider' as const },
     ...(isSuper
       ? [
         {
@@ -71,6 +61,16 @@ const UserAvatar = memo(() => {
         { type: 'divider' as const },
       ]
       : []),
+    {
+      key: '2',
+      label: (
+        <div className="flex-center gap-8px">
+          <Icon icon="solar:user-linear" fontSize={16} />
+          Tài khoản
+        </div>
+      ),
+    },
+    { type: 'divider' as const },
     {
       key: '1',
       label: (
@@ -92,7 +92,7 @@ const UserAvatar = memo(() => {
         <div>
           <ButtonIcon className="px-12px">
             <img src={vnpt} alt="vnpt" className="w-28px h-28px rounded-full border border-primary" />
-            <span className="text-15px text-primary font-medium capitalize">{user?.name}</span>
+            <span className="text-15px text-primary dark:text-white font-medium capitalize">{user?.name}</span>
           </ButtonIcon>
         </div>
       </ADropdown>

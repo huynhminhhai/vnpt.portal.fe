@@ -76,7 +76,7 @@ const PwdLogin = () => {
 
   return (
     <>
-      <h3 className="text-18px text-primary font-medium">{t('page.login.pwdLogin.title')}</h3>
+      <h3 className="text-18px text-primary font-bold">{t('page.login.pwdLogin.title')}</h3>
       <AForm
         className="pt-24px"
         form={form}

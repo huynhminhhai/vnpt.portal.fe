@@ -1,7 +1,6 @@
 import ServicesItem from "./ServicesItem"
 import ServiceHeading from "./ServiceHeading";
 import { Icon } from "@iconify/react";
-import { Input, Select } from "antd";
 import { GetSystemWebsByUser } from "@/service/api";
 import ServiceSkeleton from "./ServiceSkeleton";
 import AOS from "aos";
@@ -9,21 +8,26 @@ import "aos/dist/aos.css";
 
 const ServicesList = () => {
 
-  const { Search } = Input;
+  const [form] = AForm.useForm();
+
+  const defaultParams = {
+    MaxResultCount: 9999,
+    SkipCount: 0,
+    IsActive: true,
+    Keyword: "",
+  };
 
   const [isShowAll, setIsShowAll] = useState(
     JSON.parse(localStorage.getItem("isShowAll") || "false")
   );
   const [listSystem, setListSystem] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [searchParam, setSearchParam] = useState({});
+  const [searchParam, setSearchParam] = useState(defaultParams);
 
-  const fetchListSystem = async () => {
+  const fetchListSystem = async (params: any) => {
     setLoading(true);
     try {
-      const apiParams = { MaxResultCount: 9999, SkipCount: 0, IsActive: true, Keyword: '', ...searchParam };
-
-      const res = await GetSystemWebsByUser(apiParams);
+      const res = await GetSystemWebsByUser(params);
       const data = res.data?.result || [];
 
       setListSystem(data);
@@ -37,7 +41,7 @@ const ServicesList = () => {
   };
 
   useEffect(() => {
-    fetchListSystem();
+    fetchListSystem(searchParam);
   }, [searchParam]);
 
   useEffect(() => {
@@ -52,6 +56,14 @@ const ServicesList = () => {
     console.log(`selected ${value}`);
   };
 
+  const search = () => {
+    const values = form.getFieldsValue();
+    setSearchParam({
+      ...defaultParams,
+      ...values,
+    });
+  };
+
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -63,65 +75,55 @@ const ServicesList = () => {
     <div
       className="px-3 md:px-10 pt-[20px] pb-[20px] grow-[1] relative z-10"
     >
-      <ARow gutter={[22, 22]}>
-
-        <ACol
-          lg={4}
-          md={12}
-          span={3}
-          className="mr-auto flex justify-start"
-          data-aos="fade-right"
-        >
-          <div className="flex items-center gap-4">
-            <ButtonIcon
-              triggerParent
-              className="px-6px text-2xl border-[1px] border-[#e0e0e0] h-32px bg-white dark:bg-[#1c1c1c]"
-              icon={isShowAll ? "circum:grid-4-1" : 'circum:grid-3-2'}
-              tooltipContent={isShowAll ? 'Chế độ xem tất cả' : 'Chế độ xem theo loại'}
-              tooltipPlacement="top"
-              onClick={handleToggleShowAll}
-            />
-          </div>
-        </ACol>
-        {/* <ACol
-          lg={4}
-          md={12}
-          span={24}
-          data-aos="fade-left"
-        >
-          <Select
-            className="w-full"
+      <ARow align="middle" className="items-center flex-nowrap md:flex-wrap gap-[10px] md:gap-[22px]">
+        {/* Form nằm giữa */}
+        <ACol flex="auto" className="flex justify-center" data-aos="fade-up" data-aos-delay="100">
+          <AForm
+            form={form}
+            initialValues={searchParam}
+            labelCol={{ md: 7, span: 5 }}
             size="middle"
-            showSearch
-            placeholder="Chọn loại dịch vụ"
-            optionFilterProp="label"
-            onChange={onChange}
-            options={[
-              {
-                value: 'Y tế',
-                label: 'Y tế',
-              },
-              {
-                value: 'Giáo dục',
-                label: 'Giáo dục',
-              },
-              {
-                value: 'Khác',
-                label: 'Khác',
-              },
-            ]}
+            onFinish={search}
+            className="form-custom bg-white dark:bg-[#111826] w-full lg:w-[620px] border dark:border-[#37415180] md:border-none"
+          >
+            <ARow wrap gutter={[8, 16]} className="justify-between">
+              <ACol lg={19} md={18} sm={16} span={16}>
+                <div className="flex items-center gap-3 w-full">
+                  <AForm.Item className="m-0 w-full" label="" name="Keyword">
+                    <AInput
+                      allowClear
+                      placeholder="Tìm kiếm nhanh..."
+                      className="text-primary dark:text-white"
+                      prefix={<Icon fontSize={20} icon="lucide:search" className="text-primary dark:text-white mr-2" />}
+                    />
+                  </AForm.Item>
+                </div>
+              </ACol>
+
+              <ACol lg={5} md={6} span={8}>
+                <AFlex className="w-full" gap={16} justify="flex-end">
+                  <AButton className="border-none bg-[#dbeafe] dark:bg-[#1f3456] text-primary dark:text-[#ffffffe6] font-medium w-full rounded-[24px] !shadow-none" type="primary" onClick={search} loading={loading}>
+                    Tìm kiếm
+                  </AButton>
+                </AFlex>
+              </ACol>
+            </ARow>
+          </AForm>
+        </ACol>
+
+        {/* Toggle Button sát lề phải */}
+        <ACol flex="none" className="flex justify-end" data-aos="fade-up-left" data-aos-delay="200">
+          <ButtonIcon
+            triggerParent
+            className="w-[40px] h-[40px] px-6px text-2xl border-[1px] border-[#e0e0e0] dark:border-gray-700/50 bg-white dark:bg-[#1f3456]"
+            icon={isShowAll ? 'circum:grid-3-2' : 'circum:grid-4-1' }
+            tooltipContent={isShowAll ? 'Chế độ xem theo loại' : 'Chế độ xem tất cả' }
+            tooltipPlacement="top"
+            onClick={handleToggleShowAll}
           />
-        </ACol> */}
-        <ACol
-          lg={6}
-          md={12}
-          span={21}
-          data-aos="fade-left"
-          data-aos-delay="100"
-        >
-          <Search className="w-full" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="middle" onSearch={(value) => setSearchParam({ Keyword: value })} />
         </ACol>
       </ARow>
+
       {
         loading ?
           <ARow gutter={[22, 22]} className="mt-8">
