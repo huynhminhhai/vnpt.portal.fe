@@ -97,7 +97,7 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                     ?
                     <div className='font-medium'>{detailData?.systemName}</div>
                     :
-                    <Input placeholder="Nhập tên dịch vụ" size="middle" disabled={!isEdit} />
+                    <Input.TextArea rows={2} style={{resize: 'none'}} placeholder="Nhập tên dịch vụ" size="middle" disabled={!isEdit} />
                 }
               </Form.Item>
             </Col>

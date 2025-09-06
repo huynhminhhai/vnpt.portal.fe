@@ -32,7 +32,6 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
       const dataSubmit = { ...values };
 
       await CreateSystemWeb(dataSubmit);
-      console.log(dataSubmit)
 
       message.success('Thêm dịch vụ thành công!');
 
@@ -81,7 +80,7 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
                 name="systemName"
                 rules={[{ message: 'Vui lòng nhập tên dịch vụ', required: true }]}
               >
-                <Input placeholder="Nhập tên dịch vụ" size="middle" />
+                <Input.TextArea rows={2} placeholder="Nhập tên dịch vụ" size="middle" style={{ resize: 'none' }} />
               </Form.Item>
             </Col>
 

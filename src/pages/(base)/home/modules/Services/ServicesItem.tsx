@@ -44,8 +44,9 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
       md={12}
       lg={8}
       xl={6}
+      className="w-full max-w-full"
     >
-      <div className="w-full fade-up-css"
+      <div className="w-full h-full fade-up-css"
         style={{ animationDelay: `${index * 0.1}s` }}
       >
         <a
@@ -53,7 +54,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
           target="_blank"
           rel="noreferrer"
           className={`
-              group block relative transition-all duration-700 ease-out transform
+              group block h-full relative transition-all duration-700 ease-out transform
               hover:-translate-y-2
               ${isHovered ? 'z-10' : 'z-0'}
             `}
@@ -70,24 +71,26 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
               ${isHovered ? 'bg-gradient-to-br from-[#dbeafe]/50 via-[#ecfeff]/40 to-[#bfdbfe]/50 blur-xl scale-110' : ''}
             `} />
 
-          {/* Digital grid background */}
-          {/* <div className={`
-              absolute inset-0 rounded-2xl transition-all duration-700
-              ${isHovered ? 'opacity-100' : 'opacity-30'}
-            `}
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: '20px 20px',
-              backgroundPosition: '0 0, 0 0'
-            }} /> */}
+          {dataItem.systemUrl?.toLowerCase().includes("zalo") && (
+            <div className="absolute z-[1] top-0 right-3 flex items-center gap-1.5 flex-wrap">
+              <span
+                className={`
+                  inline-flex items-center rounded-bl-[3px] rounded-br-[3px] px-2.5 pt-[3px] pb-[4px] text-[11px] leading-[1] font-bold
+                  bg-blue-100 ${darkMode ? 'text-gray-400 group-hover:!text-white' : 'text-blue-900'}
+                `}
+                style={{
+                  boxShadow: 'rgba(0, 0, 0, 0.15) 0px 1.2px 1.2px 0px'
+                }}
+              >
+                Zalo Mini App
+              </span>
+            </div>
+          )}
 
           {/* Main card */}
           <div className={`
               relative flex flex-col justify-between rounded-lg cursor-pointer
-              transition-all duration-700 overflow-hidden border
+              transition-all duration-700 overflow-hidden border h-full
               ${darkMode
               ? 'bg-gray-900/95 backdrop-blur-md border-gray-700/50'
               : 'bg-white/95 backdrop-blur-md border-gray-200/50'
@@ -181,20 +184,25 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
 
             {/* Content wrapper with glassmorphism effect */}
             <div className="relative z-10 flex flex-col h-full">
+
               {/* Header với icon */}
-              <div className="px-6 pt-6 pb-3 flex justify-between items-start">
+              <div className="px-6 pt-6 pb-3 flex justify-between items-start flex-1">
                 <div className="flex-1 max-w-[75%]">
-                  <h2 className={`
-                      text-lg leading-6 font-bold mb-2 transition-all duration-300 line-clamp-1
+                  <h2
+                    dangerouslySetInnerHTML={{
+                      __html: dataItem.systemName.replace(/\n/g, '<br/>'),
+                    }}
+                    className={`
+                      text-lg leading-6 font-bold transition-all duration-300 line-clamp-2
                       ${darkMode ? '!text-white/90' : 'text-primary'}
                       group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-blue-800
                       group-hover:bg-clip-text group-hover:text-transparent
-                    `}>
-                    {dataItem.systemName}
-                  </h2>
+                    `} />
+                  {/* {dataItem.systemName} */}
+                  {/* </h2> */}
 
                   <div className={`
-                      flex items-center gap-1 text-xs transition-all duration-500
+                      flex items-center gap-1 text-xs transition-all duration-500 mt-1
                       ${darkMode ? 'text-gray-400 group-hover:!text-white' : 'text-gray-500'}
                       group-hover:text-primary
                     `}>
@@ -207,6 +215,27 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                       <Icon icon={'iconamoon:arrow-top-right-1'} fontSize={14} />
                     </div>
                   </div>
+
+                  {/* {dataItem.systemUrl?.toLowerCase().includes("zalo") && (
+                    <div className="flex items-center gap-1.5 flex-wrap mt-2">
+                      <span
+                        className={`
+                          inline-flex items-center rounded-[12px] px-2.5 py-1 text-[10px] leading-[1] font-semibold
+                          bg-gray-200/80 ${darkMode ? 'text-gray-400 group-hover:!text-white' : 'text-gray-500'}
+                        `}
+                      >
+                        Zalo Mini App
+                      </span>
+                      <span
+                        className={`
+                          inline-flex items-center rounded-[12px] px-2.5 py-1 text-[10px] leading-[1] font-semibold
+                          bg-gray-200/80 ${darkMode ? 'text-gray-400 group-hover:!text-white' : 'text-gray-500'}
+                        `}
+                      >
+                        Mobile App
+                      </span>
+                    </div>
+                  )} */}
                 </div>
 
                 {/* Tech icon với digital effect */}
@@ -249,6 +278,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                   {dataItem.systemDescription}
                 </p>
               </div>
+
 
               {/* Tech CTA Footer */}
               <div
@@ -323,9 +353,6 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index }) => {
                   </div>
                 </div>
               </div>
-
-
-
             </div>
           </div>
         </a>

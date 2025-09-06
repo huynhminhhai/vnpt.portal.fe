@@ -6,6 +6,8 @@ import ServiceSkeleton from "./ServiceSkeleton";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+type ViewMode = "byType" | "all" | "list";
+
 const ServicesList = () => {
 
   const [form] = AForm.useForm();
@@ -17,9 +19,10 @@ const ServicesList = () => {
     Keyword: "",
   };
 
-  const [isShowAll, setIsShowAll] = useState(
-    JSON.parse(localStorage.getItem("isShowAll") || "false")
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    (localStorage.getItem("viewMode") as ViewMode) || "byType"
   );
+
   const [listSystem, setListSystem] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchParam, setSearchParam] = useState(defaultParams);
@@ -45,12 +48,14 @@ const ServicesList = () => {
   }, [searchParam]);
 
   useEffect(() => {
-    localStorage.setItem("isShowAll", JSON.stringify(isShowAll));
-  }, [isShowAll]);
+    localStorage.setItem("viewMode", viewMode);
+  }, [viewMode]);
 
-  const handleToggleShowAll = () => {
-    setIsShowAll(!isShowAll);
-  }
+  const handleToggleViewMode = () => {
+    setViewMode((prev) =>
+      prev === "byType" ? "all" : prev === "all" ? "list" : "byType"
+    );
+  };
 
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -95,7 +100,7 @@ const ServicesList = () => {
                       placeholder="Tìm kiếm nhanh..."
                       className="text-primary dark:text-white"
                       prefix={<Icon fontSize={20} icon="lucide:search" className="text-primary dark:text-white mr-2" />}
-                      onClear={() => setSearchParam({...searchParam, Keyword: ''})}
+                      onClear={() => setSearchParam({ ...searchParam, Keyword: '' })}
                     />
                   </AForm.Item>
                 </div>
@@ -117,10 +122,22 @@ const ServicesList = () => {
           <ButtonIcon
             triggerParent
             className="w-[40px] h-[40px] px-6px text-2xl border-[1px] border-[#e0e0e0] dark:border-gray-700/50 bg-white dark:bg-[#1f3456]"
-            icon={isShowAll ? 'circum:grid-3-2' : 'circum:grid-4-1' }
-            tooltipContent={isShowAll ? 'Chế độ xem theo loại' : 'Chế độ xem tất cả' }
+            icon={
+              viewMode === "byType"
+                ? "circum:grid-3-2"
+                : viewMode === "all"
+                  ? "circum:grid-4-1"
+                  : "circum:view-list"
+            }
+            tooltipContent={
+              viewMode === "byType"
+                ? "Chế độ xem theo loại"
+                : viewMode === "all"
+                  ? "Chế độ xem tất cả"
+                  : "Chế độ xem danh sách"
+            }
             tooltipPlacement="top"
-            onClick={handleToggleShowAll}
+            onClick={handleToggleViewMode}
           />
         </ACol>
       </ARow>
@@ -142,7 +159,7 @@ const ServicesList = () => {
             ))}
           </ARow>
           :
-          isShowAll ?
+          viewMode === "all" ?
             <>
               <ARow gutter={[22, 22]} className="mt-10">
                 {listSystem.map((group, groupIndex) =>
@@ -164,22 +181,37 @@ const ServicesList = () => {
               </ARow>
             </>
             :
-            <>
-              {listSystem.map((group) => (
-                <div key={group.id}>
-                  <ServiceHeading title={group?.displayName} />
-                  <ARow gutter={[22, 22]} className="mt-6">
-                    {group.systemWebDtos.map((system: any, index: number) => (
-                      <ServicesItem
-                        key={index}
-                        index={index}
-                        dataItem={system}
-                      />
-                    ))}
-                  </ARow>
+            viewMode === "byType" ?
+              <>
+                {listSystem.map((group) => (
+                  <div key={group.id}>
+                    <ServiceHeading title={group?.displayName} />
+                    <ARow gutter={[22, 22]} className="mt-6">
+                      {group.systemWebDtos.map((system: any, index: number) => (
+                        <ServicesItem
+                          key={index}
+                          index={index}
+                          dataItem={system}
+                        />
+                      ))}
+                    </ARow>
+                  </div>
+                ))}
+              </> :
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[22px]">
+                  {listSystem.map((group) => (
+                    <div key={group.id} className="w-full">
+                      <ServiceHeading title={group?.displayName} />
+                      <div className="flex flex-col gap-[22px] mt-6 w-full">
+                        {group.systemWebDtos.map((system: any, index: number) => (
+                          <ServicesItem key={index} index={index} dataItem={system} />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </>
+              </>
       }
 
     </div>
