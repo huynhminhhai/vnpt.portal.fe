@@ -1,6 +1,7 @@
+import ServicesItem from '@/pages/(base)/home/modules/Services/ServicesItem';
 import { GetSystemGroupById, UpdateSystemGroup } from '@/service/api';
 import { formatDate } from '@/utils/date';
-import { isActiveOptions } from '@/utils/options';
+import { isActiveOptions, tailwindColors } from '@/utils/options';
 import { Button, Col, Drawer, Form, Input, Row, Select, Tag, message } from 'antd';
 import React, { useState } from 'react';
 
@@ -19,6 +20,7 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [detailData, setDetailData] = useState<any>();
   const [isEdit, setIsEdit] = useState(false);
+  const [selectedColor, setSelectedColor] = useState<string>("blue");
 
   const showDrawer = async () => {
     setOpen(true);
@@ -31,6 +33,7 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
 
       form.setFieldsValue(data);
       setDetailData(data);
+      setSelectedColor(data?.color);
     } catch (error) {
       console.log(error);
       message.error(error as string);
@@ -145,6 +148,55 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
                 }
               </Form.Item>
             </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Màu chủ đề"
+                name="color"
+                rules={[{ message: "Vui lòng chọn màu", required: true }]}
+              >
+                {
+                  !isEdit
+                    ?
+                    <div className="flex items-center gap-2">
+                      <span className={`w-4 h-4 rounded-full bg-${detailData?.color}-500`} />
+                      <span className="capitalize">{detailData?.color}</span>
+                    </div>
+                    :
+                    <Select
+                      placeholder="Chọn màu"
+                      size="middle"
+                      onChange={(value) => setSelectedColor(value)}
+                    >
+                      {tailwindColors.map((color) => (
+                        <Option key={color} value={color}>
+                          <div className="flex items-center gap-2">
+                            <span className={`w-4 h-4 rounded-full bg-${color}-500`} />
+                            <span className="capitalize">{color}</span>
+                          </div>
+                        </Option>
+                      ))}
+                    </Select>
+                }
+              </Form.Item>
+            </Col>
+
+            <Col span={24} className='my-2'>
+              <ServicesItem
+                index={1}
+                color={selectedColor}
+                dataItem={
+                  {
+                    "systemCode": "lich hen",
+                    "systemName": "Bắt số, đặt lịch online",
+                    "systemDescription": "Lấy số thứ tự, đặt lịch hẹn online với các Trung tâm hành chính công tỉnh Tây Ninh để thực hiện thủ tục hành chính",
+                    "systemUrl": "https://zalo.me/s/3493358192537809297",
+                    "iconUrl": "https://photo-logo-mapps.zadn.vn/2eb14e96e8d3018d58c2.jpg",
+                  }
+                }
+              />
+            </Col>
+
             {
               !isEdit && (
                 <>

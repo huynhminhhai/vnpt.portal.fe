@@ -201,12 +201,15 @@ const SystemGroupManagePage = () => {
       render: (_: any, record: any) => <div>{record.displayName}</div>,
       title: 'Tên nhóm dịch vụ'
     },
-    // {
-    //   align: 'center' as const,
-    //   key: 'description',
-    //   render: (_: any, record: any) => <div className='line-clamp-2'>{record?.description || '-'}</div>,
-    //   title: 'Mô tả',
-    // },
+    {
+      align: 'center' as const,
+      key: 'color',
+      render: (_: any, record: any) => <div className="flex items-center gap-2">
+        <span className={`w-4 h-4 rounded-full bg-${record.color}-500`} />
+        <span className="capitalize">{record.color}</span>
+      </div>,
+      title: 'Màu chủ đề',
+    },
     {
       align: 'center' as const,
       key: 'creationTime',

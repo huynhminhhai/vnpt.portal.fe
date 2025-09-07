@@ -5,7 +5,7 @@ import type { Plugin } from 'vite';
 import { themeSettings } from '../../src/theme/settings';
 
 const welcomeMessage = gradientString(themeSettings.themeColor, 'magenta').multiline(
-  `Phát triển bởi VNPT Long An (Mr.Trong and Mr.Hai)`
+  `Phát triển bởi VNPT Tây Ninh (Mr.Trong and Mr.Hai)`
 );
 
 const boxenOptions: BoxenOptions = {

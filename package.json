@@ -6,17 +6,17 @@
   "packageManager": "pnpm@10.4.1",
   "description": "A fresh and elegant admin template, based on React18、Vite5、TypeScript、Ant Design and UnoCSS. 一个基于React18、Vite5、TypeScript、Ant Design and UnoCSS的清新优雅的中后台模版。",
   "author": {
-    "name": "Ohh",
-    "email": "1509326266@qq.com",
-    "url": "https://github.com/mufeng889"
+    "name": "",
+    "email": "",
+    "url": ""
   },
   "license": "MIT",
-  "homepage": "https://github.com/soybeanjs/soybean-admin-react",
+  "homepage": "",
   "repository": {
-    "url": "https://github.com/soybeanjs/soybean-admin-react.git"
+    "url": ""
   },
   "bugs": {
-    "url": "https://github.com/soybeanjs/soybean-admin-react/issues"
+    "url": ""
   },
   "keywords": [
     "React admin",
@@ -137,5 +137,5 @@
   "lint-staged": {
     "*": "eslint --fix"
   },
-  "website": "https://react.soybeanjs.cn/home/"
+  "website": ""
 }

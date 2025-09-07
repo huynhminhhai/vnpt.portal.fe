@@ -1,7 +1,7 @@
 import ServicesItem from "./ServicesItem"
 import ServiceHeading from "./ServiceHeading";
 import { Icon } from "@iconify/react";
-import { GetSystemWebsByUser } from "@/service/api";
+import { GetAllSystemGroup, GetSystemWebsByUser } from "@/service/api";
 import ServiceSkeleton from "./ServiceSkeleton";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -33,7 +33,18 @@ const ServicesList = () => {
       const res = await GetSystemWebsByUser(params);
       const data = res.data?.result || [];
 
-      setListSystem(data);
+      const resGroups = await GetAllSystemGroup(defaultParams);
+      const groups = resGroups.data?.result?.items || [];
+
+      const systemsWithColor = data.map((system: any) => {
+        const group = groups.find((g: any) => g.id === system.id);
+        return {
+          ...system,
+          color: group?.color || 'blue',
+        };
+      });
+
+      setListSystem(systemsWithColor);
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -185,10 +196,11 @@ const ServicesList = () => {
               <>
                 {listSystem.map((group) => (
                   <div key={group.id}>
-                    <ServiceHeading title={group?.displayName} />
+                    <ServiceHeading title={group?.displayName} color={group.color} />
                     <ARow gutter={[22, 22]} className="mt-6">
                       {group.systemWebDtos.map((system: any, index: number) => (
                         <ServicesItem
+                          color={group.color}
                           key={index}
                           index={index}
                           dataItem={system}
@@ -202,10 +214,10 @@ const ServicesList = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[22px]">
                   {listSystem.map((group) => (
                     <div key={group.id} className="w-full">
-                      <ServiceHeading title={group?.displayName} />
+                      <ServiceHeading title={group?.displayName} color={group.color} />
                       <div className="flex flex-col gap-[22px] mt-6 w-full">
                         {group.systemWebDtos.map((system: any, index: number) => (
-                          <ServicesItem key={index} index={index} dataItem={system} />
+                          <ServicesItem color={group.color} key={index} index={index} dataItem={system} />
                         ))}
                       </div>
                     </div>

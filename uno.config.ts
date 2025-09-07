@@ -14,6 +14,33 @@ export default defineConfig<Theme>({
     }
   },
   presets: [presetUno({ dark: 'class' }), presetSoybeanAdmin()],
+  safelist: [
+    (context) => {
+      const colors = [
+        'gray', 'stone',
+        'green', 'emerald', 'teal', 'cyan', 'sky',
+        'blue', 'indigo',
+      ]
+      const levels = ['100', '400', '500', '600', '800', '900', '950']
+      const opacities = [
+        '', '/10', '/20', '/25', '/30', '/50', '/90', '/95'
+      ]
+
+      const utilities = ['text', 'bg', 'from', 'to', 'border']
+
+      const result: string[] = []
+      for (const u of utilities) {
+        for (const c of colors) {
+          for (const l of levels) {
+            for (const o of opacities) {
+              result.push(`${u}-${c}-${l}${o}`)
+            }
+          }
+        }
+      }
+      return result
+    }
+  ],
   rules: [
     [
       /^h-calc\((.*)\)$/, // 匹配 h-clac(xxx) 的正则表达式

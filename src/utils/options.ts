@@ -25,3 +25,9 @@ export const statusOptions: any = [
     key: 0,
   },
 ];
+
+export const tailwindColors = [
+  'gray', 'stone',
+  'green', 'emerald', 'teal', 'cyan', 'sky',
+  'blue', 'indigo',
+];
