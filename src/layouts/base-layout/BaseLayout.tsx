@@ -107,7 +107,7 @@ const BaseLayout = () => {
     <AdminLayout
       fixedFooter={themeSettings.footer.fixed}
       fixedTop={themeSettings.fixedHeaderAndTab}
-      Footer={ pathname === '/home' ? <GlobalFooter /> : null }
+      Footer={ null }
       footerHeight={themeSettings.footer.height}
       footerVisible={themeSettings.footer.visible}
       fullContent={fullContent}

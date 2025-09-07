@@ -119,7 +119,7 @@ const ServicesList = () => {
 
               <ACol lg={5} md={6} span={8}>
                 <AFlex className="w-full" gap={16} justify="flex-end">
-                  <AButton className="border-none bg-[#dbeafe] dark:bg-[#1f3456] text-primary dark:text-[#ffffffe6] font-medium w-full rounded-[24px] !shadow-none" type="primary" onClick={search} loading={loading}>
+                  <AButton className="border-none bg-blue-800/10 dark:bg-[#1f3456] text-primary dark:text-[#ffffffe6] font-medium w-full rounded-[24px] !shadow-none" type="primary" onClick={search} loading={loading}>
                     Tìm kiếm
                   </AButton>
                 </AFlex>

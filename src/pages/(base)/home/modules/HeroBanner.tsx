@@ -19,7 +19,7 @@ const HeroBanner = () => {
       className="relative"
     >
       <ACard
-        className="relative overflow-hidden border-none px-0 md:px-10 py-[12px] md:py-[20px] rounded-0 bg-gradient-to-r from-primary to-blue-900 dark:bg-[#111826] text-white"
+        className="relative overflow-hidden border-none px-0 md:px-10 py-[12px] md:py-[20px] rounded-0 bg-gradient-to-r from-primary via-blue-900 to-blue-800 text-white"
       >
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>

@@ -1,4 +1,5 @@
 import ButtonScrollTop from "./modules/ButtonScrollTop";
+import Footer from "./modules/Footer";
 import HeroBanner from "./modules/HeroBanner";
 import ServicesList from "./modules/Services/ServicesList";
 
@@ -11,6 +12,7 @@ const Home = () => {
       <HeroBanner />
       <ServicesList />
       <ButtonScrollTop />
+      <Footer />
     </div>
   );
 };
