@@ -187,10 +187,19 @@ textarea.ant-input[disabled],
   box-shadow: none;
 }
 
-.table-custom .ant-tree-node-selected {
+.ant-tree-node-selected {
   background: #e6ebf0 !important;
   font-weight: 600 !important;
   color: #013368 !important;
+}
+
+.ant-tree-checkbox-checked .ant-tree-checkbox-inner {
+  background-color: #013368 !important;
+  border-color: #013368 !important;
+}
+
+.ant-tree-checkbox-inner:after {
+  background-color: #013368 !important;
 }
 
 .table-custom .ant-spin-nested-loading,

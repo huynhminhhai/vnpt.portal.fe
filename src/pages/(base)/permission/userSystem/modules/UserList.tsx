@@ -40,7 +40,7 @@ const UserList: React.FC<UserListProps> = ({
     setLoading(true);
     try {
       const apiParams = {
-        MaxResultCount: 10,
+        MaxResultCount: 999,
         SkipCount: 0,
         IsActive: null,
         Keyword: '',
@@ -127,13 +127,11 @@ const UserList: React.FC<UserListProps> = ({
   return (
     <div className="flex flex-col gap-3">
       <ACard
-        className="card-wrapper [&_.ant-card-body]:!overflow-y-auto [&_.ant-card-body]:overflow-x-hidden table-custom card-wrapper
-          [&_.ant-card-body]:flex [&_.ant-card-body]:flex-col [&_.ant-card-body]:h-[calc(100vh-210px)]
-          [&_.ant-card-body]:justify-between [&_.ant-card-body]:gap-3"
+        className="card-wrapper h-[40vh] md:h-[calc(100vh-212px)] overflow-y-auto overflow-x-hidden"
         variant="borderless"
         loading={loading}
       >
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold">Danh sách người dùng</h3>
           <Switch
             checked={multiMode}
@@ -142,8 +140,8 @@ const UserList: React.FC<UserListProps> = ({
               setSelectedTenant(null);
               setSelectedTenants([]);
             }}
-            checkedChildren="Nhiều người"
-            unCheckedChildren="1 người"
+            checkedChildren="Chọn nhiều"
+            unCheckedChildren="Chọn 1"
           />
         </div>
         <Tree

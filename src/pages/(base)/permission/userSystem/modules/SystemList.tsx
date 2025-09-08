@@ -7,6 +7,7 @@ import CopyPermission from "./CopyPermission";
 
 interface SystemListProps {
   selectedTenant: number | null,
+  selectedTenants: number[],
   checkedList: number[],
   setCheckedList: React.Dispatch<React.SetStateAction<number[]>>,
   setOldChecked: React.Dispatch<React.SetStateAction<number[]>>,
@@ -15,7 +16,7 @@ interface SystemListProps {
 
 const { Search } = Input;
 
-const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, setCheckedList, setOldChecked, multiMode }) => {
+const SystemList: React.FC<SystemListProps> = ({ selectedTenant, selectedTenants, checkedList, setCheckedList, setOldChecked, multiMode }) => {
   const [loading, setLoading] = useState(false);
   const [listSystem, setListSystem] = useState<any[]>([]);
 
@@ -117,30 +118,31 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
 
   return (
     <ACard
-      className="card-wrapper h-[calc(100vh-144px)] overflow-y-unset md:overflow-y-auto md:overflow-x-hidden"
+      className="card-wrapper h-[60vh] md:h-[calc(100vh-144px)] overflow-y-auto overflow-x-hidden"
       variant="borderless"
     >
-      <div className="flex items-center justify-between mb-4">
+      <h3 className="font-semibold mb-4">Danh sách dịch vụ</h3>
+      <div className="flex flex-col-reverse md:flex-row items-start justify-between mb-4 gap-3">
         <div className="flex items-center gap-3">
           {
-            (multiMode || selectedTenant) && (
-              <div className="flex items-center gap-3">
-                {/* <CopyPermission /> */}
-                <Checkbox
-                  indeterminate={isIndeterminate}
-                  checked={isAllChecked}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      handleCheckAll();
-                    } else {
-                      handleUncheckAll();
-                    }
-                  }}
-                >
-                  {isAllChecked ? "Bỏ chọn tất cả" : "Chọn tất cả"}
-                </Checkbox>
-              </div>
-            )
+            selectedTenant && <CopyPermission checkList={checkedList} userSelected={selectedTenant} />
+          }
+
+          {
+            ( selectedTenants.length > 0 || selectedTenant) &&
+            <Checkbox
+              indeterminate={isIndeterminate}
+              checked={isAllChecked}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  handleCheckAll();
+                } else {
+                  handleUncheckAll();
+                }
+              }}
+            >
+              {isAllChecked ? "Bỏ chọn tất cả" : "Chọn tất cả"}
+            </Checkbox>
           }
 
         </div>
@@ -227,7 +229,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                       )}
 
                       {/* Checkbox ẩn (khi có tenant) */}
-                      {(multiMode || selectedTenant) && (
+                      {(selectedTenants.length > 0 || selectedTenant) && (
                         <div className="absolute top-2 left-2">
                           <Checkbox
                             className="hidden"

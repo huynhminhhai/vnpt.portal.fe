@@ -42,6 +42,7 @@ const PermissionSystem = () => {
           setCheckedList={setCheckedList}
           setOldChecked={setOldChecked}
           multiMode={multiMode}
+          selectedTenants={selectedTenants}
         />
       </ACol>
     </ARow>
