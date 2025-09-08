@@ -121,15 +121,21 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, selectedTenants
       className="card-wrapper h-[60vh] md:h-[calc(100vh-144px)] overflow-y-auto overflow-x-hidden"
       variant="borderless"
     >
-      <h3 className="font-semibold mb-4">Danh sách dịch vụ</h3>
-      <div className="flex flex-col-reverse md:flex-row items-start justify-between mb-4 gap-3">
+      <div className="flex items-start gap-1">
+        <h3 className="font-semibold">Danh sách dịch vụ</h3>
+        {
+          selectedTenant && <CopyPermission checkList={checkedList} userSelected={selectedTenant} />
+        }
+      </div>
+      <div
+        className="flex flex-col-reverse md:flex-row items-start md:items-center justify-between mb-4 gap-3"
+        style={{
+          marginTop: (selectedTenants.length > 0 || selectedTenant) ? '12px' : '0px'
+        }}
+      >
         <div className="flex items-center gap-3">
           {
-            selectedTenant && <CopyPermission checkList={checkedList} userSelected={selectedTenant} />
-          }
-
-          {
-            ( selectedTenants.length > 0 || selectedTenant) &&
+            (selectedTenants.length > 0 || selectedTenant) &&
             <Checkbox
               indeterminate={isIndeterminate}
               checked={isAllChecked}
@@ -219,9 +225,9 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, selectedTenants
                     >
                       {/* Check icon khi chọn */}
                       {checkedList.includes(item.id) && (
-                        <div className="absolute top-1 right-1">
+                        <div className="absolute top-[1px] right-[1px]">
                           <Icon
-                            icon="solar:check-circle-line-duotone"
+                            icon="solar:verified-check-line-duotone"
                             fontSize={20}
                             className="text-primary"
                           />

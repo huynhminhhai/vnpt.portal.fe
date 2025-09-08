@@ -115,7 +115,7 @@ const CopyPermission: React.FC<Props> = ({ onSuccess, checkList, userSelected })
 
   return (
     <>
-      <ButtonIcon className="px-2 border border-[#e0e0e0]" icon="solar:copy-line-duotone" tooltipContent="Sao chép quyền" onClick={showDrawer} />
+      <ButtonIcon className="px-2 h-[22px] w-[18px]" icon="solar:copy-line-duotone" tooltipContent="Sao chép quyền" onClick={showDrawer} />
       <Drawer
         className='p-0'
         open={open}
