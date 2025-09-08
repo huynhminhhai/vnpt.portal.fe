@@ -3,18 +3,19 @@ import { toHostname } from "@/utils/number";
 import { Icon } from "@iconify/react";
 import { Checkbox, Image, Input, Skeleton } from "antd";
 import vnpt from '@/assets/imgs/vnpt.png';
+import CopyPermission from "./CopyPermission";
 
 interface SystemListProps {
   selectedTenant: number | null,
   checkedList: number[],
-  setCheckedList: React.Dispatch<React.SetStateAction<number[]>>
-  setOldChecked: React.Dispatch<React.SetStateAction<number[]>>
+  setCheckedList: React.Dispatch<React.SetStateAction<number[]>>,
+  setOldChecked: React.Dispatch<React.SetStateAction<number[]>>,
+  multiMode: boolean
 }
 
-const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, setCheckedList, setOldChecked }) => {
-  const { Search } = Input;
+const { Search } = Input;
 
-  const [datas, setDatas] = useState<any[]>([]);
+const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, setCheckedList, setOldChecked, multiMode }) => {
   const [loading, setLoading] = useState(false);
   const [listSystem, setListSystem] = useState<any[]>([]);
 
@@ -57,20 +58,17 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
       const resData = res.data as any;
 
       if (resData?.result) {
-        setDatas(resData.result);
 
         // default checked = danh sách systemWebId trong datas
         const defaultChecked = resData.result.map((d: any) => d.systemWebId);
         setCheckedList(defaultChecked);
         setOldChecked(defaultChecked);
       } else {
-        setDatas([]);
         setCheckedList([]);
       }
 
     } catch (error) {
       console.error('Error fetching data:', error);
-      setDatas([]);
       setCheckedList([]);
     } finally {
       setLoading(false);
@@ -89,6 +87,11 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
     fetchList();
   }, [selectedTenant]);
 
+  useEffect(() => {
+    setCheckedList([]);
+    setOldChecked([]);
+  }, [multiMode, setCheckedList, setOldChecked]);
+
   const handleCheckboxChange = (checked: boolean, id: number) => {
     let newCheckedList;
     if (checked) {
@@ -97,7 +100,6 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
       newCheckedList = checkedList.filter((cid) => cid !== id);
     }
     setCheckedList(newCheckedList);
-    console.log("Danh sách đã chọn:", newCheckedList);
   };
 
   const handleCheckAll = () => {
@@ -121,20 +123,23 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           {
-            selectedTenant && (
-              <Checkbox
-                indeterminate={isIndeterminate}
-                checked={isAllChecked}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    handleCheckAll();
-                  } else {
-                    handleUncheckAll();
-                  }
-                }}
-              >
-                {isAllChecked ? "Bỏ chọn tất cả" : "Chọn tất cả"}
-              </Checkbox>
+            (multiMode || selectedTenant) && (
+              <div className="flex items-center gap-3">
+                {/* <CopyPermission /> */}
+                <Checkbox
+                  indeterminate={isIndeterminate}
+                  checked={isAllChecked}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      handleCheckAll();
+                    } else {
+                      handleUncheckAll();
+                    }
+                  }}
+                >
+                  {isAllChecked ? "Bỏ chọn tất cả" : "Chọn tất cả"}
+                </Checkbox>
+              </div>
             )
           }
 
@@ -153,6 +158,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                 md={12}
                 lg={12}
                 xl={8}
+                key={index}
               >
                 <div
                   className={`
@@ -221,7 +227,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                       )}
 
                       {/* Checkbox ẩn (khi có tenant) */}
-                      {selectedTenant && (
+                      {(multiMode || selectedTenant) && (
                         <div className="absolute top-2 left-2">
                           <Checkbox
                             className="hidden"

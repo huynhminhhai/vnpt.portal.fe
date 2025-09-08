@@ -6,6 +6,8 @@ const PermissionSystem = () => {
   const [selectedTenant, setSelectedTenant] = useState<number | null>(null);
   const [checkedList, setCheckedList] = useState<number[]>([]);
   const [oldChecked, setOldChecked] = useState<number[]>([]);
+  const [multiMode, setMultiMode] = useState(false);
+  const [selectedTenants, setSelectedTenants] = useState<number[]>([]);
 
   return <ASpace
     className="w-full pb-4"
@@ -23,6 +25,11 @@ const PermissionSystem = () => {
           setSelectedTenant={setSelectedTenant}
           checkedList={checkedList}
           oldChecked={oldChecked}
+          setOldChecked={setOldChecked}
+          multiMode={multiMode}
+          setMultiMode={setMultiMode}
+          selectedTenants={selectedTenants}
+          setSelectedTenants={setSelectedTenants}
         />
       </ACol>
       <ACol
@@ -34,6 +41,7 @@ const PermissionSystem = () => {
           checkedList={checkedList}
           setCheckedList={setCheckedList}
           setOldChecked={setOldChecked}
+          multiMode={multiMode}
         />
       </ACol>
     </ARow>

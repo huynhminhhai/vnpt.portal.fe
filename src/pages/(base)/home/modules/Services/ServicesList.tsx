@@ -147,7 +147,7 @@ const ServicesList = () => {
                   ? "Chế độ xem tất cả"
                   : "Chế độ xem danh sách"
             }
-            tooltipPlacement="top"
+            tooltipPlacement="topLeft"
             onClick={handleToggleViewMode}
           />
         </ACol>

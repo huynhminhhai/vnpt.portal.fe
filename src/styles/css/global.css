@@ -189,6 +189,8 @@ textarea.ant-input[disabled],
 
 .table-custom .ant-tree-node-selected {
   background: #e6ebf0 !important;
+  font-weight: 600 !important;
+  color: #013368 !important;
 }
 
 .table-custom .ant-spin-nested-loading,

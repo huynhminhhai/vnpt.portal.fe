@@ -1,13 +1,17 @@
 import { AssignSystemPermissionsToUser, GetAllUserWithTenantInfo } from "@/service/api";
-import { Icon } from "@iconify/react";
-import { message, Tree } from "antd";
+import { message, Switch, Tree } from "antd";
 import { DataNode } from "antd/es/tree";
 
 interface UserListProps {
   selectedTenant: number | null,
   setSelectedTenant: React.Dispatch<React.SetStateAction<number | null>>
   checkedList: number[],
-  oldChecked: number[]
+  oldChecked: number[],
+  setOldChecked: React.Dispatch<React.SetStateAction<number[]>>
+  multiMode: boolean,
+  setMultiMode: React.Dispatch<React.SetStateAction<boolean>>,
+  selectedTenants: number[],
+  setSelectedTenants: React.Dispatch<React.SetStateAction<number[]>>
 }
 
 interface UserType {
@@ -16,14 +20,17 @@ interface UserType {
   name: string;
 }
 
-interface TenantType {
-  key: number;
-  tenantId: number;
-  tenantName: string;
-  children: UserType[];
-}
-
-const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, checkedList, oldChecked }) => {
+const UserList: React.FC<UserListProps> = ({
+  selectedTenant,
+  setSelectedTenant,
+  checkedList,
+  oldChecked,
+  setOldChecked,
+  multiMode,
+  setMultiMode,
+  selectedTenants,
+  setSelectedTenants
+}) => {
 
   const [datas, setDatas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -77,23 +84,45 @@ const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, 
   const handleSubmit = async (checkedList: number[]) => {
     setLoadingAssign(true);
     try {
-      const dataSubmit = {
-        userId: selectedTenant as number,
-        systemWebIds: checkedList,
-        permissionLevel: ''
-      };
-
-      await AssignSystemPermissionsToUser(dataSubmit);
-
-      message.success('Cập nhật phân quyền thành công!');
-
+      if (multiMode) {
+        // nhiều user
+        for (const userId of selectedTenants) {
+          await AssignSystemPermissionsToUser({
+            userId,
+            systemWebIds: checkedList,
+            permissionLevel: ''
+          });
+        }
+        message.success("Cập nhật phân quyền cho nhiều người thành công!");
+      } else {
+        // 1 user
+        await AssignSystemPermissionsToUser({
+          userId: selectedTenant as number,
+          systemWebIds: checkedList,
+          permissionLevel: ''
+        });
+        message.success("Cập nhật phân quyền thành công!");
+        setOldChecked(checkedList);
+      }
     } catch (error) {
-      console.log(error);
-      message.error(error as string);
+      console.error(error);
+      message.error("Có lỗi xảy ra khi cập nhật quyền!");
     } finally {
       setLoadingAssign(false);
     }
-  }
+  };
+
+  const getLeafKeys = (nodes: any[]): string[] => {
+    let keys: string[] = [];
+    nodes.forEach((node) => {
+      if (node.children && node.children.length) {
+        keys = keys.concat(getLeafKeys(node.children));
+      } else {
+        keys.push(String(node.key));
+      }
+    });
+    return keys;
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -104,18 +133,48 @@ const UserList: React.FC<UserListProps> = ({ selectedTenant, setSelectedTenant, 
         variant="borderless"
         loading={loading}
       >
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="font-semibold">Danh sách người dùng</h3>
+          <Switch
+            checked={multiMode}
+            onChange={(checked) => {
+              setMultiMode(checked);
+              setSelectedTenant(null);
+              setSelectedTenants([]);
+            }}
+            checkedChildren="Nhiều người"
+            unCheckedChildren="1 người"
+          />
+        </div>
         <Tree
+          className="grow-1"
           treeData={treeData}
           showLine
           selectable
-          multiple={false}
-          selectedKeys={selectedTenant ? [selectedTenant] : []}
-          onSelect={(keys) => {
-            if (keys.length && keys[0]) {
-              setSelectedTenant(keys[0] as number);
+          multiple={multiMode}
+          checkable={multiMode}
+          checkedKeys={multiMode ? selectedTenants.map(String) : []}
+          selectedKeys={
+            multiMode ? selectedTenants.map(String) : selectedTenant ? [String(selectedTenant)] : []
+          }
+          onCheck={(checkedKeys) => {
+            if (multiMode) {
+              const leafKeys = getLeafKeys(treeData);
+              const onlyLeafChecked = (checkedKeys as React.Key[]).filter((k) =>
+                leafKeys.includes(String(k))
+              );
+              setSelectedTenants(onlyLeafChecked.map(Number));
             }
           }}
-          className="grow-1"
+          onSelect={(keys) => {
+            if (multiMode) {
+              setSelectedTenants(keys.map(Number));
+            } else {
+              if (keys.length && keys[0]) {
+                setSelectedTenant(Number(keys[0]));
+              }
+            }
+          }}
         />
       </ACard>
       <ACard>
