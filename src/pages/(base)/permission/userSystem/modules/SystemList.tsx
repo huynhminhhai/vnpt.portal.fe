@@ -25,7 +25,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
       const apiParams = {
         MaxResultCount: 9999,
         SkipCount: 0,
-        IsActive: true,
+        IsActive: null,
         Keyword: '',
         ...params
       };
@@ -67,6 +67,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
         setDatas([]);
         setCheckedList([]);
       }
+
     } catch (error) {
       console.error('Error fetching data:', error);
       setDatas([]);
@@ -99,12 +100,46 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
     console.log("Danh sách đã chọn:", newCheckedList);
   };
 
+  const handleCheckAll = () => {
+    const allIds = listSystem.map((item: any) => item.id);
+    setCheckedList(allIds);
+  };
+
+  const handleUncheckAll = () => {
+    setCheckedList([]);
+  };
+
+  const isAllChecked = checkedList.length === listSystem.length;
+  const isIndeterminate =
+    checkedList.length > 0 && checkedList.length < listSystem.length;
+
   return (
     <ACard
       className="card-wrapper h-[calc(100vh-144px)] overflow-y-unset md:overflow-y-auto md:overflow-x-hidden"
       variant="borderless"
     >
-      <div className="flex items-center justify-end mb-4">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          {
+            selectedTenant && (
+              <Checkbox
+                indeterminate={isIndeterminate}
+                checked={isAllChecked}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    handleCheckAll();
+                  } else {
+                    handleUncheckAll();
+                  }
+                }}
+              >
+                {isAllChecked ? "Bỏ chọn tất cả" : "Chọn tất cả"}
+              </Checkbox>
+            )
+          }
+
+        </div>
+
         <Search className="w-full md:w-[300px]" placeholder="Tìm kiếm nhanh" allowClear enterButton={<Icon icon={'ant-design:search-outlined'} fontSize={20} />} size="middle" onSearch={(value) => fetchListSystem({ Keyword: value })} />
       </div>
 
@@ -137,13 +172,6 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                     />
 
                     <div className="flex-1 min-w-0">
-                      {/* Title skeleton */}
-                      <Skeleton.Input
-                        active
-                        size="small"
-                        style={{ width: "70%", marginBottom: 6 }}
-                      />
-                      {/* URL skeleton */}
                       <Skeleton.Input
                         active
                         size="small"
@@ -174,7 +202,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                     rounded-lg border transition-all duration-300 overflow-hidden
                     hover:scale-[1.01]
                     ${checkedList.includes(item.id)
-                          ? "bg-blue-50 border-primary shadow-md"
+                          ? "bg-gradient-to-r from-blue-100 to-blue-50 border-primary shadow-md"
                           : "bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-700"}
                   `}
                       style={{
@@ -183,7 +211,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                     >
                       {/* Check icon khi chọn */}
                       {checkedList.includes(item.id) && (
-                        <div className="absolute top-2 right-2">
+                        <div className="absolute top-1 right-1">
                           <Icon
                             icon="solar:check-circle-line-duotone"
                             fontSize={20}
@@ -211,7 +239,7 @@ const SystemList: React.FC<SystemListProps> = ({ selectedTenant, checkedList, se
                           width={28}
                           src={item?.iconUrl || vnpt}
                           preview={false}
-                          className="rounded-md shadow-sm"
+                          className="rounded-md"
                         />
 
                         {/* Text */}
