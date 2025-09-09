@@ -252,13 +252,13 @@ const UserManagePage = () => {
       },
       title: 'Tên đơn vị'
     },
-    {
-      align: 'center' as const,
-      key: 'creationTime',
-      render: (_: any, record: any) => <div>{record?.creationTime && formatDate(record.creationTime)}</div>,
-      title: 'Ngày tạo',
-      width: 140
-    },
+    // {
+    //   align: 'center' as const,
+    //   key: 'creationTime',
+    //   render: (_: any, record: any) => <div>{record?.creationTime && formatDate(record.creationTime)}</div>,
+    //   title: 'Ngày tạo',
+    //   width: 140
+    // },
     {
       align: 'center' as const,
       key: 'isActive',

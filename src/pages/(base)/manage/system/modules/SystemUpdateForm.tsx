@@ -1,4 +1,5 @@
 import { GetSystemWebById, UpdateSystemWeb } from '@/service/api';
+import { formatDate } from '@/utils/date';
 import { isActiveOptions, statusOptions } from '@/utils/options';
 import { Button, Col, Drawer, Form, Input, Row, Select, Space, Tag, message } from 'antd';
 import React, { useState } from 'react';
@@ -97,7 +98,7 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                     ?
                     <div className='font-medium'>{detailData?.systemName}</div>
                     :
-                    <Input.TextArea rows={2} style={{resize: 'none'}} placeholder="Nhập tên dịch vụ" size="middle" disabled={!isEdit} />
+                    <Input.TextArea rows={2} style={{ resize: 'none' }} placeholder="Nhập tên dịch vụ" size="middle" disabled={!isEdit} />
                 }
               </Form.Item>
             </Col>
@@ -266,6 +267,28 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                 }
               </Form.Item>
             </Col>
+            {
+              !isEdit && (
+                <>
+                  <Col span={12}>
+                    <Form.Item
+                      label="Ngày tạo"
+                      name="createdDate"
+                    >
+                      <div className='font-medium'>{detailData?.createdDate && formatDate(detailData.createdDate)}</div>
+                    </Form.Item>
+                  </Col>
+                  {/* <Col span={12}>
+                    <Form.Item
+                      label="Ngày chỉnh sửa"
+                      name="modifiedDate"
+                    >
+                      <div className='font-medium'>{detailData?.modifiedDate ? formatDate(detailData.modifiedDate) : '-'}</div>
+                    </Form.Item>
+                  </Col> */}
+                </>
+              )
+            }
           </Row>
           <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white'>
             <Row gutter={16}>

@@ -51,6 +51,25 @@ export const GetSystemWebsByUser = (params: Api.SystemManage.paramsPhanTrang) =>
   return res;
 };
 
+export const GetUserGroupOders = () => {
+  const res = newRequest<any>({
+    method: 'get',
+    url: `/api/services/app/UserGroupOders/GetByUser`
+  });
+
+  return res;
+};
+
+export const UpdateUserGroupOders = (data: any) => {
+  const res = newRequest<any>({
+    data,
+    method: 'put',
+    url: '/api/services/app/UserGroupOders/UpdateForUser'
+  });
+
+  return res;
+};
+
 export const CreateSystemWeb = (data: SystemWebType) => {
   const res = newRequest<any>({
     data,

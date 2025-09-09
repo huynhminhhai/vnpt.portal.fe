@@ -1,19 +1,18 @@
 import { Button, Drawer, message } from 'antd';
 import React, { useState } from 'react';
 import { ViewMode } from '../Services/ServicesList';
-import { Icon } from '@iconify/react';
 import CategoryUi from './CategoryUi';
 import DndCategoryUi from './DndCategoryUi';
-import { selectUserInfo } from '@/features/auth/authStore';
+import { UpdateUserGroupOders } from '@/service/api';
 
 type Props = {
   onSuccess?: () => void;
   viewMode: string;
   setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
+  sortedIds: number[];
 };
 
-const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode }) => {
-  const { user } = useAppSelector(selectUserInfo);
+const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode, sortedIds }) => {
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,12 +22,14 @@ const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode }) => {
     setLoading(true);
     try {
       const apiParams = {
-        systemGroupIds: systemGroupIds,
-        id: user.id
+        listGroup: systemGroupIds
       }
-      // await UpdateSystemGroup(apiParams);
-      console.log(apiParams)
+      await UpdateUserGroupOders(apiParams);
+
       message.success('Cập nhật giao diện thành công');
+
+      onSuccess?.();
+
     } catch (error) {
       console.log(error);
       message.error(error as string);
@@ -70,11 +71,10 @@ const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode }) => {
       >
         <ADivider>Chế độ bố cục</ADivider>
         <CategoryUi viewMode={viewMode} setViewMode={setViewMode} />
-        {/* <ADivider>Thứ tự hiển thị</ADivider> */}
-        {/* <DndCategoryUi setSystemGroupIds={setSystemGroupIds} systemGroupIds={systemGroupIds} /> */}
-        {/* <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white'>
+        <ADivider>Thứ tự hiển thị</ADivider>
+        <DndCategoryUi setSystemGroupIds={setSystemGroupIds} setLoading={setLoading} sortedIds={sortedIds} />
+        <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white'>
           <Button
-            // disabled={systemGroupIds.length === 0}
             className="w-full"
             loading={loading}
             size="middle"
@@ -83,7 +83,7 @@ const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode }) => {
           >
             Lưu cấu hình
           </Button>
-        </div> */}
+        </div>
       </Drawer>
     </>
   );

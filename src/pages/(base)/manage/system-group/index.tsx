@@ -9,6 +9,7 @@ import { useIsTabletResponsive } from '@/utils/responsive';
 import { isActiveOptions } from '@/utils/options';
 import { Icon } from '@iconify/react';
 import { getPaginationConfig } from '../modules/CommonPagination';
+import SortOrderDrawer from './modules/SortOrderDrawer';
 
 const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams }) => {
   const { t } = useTranslation();
@@ -202,7 +203,6 @@ const SystemGroupManagePage = () => {
       title: 'Tên nhóm dịch vụ'
     },
     {
-      align: 'center' as const,
       key: 'color',
       render: (_: any, record: any) => <div className="flex items-center gap-2">
         <span className={`w-4 h-4 rounded-full bg-${record.color}-500`} />
@@ -212,16 +212,14 @@ const SystemGroupManagePage = () => {
     },
     {
       align: 'center' as const,
-      key: 'creationTime',
-      render: (_: any, record: any) => <div>{record?.creationTime && formatDate(record.creationTime)}</div>,
-      title: 'Ngày tạo',
-      width: 140
-    },
-    {
-      align: 'center' as const,
-      key: 'lastModificationTime',
-      render: (_: any, record: any) => <div>{record?.lastModificationTime && formatDate(record.lastModificationTime)}</div>,
-      title: 'Ngày chỉnh sửa',
+      key: 'sortOrder',
+      render: (_: any, record: any) => <div>{record?.sortOrder || '-'}</div>,
+      title: (
+        <div className="flex items-center justify-center gap-2">
+          <span>Số thứ tự</span>
+          <SortOrderDrawer onSuccess={() => fetchList(searchParams)} systemGroups={datas?.items?.sort((a: any, b: any) => a.sortOrder - b.sortOrder)} />
+        </div>
+      ),
       width: 140
     },
     {
@@ -282,7 +280,7 @@ const SystemGroupManagePage = () => {
         variant="borderless"
         extra={
           <TableHeaderOperation
-            addForm={<SystemGroupAddForm onSuccess={() => fetchList(searchParams)} />}
+            addForm={<SystemGroupAddForm onSuccess={() => fetchList(searchParams)} sortOrder={datas?.items?.length || 0} />}
             columns={columns}
             disabledDelete={true}
             isShowDelete={false}

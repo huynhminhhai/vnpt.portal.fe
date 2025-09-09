@@ -133,7 +133,7 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
                 }
               </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={24} hidden>
               <Form.Item
                 label="Mô tả"
                 name="description"
@@ -149,7 +149,7 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
               </Form.Item>
             </Col>
 
-            <Col span={24}>
+            <Col span={12}>
               <Form.Item
                 label="Màu chủ đề"
                 name="color"
@@ -181,7 +181,23 @@ const SystemGroupUpdateForm: React.FC<Props> = ({ id, onSuccess }) => {
               </Form.Item>
             </Col>
 
-            <Col span={24} className='my-2'>
+            <Col span={12}>
+              <Form.Item
+                label="Thứ tự hiển thị"
+                name="sortOrder"
+                rules={[{ required: false }]}
+              >
+                {
+                  !isEdit
+                    ?
+                    <div className='font-medium'>{detailData?.sortOrder || '-'}</div>
+                    :
+                    <Input type="number" placeholder="Nhập thứ tự" size="middle" disabled />
+                }
+              </Form.Item>
+            </Col>
+
+            <Col span={24} className='mt-2 mb-4'>
               <ServicesItem
                 index={1}
                 color={selectedColor}

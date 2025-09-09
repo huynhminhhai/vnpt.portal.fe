@@ -1,7 +1,7 @@
 import ServicesItem from "./ServicesItem"
 import ServiceHeading from "./ServiceHeading";
 import { Icon } from "@iconify/react";
-import { GetAllSystemGroup, GetSystemWebsByUser } from "@/service/api";
+import { GetSystemWebsByUser, GetUserGroupOders } from "@/service/api";
 import ServiceSkeleton from "./ServiceSkeleton";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -25,16 +25,30 @@ const ServicesList = () => {
   );
 
   const [listSystem, setListSystem] = useState<any[]>([]);
+  const [sortedIds, setSortedIds] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchParam, setSearchParam] = useState(defaultParams);
 
   const fetchListSystem = async (params: any) => {
     setLoading(true);
     try {
+
+      const resSortOrder = await GetUserGroupOders();
+      const sortedIds = (resSortOrder as any)?.data?.result?.listGroup;
+
       const res = await GetSystemWebsByUser(params);
       const data = res.data?.result || [];
 
-      setListSystem(data);
+      const sorted = sortedIds
+        .map((id: number, index: number) => {
+          const sys = data.find((s: any) => s.id === id);
+          return sys ? { ...sys, sortOrder: index + 1 } : null;
+        })
+        .filter(Boolean);
+
+      setSortedIds(sortedIds);
+
+      setListSystem(sorted);
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -106,7 +120,7 @@ const ServicesList = () => {
 
         {/* Toggle Button sát lề phải */}
         <ACol flex="none" className="flex justify-end" data-aos="fade-up-left" data-aos-delay="200">
-          <ConfigUi viewMode={viewMode} setViewMode={setViewMode} />
+          <ConfigUi viewMode={viewMode} setViewMode={setViewMode} onSuccess={() => fetchListSystem(searchParam)} sortedIds={sortedIds} />
         </ACol>
       </ARow>
 

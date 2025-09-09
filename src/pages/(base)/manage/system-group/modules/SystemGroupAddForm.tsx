@@ -11,9 +11,10 @@ const { TextArea } = Input;
 
 type Props = {
   onSuccess?: () => void;
+  sortOrder: number
 };
 
-const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
+const SystemGroupAddForm: React.FC<Props> = ({ onSuccess, sortOrder }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -70,7 +71,8 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
           onFinish={onFinish}
           initialValues={{
             isActive: true,
-            color: selectedColor
+            color: selectedColor,
+            sortOrder: sortOrder + 1
           }}
         >
           <Row gutter={16}>
@@ -106,7 +108,7 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={24} hidden>
               <Form.Item
                 label="Mô tả"
                 name="description"
@@ -115,7 +117,7 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
                 <TextArea rows={2} placeholder="Nhập mô tả nhóm" maxLength={255} size='middle' />
               </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={12}>
               <Form.Item
                 label="Màu chủ đề"
                 name="color"
@@ -135,6 +137,15 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess }) => {
                     </Option>
                   ))}
                 </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Thứ tự hiển thị"
+                name="sortOrder"
+                rules={[{ required: false }]}
+              >
+                <Input type="number" placeholder="Nhập thứ tự" size="middle" disabled />
               </Form.Item>
             </Col>
             <Col span={24} className='mt-4'>

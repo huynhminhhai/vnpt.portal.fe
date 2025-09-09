@@ -1,4 +1,5 @@
 import { GetTenantById, GetUserById, UpdateTenant, UpdateUser } from '@/service/api';
+import { formatDate } from '@/utils/date';
 import { isActiveOptions } from '@/utils/options';
 import { Icon } from '@iconify/react';
 import { Button, Col, Drawer, Form, Input, Row, Select, Tag, message } from 'antd';
@@ -266,6 +267,29 @@ const UserUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                 }
               </Form.Item>
             </Col>
+
+            {
+              !isEdit && (
+                <>
+                  <Col span={12}>
+                    <Form.Item
+                      label="Ngày tạo"
+                      name="creationTime"
+                    >
+                      <div className='font-medium'>{detailData?.creationTime && formatDate(detailData.creationTime)}</div>
+                    </Form.Item>
+                  </Col>
+                  {/* <Col span={12}>
+                    <Form.Item
+                      label="Ngày chỉnh sửa"
+                      name="lastModificationTime"
+                    >
+                      <div className='font-medium'>{detailData?.lastModificationTime ? formatDate(detailData.lastModificationTime) : '-'}</div>
+                    </Form.Item>
+                  </Col> */}
+                </>
+              )
+            }
 
             {
               password &&

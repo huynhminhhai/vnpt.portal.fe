@@ -10,7 +10,7 @@ import {
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GetAllSystemGroup } from '@/service/api';
+import { GetAllSystemGroup, GetUserGroupOders } from '@/service/api';
 import { Icon } from "@iconify/react";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import React from "react";
@@ -37,17 +37,18 @@ const SortableItem = ({ id, name, color }: { id: number; name: string, color: st
 };
 
 interface DndCategoryUiProps {
-  systemGroupIds: number[];
-  setSystemGroupIds: React.Dispatch<React.SetStateAction<number[]>>
+  setSystemGroupIds: React.Dispatch<React.SetStateAction<number[]>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  sortedIds: number[];
 }
 
-const DndCategoryUi: React.FC<DndCategoryUiProps> = ({ systemGroupIds, setSystemGroupIds }) => {
-
-  const [loading, setLoading] = useState(false);
+const DndCategoryUi: React.FC<DndCategoryUiProps> = ({ setSystemGroupIds, setLoading, sortedIds }) => {
 
   const [groups, setGroups] = useState<any[]>([]);
+  const [isLoadingList, setIsLoadingList] = useState(false);
 
   const fetchList = async () => {
+    setIsLoadingList(true);
     setLoading(true);
     const apiParams = {
       MaxResultCount: 9999,
@@ -59,20 +60,21 @@ const DndCategoryUi: React.FC<DndCategoryUiProps> = ({ systemGroupIds, setSystem
       const res = await GetAllSystemGroup(apiParams);
       const data = res.data?.result?.items || [];
 
-      const sortedIds = [7, 1, 2, 12, 14]
+      const newData = data
+        .filter((item: any) => sortedIds.includes(item.id))
+        .map((item: any) => {
+          const index = sortedIds.indexOf(item.id);
+          return {
+            ...item,
+            soThuTu: index + 1,
+          };
+        });
 
-      const newData = data.map((item: any) => {
-        const index = sortedIds.indexOf(item.id);
-        return {
-          ...item,
-          soThuTu: index !== -1 ? index + 1 : null
-        };
-      });
-
-      setGroups(newData);
+      setGroups(newData?.sort((a: any, b: any) => (a.soThuTu ?? 0) - (b.soThuTu ?? 0)));
     } catch (error) {
       console.error(error);
     } finally {
+      setIsLoadingList(false);
       setLoading(false);
     }
   };
@@ -95,7 +97,7 @@ const DndCategoryUi: React.FC<DndCategoryUiProps> = ({ systemGroupIds, setSystem
       const newGroups = arrayMove(groups, oldIndex, newIndex).map(
         (item, index) => ({
           ...item,
-          soThuTu: index + 1 // cập nhật lại thứ tự
+          soThuTu: index + 1
         })
       );
 
@@ -110,9 +112,22 @@ const DndCategoryUi: React.FC<DndCategoryUiProps> = ({ systemGroupIds, setSystem
         items={groups.map((g) => g.id)}
         strategy={verticalListSortingStrategy}
       >
-        {groups.map((group) => (
-          <SortableItem key={group.id} id={group.id} name={group.displayName} color={group.color} />
-        ))}
+        {
+          isLoadingList ?
+            Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between mb-4 text-[14px] leading-[1] font-bold border-l-[4px] border-gray-300 pl-3 uppercase animate-pulse"
+              >
+                <div className="h-4 w-24 bg-gray-300 rounded"></div>
+                <div className="h-6 w-6 bg-gray-300 rounded"></div>
+              </div>
+            ))
+            :
+            groups.map((group) => (
+              <SortableItem key={group.id} id={group.id} name={group.displayName} color={group.color} />
+            ))
+        }
       </SortableContext>
 
       {/* <pre>{JSON.stringify(groups, null, 2)}</pre> */}
