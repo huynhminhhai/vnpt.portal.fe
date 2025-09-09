@@ -1,0 +1,92 @@
+import { Button, Drawer, message } from 'antd';
+import React, { useState } from 'react';
+import { ViewMode } from '../Services/ServicesList';
+import { Icon } from '@iconify/react';
+import CategoryUi from './CategoryUi';
+import DndCategoryUi from './DndCategoryUi';
+import { selectUserInfo } from '@/features/auth/authStore';
+
+type Props = {
+  onSuccess?: () => void;
+  viewMode: string;
+  setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
+};
+
+const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode }) => {
+  const { user } = useAppSelector(selectUserInfo);
+
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [systemGroupIds, setSystemGroupIds] = useState<number[]>([]);
+
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const apiParams = {
+        systemGroupIds: systemGroupIds,
+        id: user.id
+      }
+      // await UpdateSystemGroup(apiParams);
+      console.log(apiParams)
+      message.success('Cập nhật giao diện thành công');
+    } catch (error) {
+      console.log(error);
+      message.error(error as string);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <ButtonIcon
+        triggerParent
+        className="w-[40px] h-[40px] px-6px text-2xl border-[1px] border-[#e0e0e0] dark:border-gray-700/50 bg-white dark:bg-[#1f3456]"
+        icon={'solar:widget-2-linear'}
+        tooltipContent={'Cấu hình giao diện'}
+        tooltipPlacement="topLeft"
+        onClick={showDrawer}
+      />
+      <Drawer
+        className='p-0 overflow-x-hidden'
+        open={open}
+        title="Cấu hình giao diện"
+        width={380}
+        styles={{
+          body: {
+            paddingBottom: 80,
+            paddingTop: 0,
+          }
+        }}
+        onClose={onClose}
+      >
+        <ADivider>Chế độ bố cục</ADivider>
+        <CategoryUi viewMode={viewMode} setViewMode={setViewMode} />
+        {/* <ADivider>Thứ tự hiển thị</ADivider> */}
+        {/* <DndCategoryUi setSystemGroupIds={setSystemGroupIds} systemGroupIds={systemGroupIds} /> */}
+        {/* <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white'>
+          <Button
+            // disabled={systemGroupIds.length === 0}
+            className="w-full"
+            loading={loading}
+            size="middle"
+            type="primary"
+            onClick={handleSave}
+          >
+            Lưu cấu hình
+          </Button>
+        </div> */}
+      </Drawer>
+    </>
+  );
+};
+
+export default ConfigUi;

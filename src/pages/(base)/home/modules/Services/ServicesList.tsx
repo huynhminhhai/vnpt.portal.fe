@@ -5,8 +5,9 @@ import { GetAllSystemGroup, GetSystemWebsByUser } from "@/service/api";
 import ServiceSkeleton from "./ServiceSkeleton";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ConfigUi from "../ConfigUi/ConfigUi";
 
-type ViewMode = "byType" | "all" | "list";
+export type ViewMode = "byType" | "all" | "list";
 
 const ServicesList = () => {
 
@@ -33,18 +34,7 @@ const ServicesList = () => {
       const res = await GetSystemWebsByUser(params);
       const data = res.data?.result || [];
 
-      const resGroups = await GetAllSystemGroup(defaultParams);
-      const groups = resGroups.data?.result?.items || [];
-
-      const systemsWithColor = data.map((system: any) => {
-        const group = groups.find((g: any) => g.id === system.id);
-        return {
-          ...system,
-          color: group?.color || 'blue',
-        };
-      });
-
-      setListSystem(systemsWithColor);
+      setListSystem(data);
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -57,20 +47,6 @@ const ServicesList = () => {
   useEffect(() => {
     fetchListSystem(searchParam);
   }, [searchParam]);
-
-  useEffect(() => {
-    localStorage.setItem("viewMode", viewMode);
-  }, [viewMode]);
-
-  const handleToggleViewMode = () => {
-    setViewMode((prev) =>
-      prev === "byType" ? "all" : prev === "all" ? "list" : "byType"
-    );
-  };
-
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
 
   const search = () => {
     const values = form.getFieldsValue();
@@ -130,26 +106,7 @@ const ServicesList = () => {
 
         {/* Toggle Button sát lề phải */}
         <ACol flex="none" className="flex justify-end" data-aos="fade-up-left" data-aos-delay="200">
-          <ButtonIcon
-            triggerParent
-            className="w-[40px] h-[40px] px-6px text-2xl border-[1px] border-[#e0e0e0] dark:border-gray-700/50 bg-white dark:bg-[#1f3456]"
-            icon={
-              viewMode === "byType"
-                ? "circum:grid-3-2"
-                : viewMode === "all"
-                  ? "circum:grid-4-1"
-                  : "circum:view-list"
-            }
-            tooltipContent={
-              viewMode === "byType"
-                ? "Chế độ xem theo loại"
-                : viewMode === "all"
-                  ? "Chế độ xem tất cả"
-                  : "Chế độ xem danh sách"
-            }
-            tooltipPlacement="topLeft"
-            onClick={handleToggleViewMode}
-          />
+          <ConfigUi viewMode={viewMode} setViewMode={setViewMode} />
         </ACol>
       </ARow>
 

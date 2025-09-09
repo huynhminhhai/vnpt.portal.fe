@@ -89,9 +89,10 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
           <div className={`
               relative flex flex-col justify-between rounded-lg cursor-pointer
               transition-all duration-700 overflow-hidden border h-full
+              shadow-[0_8px_30px_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.05)]
               ${darkMode
-              ? 'bg-gray-900/95 backdrop-blur-md border-gray-700/50'
-              : 'bg-white/95 backdrop-blur-md border-gray-200/50'
+              ? `${isHovered ? 'bg-gray-900/95 border-gray-700/50' : 'bg-gray-900/95 border-gray-700/50'}`
+              : `${isHovered ? `bg-white/95 border-${color}-500/30` : 'bg-white/95 border-gray-200/50'}`
             }
             `}
             style={{
@@ -100,9 +101,6 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                   ? 'linear-gradient(145deg, rgba(17,24,39,0.98), rgba(31,41,55,0.98))'
                   : 'linear-gradient(145deg, rgba(255,255,255,0.98), rgba(248,250,252,0.98))'
                 : undefined,
-              boxShadow: isHovered
-                ? '0 25px 50px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
-                : '0 8px 30px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.05)'
             }}
           >
             {/* Digital animated background particles */}
