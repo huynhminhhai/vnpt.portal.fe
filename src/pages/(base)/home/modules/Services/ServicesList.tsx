@@ -202,7 +202,7 @@ const ServicesList = () => {
                     disabledClass: "swiper-button-disabled"
                   }}
                 >
-                  {listSystem.map((group) => (
+                  {/* {listSystem.map((group) => (
                     <SwiperSlide key={group.id}>
                       <div className="w-full">
                         <ServiceHeading title={group?.displayName} color={group.color} />
@@ -218,7 +218,39 @@ const ServicesList = () => {
                         </div>
                       </div>
                     </SwiperSlide>
-                  ))}
+                  ))} */}
+
+                  {listSystem.map((group) => {
+                    const chunkSize = 6;
+                    const chunks = [];
+                    for (let i = 0; i < group.systemWebDtos.length; i += chunkSize) {
+                      chunks.push(group.systemWebDtos.slice(i, i + chunkSize));
+                    }
+
+                    return chunks.map((chunk, colIndex) => (
+                      <SwiperSlide key={`${group.id}-${colIndex}`}>
+                        <div className="w-full">
+                          {/* Chỉ hiện heading ở cột đầu tiên của loại */}
+                          {colIndex === 0 ? (
+                            <ServiceHeading title={group?.displayName} color={group.color} />
+                          ) : (
+                            <div className="h-13" />
+                          )}
+                          <div className="flex flex-col gap-[22px] mt-6 w-full">
+                            {chunk.map((system: any, index: number) => (
+                              <ServicesItem
+                                color={group.color}
+                                key={index}
+                                index={index}
+                                dataItem={system}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    ));
+                  })}
+
                 </Swiper>
                 <div className="image-swiper-button-prev cursor-pointer w-7 h-7 fixed top-1/2 left-2 bg-white text-primary border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform hover:scale-[1.04] transition-all duration-300">
                   <Icon icon={'guidance:right-arrow'} className="absolute top-1/2 left-2.5 -translate-y-1/2 w-6 h-6" />
