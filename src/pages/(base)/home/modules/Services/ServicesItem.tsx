@@ -70,7 +70,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
               ${isHovered ? `bg-gradient-to-br from-${color}-100/40 via-${color}-200/40 to-${color}-300/50 blur-xl scale-[1.04]` : ''}
             `} />
 
-          {dataItem.systemUrl?.toLowerCase().includes("zalo") && (
+          {/* {dataItem.systemUrl?.toLowerCase().includes("zalo") && (
             <div className="absolute z-[1] top-0 right-3 flex items-center gap-1.5 flex-wrap">
               <span
                 className={`
@@ -83,13 +83,14 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                 Zalo Mini App
               </span>
             </div>
-          )}
+          )} */}
 
           {/* Main card */}
           <div className={`
               relative flex flex-col justify-between rounded-lg cursor-pointer
               transition-all duration-700 overflow-hidden border h-full
               shadow-[0_8px_30px_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.05)]
+              hover:shadow-[rgba(50,50,93,0.25)_0px_13px_27px_-5px,rgba(0,0,0,0.3)_0px_8px_16px_-8px]
               ${darkMode
               ? `${isHovered ? 'bg-gray-900/95 border-gray-700/50' : 'bg-gray-900/95 border-gray-700/50'}`
               : `${isHovered ? `bg-white/95 border-${color}-500/30` : 'bg-white/95 border-gray-200/50'}`
@@ -196,8 +197,6 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                         bg-clip-text text-transparent
                       ` : ''}
                     `} />
-                  {/* {dataItem.systemName} */}
-                  {/* </h2> */}
 
                   <div className={`
                       flex items-center gap-1 text-xs transition-all duration-500 mt-1
@@ -303,7 +302,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
 
                   <div
                     className={`
-                      p-2 rounded-lg transition-all duration-500 relative overflow-hidden
+                      p-2 rounded-md transition-all duration-500 relative overflow-hidden flex items-center gap-2
                       ${isHovered
                         ? 'bg-white/20 backdrop-blur-sm scale-110'
                         : darkMode
@@ -311,14 +310,28 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                           : `bg-${color}-100`}
                     `}
                   >
-                    <div
+                    {
+                      dataItem.systemUrl?.toLowerCase().includes("zalo") ?
+                        <div className={`text-[10px] leading-[1] font-bold
+                          ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-800`}
+                        `}>Zalo Mini App</div> :
+                        <div
+                          className={`
+                        flex items-center justify-center w-4 h-3 transition-all duration-500
+                        ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-600`}
+                      `}
+                        >
+                          <Icon icon={'streamline-plump:web'} fontSize={16} />
+                        </div>
+                    }
+                    {/* <div
                       className={`
                         flex items-center justify-center w-4 h-4 transition-all duration-500
-                        ${isHovered ? 'text-white rotate-45' : darkMode ? `text-${color}-400` : `text-${color}-600`}
+                        ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-600`}
                       `}
                     >
-                      <Icon icon={'solar:link-bold-duotone'} fontSize={18} />
-                    </div>
+                      <Icon icon={'solar:pin-bold'} fontSize={18} />
+                    </div> */}
                   </div>
                 </div>
               </div>

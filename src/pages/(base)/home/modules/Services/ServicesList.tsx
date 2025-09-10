@@ -6,6 +6,10 @@ import ServiceSkeleton from "./ServiceSkeleton";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ConfigUi from "../ConfigUi/ConfigUi";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 export type ViewMode = "byType" | "all" | "list";
 
@@ -181,20 +185,48 @@ const ServicesList = () => {
                   </div>
                 ))}
               </> :
-              <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[22px]">
+              <div className="relative">
+                <Swiper
+                  modules={[Navigation]}
+                  spaceBetween={22}
+                  loop
+                  autoHeight
+                  breakpoints={{
+                    640: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1280: { slidesPerView: 4 },
+                  }}
+                  navigation={{
+                    nextEl: ".image-swiper-button-next",
+                    prevEl: ".image-swiper-button-prev",
+                    disabledClass: "swiper-button-disabled"
+                  }}
+                >
                   {listSystem.map((group) => (
-                    <div key={group.id} className="w-full">
-                      <ServiceHeading title={group?.displayName} color={group.color} />
-                      <div className="flex flex-col gap-[22px] mt-6 w-full">
-                        {group.systemWebDtos.map((system: any, index: number) => (
-                          <ServicesItem color={group.color} key={index} index={index} dataItem={system} />
-                        ))}
+                    <SwiperSlide key={group.id}>
+                      <div className="w-full">
+                        <ServiceHeading title={group?.displayName} color={group.color} />
+                        <div className="flex flex-col gap-[22px] mt-6 w-full">
+                          {group.systemWebDtos.map((system: any, index: number) => (
+                            <ServicesItem
+                              color={group.color}
+                              key={index}
+                              index={index}
+                              dataItem={system}
+                            />
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    </SwiperSlide>
                   ))}
+                </Swiper>
+                <div className="image-swiper-button-prev cursor-pointer w-7 h-7 fixed top-1/2 left-2 bg-white text-primary border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform hover:scale-[1.04] transition-all duration-300">
+                  <Icon icon={'guidance:right-arrow'} className="absolute top-1/2 left-2.5 -translate-y-1/2 w-6 h-6" />
                 </div>
-              </>
+                <div className="image-swiper-button-next cursor-pointer w-7 h-7 fixed top-1/2 right-2 bg-white text-primary border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform hover:scale-[1.04] transition-all duration-300">
+                  <Icon icon={'guidance:left-arrow'} className="absolute top-1/2 right-2.5 -translate-y-1/2 w-6 h-6" />
+                </div>
+              </div>
       }
 
     </div>

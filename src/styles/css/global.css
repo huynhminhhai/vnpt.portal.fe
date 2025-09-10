@@ -138,6 +138,62 @@ textarea.ant-input[disabled],
   animation: arrow-move 1.5s ease-in-out infinite;
 }
 
+@keyframes arrow-right {
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  15% {
+    transform: translateY(-50%) translateX(8px);
+  }
+  30% {
+    transform: translateY(-50%) translateX(0);
+  }
+  45% {
+    transform: translateY(-50%) translateX(5px);
+  }
+  60% {
+    transform: translateY(-50%) translateX(0);
+  }
+  75% {
+    transform: translateY(-50%) translateX(2px);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes arrow-left {
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  15% {
+    transform: translateY(-50%) translateX(-8px);
+  }
+  30% {
+    transform: translateY(-50%) translateX(0);
+  }
+  45% {
+    transform: translateY(-50%) translateX(-5px);
+  }
+  60% {
+    transform: translateY(-50%) translateX(0);
+  }
+  75% {
+    transform: translateY(-50%) translateX(-2px);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+.image-swiper-button-prev:hover svg {
+  animation: arrow-right 2s ease-in-out infinite;
+}
+
+.image-swiper-button-next:hover svg {
+  animation: arrow-left 2s ease-in-out infinite;
+}
+
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
