@@ -219,9 +219,11 @@ const ServicesList = () => {
 
       {
         (isShowFavorite && listFavoriteSystem.length > 0) &&
-        <div className="bg-gradient-to-r from-blue-800/5 via-blue-800/3 to-blue-800/5 dark:bg-gradient-to-r dark:from-[#111826] dark:to-[#111826] pt-3 rounded-lg mt-6 mb-4">
+        <div
+          className="bg-gradient-to-r from-white via-blue-800/3 to-white dark:bg-gradient-to-r dark:from-[rgba(17,24,38,0.8)] dark:to-[rgba(17,24,38,0.8)] pt-3 rounded-lg mt-6 mb-4"
+        >
 
-          {/* <div className="relative z-10 flex items-center justify-center space-x-4 mb-2 !hidden">
+          {/* <div className="relative z-10 flex items-center justify-center space-x-4 mb-2">
             <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary/80 to-transparent opacity-60"></div>
             <div className="text-center text-[18px] leading-[1.2] font-bold">Mục yêu thích</div>
             <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary/80 to-transparent opacity-60"></div>
@@ -245,7 +247,7 @@ const ServicesList = () => {
               :
               <div className="relative">
                 <Swiper
-                  className="!pt-4 !pb-12 !px-3 [&_.swiper-pagination-bullet]:bg-primary [&_.swiper-pagination-bullet-active]:bg-primary"
+                  className="!pt-4 !pb-12 !px-3 [&_.swiper-pagination-bullet]:bg-primary [&_.swiper-pagination-bullet-active]:bg-primary dark:[&_.swiper-pagination-bullet]:bg-white dark:[&_.swiper-pagination-bullet-active]:bg-white"
                   modules={[Pagination, Navigation]}
                   pagination={{ clickable: true }}
                   spaceBetween={22}
@@ -269,19 +271,19 @@ const ServicesList = () => {
                         index={index}
                         dataItem={system}
                         toggleFavorite={() => toggleFavorite(system.id)}
-                        isShowShadow={false}
+                        // isShowShadow={false}
                         color={system.color}
                       />
                     </SwiperSlide>
                   ))}
 
                   <div
-                    className="favorite-swiper-button-prev cursor-pointer absolute bottom-1.5 left-4 text-primary z-10 opacity-100 transform transition-all duration-300"
+                    className="favorite-swiper-button-prev cursor-pointer absolute bottom-1.5 left-4 text-primary dark:text-white z-10 opacity-100 transform transition-all duration-300"
                   >
                     <Icon icon={'solar:round-alt-arrow-left-line-duotone'} className="w-8 h-8" />
                   </div>
                   <div
-                    className="favorite-swiper-button-next cursor-pointer absolute bottom-1.5 right-4 text-primary z-10 opacity-100 transform transition-all duration-300"
+                    className="favorite-swiper-button-next cursor-pointer absolute bottom-1.5 right-4 text-primary dark:text-white z-10 opacity-100 transform transition-all duration-300"
                   >
                     <Icon icon={'solar:round-alt-arrow-right-line-duotone'} className="w-8 h-8" />
                   </div>
@@ -353,7 +355,9 @@ const ServicesList = () => {
               </> :
               <div className="relative">
                 <Swiper
-                  modules={[Navigation]}
+                  className="!pb-8 [&_.swiper-pagination-bullet]:bg-primary [&_.swiper-pagination-bullet-active]:bg-primary dark:[&_.swiper-pagination-bullet]:bg-white dark:[&_.swiper-pagination-bullet-active]:bg-white"
+                  modules={[Pagination ,Navigation]}
+                  pagination={{ clickable: true }}
                   spaceBetween={22}
                   loop
                   autoHeight
@@ -368,24 +372,6 @@ const ServicesList = () => {
                     disabledClass: "swiper-button-disabled"
                   }}
                 >
-                  {/* {listSystem.map((group) => (
-                    <SwiperSlide key={group.id}>
-                      <div className="w-full">
-                        <ServiceHeading title={group?.displayName} color={group.color} />
-                        <div className="flex flex-col gap-[22px] mt-6 w-full">
-                          {group.systemWebDtos.map((system: any, index: number) => (
-                            <ServicesItem
-                              color={group.color}
-                              key={index}
-                              index={index}
-                              dataItem={system}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  ))} */}
-
                   {listSystem.map((group) => {
                     const chunkSize = 6;
                     const chunks = [];
@@ -420,13 +406,13 @@ const ServicesList = () => {
 
                 </Swiper>
                 <div
-                  className="image-swiper-button-prev cursor-pointer w-7 h-7 fixed top-1/2 left-2.5 bg-white text-primary border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform transition-all duration-300"
+                  className="image-swiper-button-prev cursor-pointer w-7 h-7 fixed top-1/2 left-2.5 bg-white text-primary dark:text-gray-400 border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform transition-all duration-300"
                   style={{ opacity: visible ? 0.8 : 0, visibility: visible ? 'visible' : 'hidden' }}
                 >
                   <Icon icon={'mynaui:arrow-long-left'} className="absolute top-1/2 left-2.5 -translate-y-1/2 w-6 h-6" />
                 </div>
                 <div
-                  className="image-swiper-button-next cursor-pointer w-7 h-7 fixed top-1/2 right-2.5 bg-white text-primary border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform transition-all duration-300"
+                  className="image-swiper-button-next cursor-pointer w-7 h-7 fixed top-1/2 right-2.5 bg-white text-primary dark:text-gray-400 border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform transition-all duration-300"
                   style={{ opacity: visible ? 0.8 : 0, visibility: visible ? 'visible' : 'hidden' }}
                 >
                   <Icon icon={'mynaui:arrow-long-right'} className="absolute top-1/2 right-2.5 -translate-y-1/2 w-6 h-6" />

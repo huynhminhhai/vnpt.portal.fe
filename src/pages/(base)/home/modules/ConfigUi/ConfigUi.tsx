@@ -79,7 +79,7 @@ const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode, sortedIds
         </div>
         <ADivider>Thứ tự hiển thị</ADivider>
         <DndCategoryUi setSystemGroupIds={setSystemGroupIds} setLoading={setLoading} sortedIds={sortedIds} />
-        <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white'>
+        <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white dark:bg-[#1f1f1f]'>
           <Button
             className="w-full"
             loading={loading}
