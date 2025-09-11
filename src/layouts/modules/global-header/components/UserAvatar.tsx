@@ -92,7 +92,7 @@ const UserAvatar = memo(() => {
         <div>
           <ButtonIcon className="px-12px">
             <img src={vnpt} alt="vnpt" className="w-28px h-28px rounded-full border border-primary" />
-            <span className="text-15px text-primary dark:text-white font-medium capitalize">{user?.name}</span>
+            <span className="text-15px text-primary dark:text-white font-semibold capitalize">{user?.name}</span>
           </ButtonIcon>
         </div>
       </ADropdown>

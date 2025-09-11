@@ -1,4 +1,4 @@
-import { Button, Drawer, message } from 'antd';
+import { Button, Drawer, message, Switch } from 'antd';
 import React, { useState } from 'react';
 import { ViewMode } from '../Services/ServicesList';
 import CategoryUi from './CategoryUi';
@@ -10,9 +10,11 @@ type Props = {
   viewMode: string;
   setViewMode: React.Dispatch<React.SetStateAction<ViewMode>>;
   sortedIds: number[];
+  toggleFavoriteList: () => void;
+  isShowFavorite: boolean
 };
 
-const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode, sortedIds }) => {
+const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode, sortedIds, toggleFavoriteList, isShowFavorite }) => {
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -71,6 +73,10 @@ const ConfigUi: React.FC<Props> = ({ onSuccess, viewMode, setViewMode, sortedIds
       >
         <ADivider>Chế độ bố cục</ADivider>
         <CategoryUi viewMode={viewMode} setViewMode={setViewMode} />
+        <div className='flex items-center justify-between mt-2 mb-3'>
+          <div className='font-semibold'>Mục yêu thích</div>
+          <Switch defaultChecked={isShowFavorite} onChange={toggleFavoriteList} />
+        </div>
         <ADivider>Thứ tự hiển thị</ADivider>
         <DndCategoryUi setSystemGroupIds={setSystemGroupIds} setLoading={setLoading} sortedIds={sortedIds} />
         <div className='absolute bottom-0 left-0 p-3 shadow-md w-full border-t-[1px] bg-white'>

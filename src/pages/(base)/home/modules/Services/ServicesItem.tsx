@@ -3,15 +3,17 @@ import { toHostname } from "@/utils/number"
 import { Icon } from "@iconify/react"
 import React from "react"
 import vnpt from '@/assets/imgs/vnpt.png';
-import { Image } from "antd";
+import { Image, Tooltip } from "antd";
 
 export interface ServicesItemProps {
   dataItem: any,
   index: number,
-  color?: string
+  color?: string,
+  toggleFavorite: (id: number) => void,
+  isShowShadow?: boolean
 }
 
-const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'blue' }) => {
+const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'blue', toggleFavorite, isShowShadow = true }) => {
 
   const { darkMode } = useContext(ThemeContext);
   const [particles, setParticles] = useState<any>([]);
@@ -35,7 +37,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
     };
 
     generateParticles();
-  }, [])
+  }, []);
 
   return (
     <ACol
@@ -70,6 +72,29 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
               ${isHovered ? `bg-gradient-to-br from-${color}-100/40 via-${color}-200/40 to-${color}-300/50 blur-xl scale-[1.04]` : ''}
             `} />
 
+          {/* Tag */}
+          <Tooltip
+            title="Thêm vào mục yêu thích"
+            placement="topLeft"
+            className={`absolute -top-1 -right-1 z-20 transition-all duration-300 border-1 border-primary/10
+                ${dataItem?.isFavorite ? "opacity-100" : "opacity-45 hover:opacity-100"}
+                }
+              `}>
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                toggleFavorite(dataItem.id);
+              }}
+              className="absolute top-0 right-0 p-1.5 rounded-full bg-white"
+            >
+              <Icon
+                icon={dataItem?.isFavorite ? "bi:bookmark-star-fill" : "bi:bookmark-star"}
+                className="text-primary/90"
+                fontSize={16}
+              />
+            </div>
+          </Tooltip>
+
           {/* {dataItem.systemUrl?.toLowerCase().includes("zalo") && (
             <div className="absolute z-[1] top-0 right-3 flex items-center gap-1.5 flex-wrap">
               <span
@@ -89,8 +114,10 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
           <div className={`
               relative flex flex-col justify-between rounded-lg cursor-pointer
               transition-all duration-700 overflow-hidden border h-full
-              shadow-[0_8px_30px_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.05)]
-              hover:shadow-[rgba(50,50,93,0.25)_0px_13px_27px_-5px,rgba(0,0,0,0.3)_0px_8px_16px_-8px]
+              ${isShowShadow ?
+            `shadow-[0_8px_30px_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.05)]
+                  hover:shadow-[rgba(50,50,93,0.25)_0px_13px_27px_-5px,rgba(0,0,0,0.3)_0px_8px_16px_-8px]` : 'shadow-sm'
+            }
               ${darkMode
               ? `${isHovered ? 'bg-gray-900/95 border-gray-700/50' : 'bg-gray-900/95 border-gray-700/50'}`
               : `${isHovered ? `bg-white/95 border-${color}-500/30` : 'bg-white/95 border-gray-200/50'}`
@@ -318,7 +345,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                         <div
                           className={`
                         flex items-center justify-center w-4 h-3 transition-all duration-500
-                        ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-600`}
+                        ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-800`}
                       `}
                         >
                           <Icon icon={'streamline-plump:web'} fontSize={16} />

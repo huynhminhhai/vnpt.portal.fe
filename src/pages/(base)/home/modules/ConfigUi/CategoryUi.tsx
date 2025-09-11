@@ -1,5 +1,6 @@
 import React from 'react'
 import { ViewMode } from '../Services/ServicesList';
+import { message, Tooltip } from 'antd';
 
 interface CategoryUiProps {
   viewMode: string
@@ -73,27 +74,32 @@ const CategoryUi: React.FC<CategoryUiProps> = ({ viewMode, setViewMode }) => {
   return (
     <div className="flex gap-4 pb-4">
       {options.map((opt) => (
-        <label key={opt.value} className="cursor-pointer" title={opt.label}>
-          <input
-            type="radio"
-            name="viewMode"
-            value={opt.value}
-            checked={viewMode === opt.value}
-            onChange={() => setViewMode(opt.value as any)}
-            className="hidden"
-          />
+        <Tooltip key={opt.value} title={opt.desc} placement="bottom">
+          <label className="cursor-pointer" title={opt.label}>
+            <input
+              type="radio"
+              name="viewMode"
+              value={opt.value}
+              checked={viewMode === opt.value}
+              onChange={() => {
+                setViewMode(opt.value as any);
+                message.success('Thay đổi bố cục thành công');
+              }}
+              className="hidden"
+            />
 
-          <div className={`
-                  flex flex-col items-center justify-center w-[100px] h-[74px] rounded-lg border text-center p-2 transition
-                  ${viewMode === opt.value
-              ? "border-[2px] border-primary bg-blue-50/50 dark:bg-blue-900/30"
-              : "border-gray-300 dark:border-gray-700 hover:border-blue-300"
-            }
-                `}>
-            {opt.render()}
-            {/* <span className="mt-2 text-[10px] font-medium">{opt.label}</span> */}
-          </div>
-        </label>
+            <div className={`
+                    flex flex-col items-center justify-center w-[100px] h-[74px] rounded-lg border text-center p-2 transition
+                    ${viewMode === opt.value
+                ? "border-[2px] border-primary bg-blue-50/50 dark:bg-blue-900/30"
+                : "border-gray-300 dark:border-gray-700 hover:border-blue-300"
+              }
+                  `}>
+              {opt.render()}
+              {/* <span className="mt-2 text-[10px] font-medium">{opt.label}</span> */}
+            </div>
+          </label>
+        </Tooltip>
       ))}
     </div>
   )

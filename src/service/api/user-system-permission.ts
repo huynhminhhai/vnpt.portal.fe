@@ -6,6 +6,11 @@ interface PermissionRequestType {
   permissionLevel: string;
 }
 
+interface UpdateFavoriteSystemType {
+  idPermission: number,
+  isFavorite: boolean
+}
+
 export const GetUserSystemPermissions = async (id: number) => {
   const res = await newRequest<any>({
     method: 'get',
@@ -24,3 +29,13 @@ export const AssignSystemPermissionsToUser = (data: PermissionRequestType) => {
 
   return res;
 };
+
+export const UpdateFavoriteSystem = (data: UpdateFavoriteSystemType) => {
+  const res = newRequest<any>({
+    data,
+    method: 'put',
+    url: '/api/services/app/UserSystemPermission/UpdateFavoriteSystem'
+  });
+
+  return res;
+}
