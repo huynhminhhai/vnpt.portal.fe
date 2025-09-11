@@ -76,7 +76,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
           <Tooltip
             title="Thêm vào mục yêu thích"
             placement="topLeft"
-            className={`absolute -top-1 -right-1 z-20 transition-all duration-300 border-1 border-primary/10
+            className={`absolute -top-0 -right-0 z-20 transition-all duration-300 border-1 border-primary/10
                 ${dataItem?.isFavorite ? "opacity-100" : "opacity-45 hover:opacity-100"}
                 }
               `}>
@@ -85,7 +85,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                 e.preventDefault();
                 toggleFavorite(dataItem.id);
               }}
-              className="absolute top-0 right-0 p-1.5 rounded-full bg-white"
+              className="absolute -top-1 -right-1 p-1.5 rounded-full bg-white"
             >
               <Icon
                 icon={dataItem?.isFavorite ? "bi:bookmark-star-fill" : "bi:bookmark-star"}

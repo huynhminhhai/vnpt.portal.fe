@@ -24,6 +24,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
         md: 7,
         span: 5
       }}
+      onFinish={search}
     >
       <ARow
         wrap
@@ -42,14 +43,14 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
               label=''
               name="Keyword"
             >
-              <AInput placeholder='Tìm kiếm nhanh' prefix={<Icon icon="ant-design:search-outlined" />} />
+              <AInput allowClear placeholder='Tìm kiếm nhanh' prefix={<Icon icon="ant-design:search-outlined" />} />
             </AForm.Item>
             <AForm.Item
               className="m-0 w-full"
               label=''
               name="IsActive"
             >
-              <Select placeholder="Chọn trạng thái" size="middle">
+              <Select allowClear placeholder="Chọn trạng thái" size="middle">
                 {isActiveOptions
                   .filter((item: any) => !item.type)
                   .map((item: any) => (
@@ -84,7 +85,7 @@ const UserSearch: FC<Page.SearchProps> = ({ form, reset, search, searchParams })
               ghost
               icon={<IconUilSearch />}
               type="primary"
-              onClick={search}
+              htmlType="submit"
             >
               {t('common.search')}
             </AButton>

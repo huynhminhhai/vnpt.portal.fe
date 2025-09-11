@@ -355,7 +355,7 @@ const ServicesList = () => {
               </> :
               <div className="relative">
                 <Swiper
-                  className="!pb-8 [&_.swiper-pagination-bullet]:bg-primary [&_.swiper-pagination-bullet-active]:bg-primary dark:[&_.swiper-pagination-bullet]:bg-white dark:[&_.swiper-pagination-bullet-active]:bg-white"
+                  className="!pb-10 !px-1 [&_.swiper-pagination-bullet]:bg-primary [&_.swiper-pagination-bullet-active]:bg-primary dark:[&_.swiper-pagination-bullet]:bg-white dark:[&_.swiper-pagination-bullet-active]:bg-white"
                   modules={[Pagination ,Navigation]}
                   pagination={{ clickable: true }}
                   spaceBetween={22}
@@ -396,6 +396,7 @@ const ServicesList = () => {
                                 index={index}
                                 dataItem={system}
                                 toggleFavorite={() => toggleFavorite(system.id)}
+                                isShowShadow={false}
                               />
                             ))}
                           </div>
@@ -406,7 +407,7 @@ const ServicesList = () => {
 
                 </Swiper>
                 <div
-                  className="image-swiper-button-prev cursor-pointer w-7 h-7 fixed top-1/2 left-2.5 bg-white text-primary dark:text-gray-400 border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform transition-all duration-300"
+                  className="image-swiper-button-prev cursor-pointer w-7 h-7 fixed top-1/2 left-1 bg-white text-primary dark:text-gray-400 border border-primary p-2 rounded-full z-10 opacity-60 hover:opacity-100 transform transition-all duration-300"
                   style={{ opacity: visible ? 0.8 : 0, visibility: visible ? 'visible' : 'hidden' }}
                 >
                   <Icon icon={'mynaui:arrow-long-left'} className="absolute top-1/2 left-2.5 -translate-y-1/2 w-6 h-6" />
