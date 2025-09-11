@@ -95,27 +95,12 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
             </div>
           </Tooltip>
 
-          {/* {dataItem.systemUrl?.toLowerCase().includes("zalo") && (
-            <div className="absolute z-[1] top-0 right-3 flex items-center gap-1.5 flex-wrap">
-              <span
-                className={`
-                  inline-flex items-center rounded-bl-[3px] rounded-br-[3px] px-2.5 pt-[3px] pb-[4px] text-[11px] leading-[1] font-bold
-                  bg-${color}-100 text-${color}-900`}
-                style={{
-                  boxShadow: 'rgba(0, 0, 0, 0.15) 0px 1.2px 1.2px 0px'
-                }}
-              >
-                Zalo Mini App
-              </span>
-            </div>
-          )} */}
-
           {/* Main card */}
           <div className={`
               relative flex flex-col justify-between rounded-lg cursor-pointer
               transition-all duration-700 overflow-hidden border h-full
               ${isShowShadow ?
-            `shadow-[0_8px_30px_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.05)]
+              `shadow-[0_8px_30px_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.05)]
                   hover:shadow-[rgba(50,50,93,0.25)_0px_13px_27px_-5px,rgba(0,0,0,0.3)_0px_8px_16px_-8px]` : 'shadow-sm'
             }
               ${darkMode
@@ -338,10 +323,23 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                     `}
                   >
                     {
-                      dataItem.systemUrl?.toLowerCase().includes("zalo") ?
+                      dataItem?.platformTypes?.length > 0 ?
                         <div className={`text-[10px] leading-[1] font-bold
                           ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-800`}
-                        `}>Zalo Mini App</div> :
+                        `}>
+                          {
+                            dataItem.platformTypes[0] === 'Web App' ?
+                              <div
+                                className={`
+                                  flex items-center justify-center w-4 h-3 transition-all duration-500
+                                  ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-800`}
+                                `}
+                              >
+                                <Icon icon={'streamline-plump:web'} fontSize={16} />
+                              </div> :
+                              dataItem.platformTypes[0]
+                          }
+                        </div> :
                         <div
                           className={`
                         flex items-center justify-center w-4 h-3 transition-all duration-500
@@ -351,14 +349,6 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                           <Icon icon={'streamline-plump:web'} fontSize={16} />
                         </div>
                     }
-                    {/* <div
-                      className={`
-                        flex items-center justify-center w-4 h-4 transition-all duration-500
-                        ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-600`}
-                      `}
-                    >
-                      <Icon icon={'solar:pin-bold'} fontSize={18} />
-                    </div> */}
                   </div>
                 </div>
               </div>

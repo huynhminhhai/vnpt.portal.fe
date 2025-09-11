@@ -229,7 +229,6 @@ const SystemManagePage = () => {
     {
       align: 'left' as const,
       key: 'systemCode',
-      width: 160,
       render: (_: any, record: any) => record.systemCode || '-',
       title: 'Mã dịch vụ'
     },

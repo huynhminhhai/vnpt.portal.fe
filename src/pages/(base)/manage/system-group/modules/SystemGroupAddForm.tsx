@@ -161,6 +161,7 @@ const SystemGroupAddForm: React.FC<Props> = ({ onSuccess, sortOrder }) => {
                     "iconUrl": "https://photo-logo-mapps.zadn.vn/2eb14e96e8d3018d58c2.jpg",
                   }
                 }
+                toggleFavorite={() => {}}
               />
             </Col>
           </Row>

@@ -221,16 +221,11 @@ const ServicesList = () => {
         (isShowFavorite && listFavoriteSystem.length > 0) &&
         <div className="bg-gradient-to-r from-blue-800/5 via-blue-800/3 to-blue-800/5 dark:bg-gradient-to-r dark:from-[#111826] dark:to-[#111826] pt-3 rounded-lg mt-6 mb-4">
 
-          <div className="relative z-10 flex items-center justify-center space-x-4 mb-2 !hidden">
-            {/* Left Line */}
+          {/* <div className="relative z-10 flex items-center justify-center space-x-4 mb-2 !hidden">
             <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary/80 to-transparent opacity-60"></div>
-
-            {/* Center Icon */}
             <div className="text-center text-[18px] leading-[1.2] font-bold">Mục yêu thích</div>
-
-            {/* Right Line */}
             <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary/80 to-transparent opacity-60"></div>
-          </div>
+          </div> */}
           {
             loading ?
               <ARow gutter={[22, 22]} className="mt-8 pb-8 px-3">
@@ -281,14 +276,14 @@ const ServicesList = () => {
                   ))}
 
                   <div
-                    className="favorite-swiper-button-prev cursor-pointer absolute bottom-1 left-4 text-primary z-10 opacity-100 transform transition-all duration-300"
+                    className="favorite-swiper-button-prev cursor-pointer absolute bottom-1.5 left-4 text-primary z-10 opacity-100 transform transition-all duration-300"
                   >
-                    <Icon icon={'solar:round-alt-arrow-left-line-duotone'} className="w-9 h-9" />
+                    <Icon icon={'solar:round-alt-arrow-left-line-duotone'} className="w-8 h-8" />
                   </div>
                   <div
-                    className="favorite-swiper-button-next cursor-pointer absolute bottom-1 right-4 text-primary z-10 opacity-100 transform transition-all duration-300"
+                    className="favorite-swiper-button-next cursor-pointer absolute bottom-1.5 right-4 text-primary z-10 opacity-100 transform transition-all duration-300"
                   >
-                    <Icon icon={'solar:round-alt-arrow-right-line-duotone'} className="w-9 h-9" />
+                    <Icon icon={'solar:round-alt-arrow-right-line-duotone'} className="w-8 h-8" />
                   </div>
                 </Swiper>
               </div>

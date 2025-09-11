@@ -1,4 +1,4 @@
-import { Button, Col, Drawer, Form, Input, Row, Select, Space, message } from 'antd';
+import { Button, Col, Drawer, Form, Input, Radio, Row, Select, Space, message } from 'antd';
 import React, { useState } from 'react';
 
 import { AddButton } from '@/components/button';
@@ -29,7 +29,7 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      const dataSubmit = { ...values };
+      const dataSubmit = { ...values, platformTypes: [values?.platformTypes] };
 
       await CreateSystemWeb(dataSubmit);
 
@@ -70,6 +70,7 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
           onFinish={onFinish}
           initialValues={{
             isActive: true,
+            platformTypes: 'Web App'
           }}
         >
           <Row gutter={16}>
@@ -117,6 +118,20 @@ const SystemAddForm: React.FC<Props> = ({ onSuccess, groupData }) => {
                 rules={[{ message: 'Vui lòng nhập đường dẫn dịch vụ', required: true }]}
               >
                 <Input placeholder="Nhập đường dẫn dịch vụ" size="middle" />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Nền tảng"
+                name="platformTypes"
+                rules={[{ required: true, message: 'Vui lòng chọn nền tảng' }]}
+              >
+                <Radio.Group className='font-medium'>
+                  <Radio value="Web App">Web App</Radio>
+                  <Radio value="Zalo Mini App">Zalo Mini App</Radio>
+                  <Radio value="Mobile App">Mobile App</Radio>
+                </Radio.Group>
               </Form.Item>
             </Col>
 

@@ -1,7 +1,7 @@
 import { GetSystemWebById, UpdateSystemWeb } from '@/service/api';
 import { formatDate } from '@/utils/date';
 import { isActiveOptions, statusOptions } from '@/utils/options';
-import { Button, Col, Drawer, Form, Input, Row, Select, Space, Tag, message } from 'antd';
+import { Button, Col, Drawer, Form, Input, Radio, Row, Select, Space, Tag, message } from 'antd';
 import React, { useState } from 'react';
 
 const { Option } = Select;
@@ -30,7 +30,10 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
       const res = await GetSystemWebById(id);
       const data = res.data?.result;
 
-      form.setFieldsValue(data);
+      form.setFieldsValue({
+        ...data,
+        platformTypes: data?.platformTypes?.[0] || 'Web App',
+      });
       setDetailData(data);
     } catch (error) {
       console.log(error);
@@ -47,7 +50,7 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      const dataSubmit = { ...detailData, ...values };
+      const dataSubmit = { ...detailData, ...values, platformTypes: [values?.platformTypes] };
 
       await UpdateSystemWeb(dataSubmit);
 
@@ -153,6 +156,26 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                     <div className='font-medium line-clamp-1'>{detailData?.systemUrl || '-'}</div>
                     :
                     <Input placeholder="Nhập đường dẫn dịch vụ" size="middle" disabled={!isEdit} />
+                }
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Nền tảng"
+                name="platformTypes"
+                rules={[{ required: true, message: 'Vui lòng chọn nền tảng' }]}
+              >
+                {
+                  !isEdit
+                    ?
+                    <div className='font-medium line-clamp-1'>{detailData?.platformTypes.length > 0 ? detailData.platformTypes[0] : 'Web App'}</div>
+                    :
+                    <Radio.Group className='font-medium'>
+                      <Radio value="Web App">Web App</Radio>
+                      <Radio value="Zalo Mini App">Zalo Mini App</Radio>
+                      <Radio value="Mobile App">Mobile App</Radio>
+                    </Radio.Group>
                 }
               </Form.Item>
             </Col>
