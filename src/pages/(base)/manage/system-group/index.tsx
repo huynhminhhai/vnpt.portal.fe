@@ -257,7 +257,7 @@ const SystemGroupManagePage = () => {
     <div className="h-full min-h-500px flex-col-stretch gap-2px md:gap-12px overflow-hidden lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
-        className="card-wrapper"
+        className="card-wrapper mt-2 mx-1 md:mx-0 md:mt-0"
         defaultActiveKey={isMobile ? undefined : []}
         items={[
           {
@@ -275,7 +275,7 @@ const SystemGroupManagePage = () => {
         ]}
       />
       <ACard
-        className="flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
+        className="mt-2 mx-1 md:mx-0 md:mt-0 flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
         ref={tableWrapperRef}
         title="Danh sách nhóm dịch vụ"
         variant="borderless"
@@ -323,7 +323,7 @@ const SystemGroupManagePage = () => {
                       {/* Header với ID và Status */}
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 bg-blue-50 rounded-lg flex items-center justify-center">
+                          <div className="py-1 px-3 bg-blue-50 rounded-lg flex items-center justify-center">
                             <span className="text-xs font-semibold text-primary">#{item.id}</span>
                           </div>
                         </div>
@@ -340,16 +340,19 @@ const SystemGroupManagePage = () => {
                         <Collapse.Panel
                           key="panel"
                           header={
-                            <h3 className="text-[17px] leading-[24px] font-semibold mb-2">
-                              {item.displayName}
-                            </h3>
+                            <div className='flex items-center gap-2 mb-2'>
+                              <span className={`w-4 h-4 rounded-full bg-${item.color}-500`} />
+                              <h3 className="text-[17px] leading-[24px] font-semibold">
+                                {item.displayName}
+                              </h3>
+                            </div>
                           }
                         >
                           {/* Description */}
                           {
                             item.description && (
                               <div className="mb-3">
-                                <p className="text-gray-600 text-sm leading-relaxed md:min-h-[44px] md:line-clamp-2">
+                                <p className="text-sm leading-relaxed md:min-h-[44px] md:line-clamp-2">
                                   {item.description}
                                 </p>
                               </div>
@@ -358,6 +361,14 @@ const SystemGroupManagePage = () => {
 
                           {/* Dates */}
                           <div className="space-y-2 pt-3 border-t">
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm text-gray-600">Số thứ tự: </span>
+                              <div className="text-sm font-medium flex items-center gap-3">
+                                {item?.sortOrder || "-"}
+                                <SortOrderDrawer onSuccess={() => fetchList(searchParams)} systemGroups={datas?.items?.sort((a: any, b: any) => a.sortOrder - b.sortOrder)} />
+                              </div>
+                            </div>
+
                             <div className="flex items-center gap-2">
                               <span className="text-sm text-gray-600">Ngày tạo: </span>
                               <p className="text-sm font-medium">

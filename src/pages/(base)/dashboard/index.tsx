@@ -1,14 +1,16 @@
 import CardData from "./modules/CardData";
+import HeaderBanner from "./modules/HeaderBanner";
 import LineChart from "./modules/LineChart";
 import PieChart from "./modules/PieChart";
 
 const Dashboard = () => {
-  return <ASpace
+  return <div className="w-[95%] mx-auto mt-2 md:mt-0 md:w-full">
+    <ASpace
     className="w-full pb-4"
     direction="vertical"
     size={[16, 16]}
   >
-    {/* <HeaderBanner /> */}
+    <HeaderBanner />
 
     <CardData />
 
@@ -40,7 +42,8 @@ const Dashboard = () => {
         <UsersNew />
       </ACol>
     </ARow> */}
-  </ASpace>;
+  </ASpace>
+  </div>;
 };
 
 

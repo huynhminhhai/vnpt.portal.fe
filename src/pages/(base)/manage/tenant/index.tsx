@@ -258,7 +258,7 @@ const TenantManagePage = () => {
     <div className="h-full min-h-500px flex-col-stretch gap-2px md:gap-12px overflow-hidden lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
-        className="card-wrapper"
+        className="card-wrapper mt-2 mx-1 md:mx-0 md:mt-0"
         defaultActiveKey={isMobile ? undefined : []}
         items={[
           {
@@ -276,7 +276,7 @@ const TenantManagePage = () => {
         ]}
       />
       <ACard
-        className="flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
+        className="mt-2 mx-1 md:mx-0 md:mt-0 flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
         ref={tableWrapperRef}
         title="Danh sách hệ thống"
         variant="borderless"
@@ -352,6 +352,27 @@ const TenantManagePage = () => {
                               <span className="text-sm text-gray-600">Mã đơn vị: </span>
                               <p className="text-sm font-medium">
                                 {item?.tenancyName || "-"}
+                              </p>
+                            </div>
+
+                            <div className="flex items-start gap-2">
+                              <span className="text-sm text-gray-600 whitespace-nowrap">Tiêu đề header: </span>
+                              <p className="text-sm font-medium">
+                                {item?.title || "-"}
+                              </p>
+                            </div>
+
+                            <div className="flex items-start gap-2">
+                              <span className="text-sm text-gray-600 whitespace-nowrap">Tiêu đề banner: </span>
+                              <p className="text-sm font-medium">
+                                {item?.displayName || "-"}
+                              </p>
+                            </div>
+
+                            <div className="flex items-start gap-2">
+                              <span className="text-sm text-gray-600 whitespace-nowrap">Nội dung banner: </span>
+                              <p className="text-sm font-medium">
+                                {item?.description || "-"}
                               </p>
                             </div>
                           </div>

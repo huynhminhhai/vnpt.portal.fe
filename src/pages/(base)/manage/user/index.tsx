@@ -296,7 +296,7 @@ const UserManagePage = () => {
     <div className="h-full min-h-500px flex-col-stretch gap-2px md:gap-12px overflow-hidden lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
-        className="card-wrapper"
+        className="card-wrapper mt-2 mx-1 md:mx-0 md:mt-0"
         defaultActiveKey={isMobile ? undefined : []}
         items={[
           {
@@ -314,7 +314,7 @@ const UserManagePage = () => {
         ]}
       />
       <ACard
-        className="flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
+        className="mt-2 mx-1 md:mx-0 md:mt-0 flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
         ref={tableWrapperRef}
         title="Danh sách người dùng"
         variant="borderless"
@@ -387,9 +387,20 @@ const UserManagePage = () => {
                           {/* Dates */}
                           <div className="space-y-2 pt-3 border-t">
                             <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">Mã đơn vị: </span>
+                              <span className="text-sm text-gray-600">Tên đăng nhập: </span>
                               <p className="text-sm font-medium">
-                                {item?.tenancyName || "-"}
+                                {item?.userName || "-"}
+                              </p>
+                            </div>
+
+                            <div className="flex items-start gap-2">
+                              <span className="text-sm text-gray-600 whitespace-nowrap">Tên đơn vị: </span>
+                              <p className="text-sm font-medium">
+                                {(() => {
+                                  const tenancyKey = item.userName?.split(".")[0];
+                                  const tenant = tenants.find(t => t.tenancyName === tenancyKey);
+                                  return tenant?.name || "-";
+                                })()}
                               </p>
                             </div>
                           </div>

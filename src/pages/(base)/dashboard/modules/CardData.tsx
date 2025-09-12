@@ -44,7 +44,7 @@ function useGetCardData() {
         const mappedData: CardDataProps[] = [
           {
             cardKey: 'soLuongSuDung',
-            color: { end: '#93c5fd', start: '#1d4ed8' },
+            color: { end: '#60a5fa', start: '#1d4ed8' },
             icon: 'solar:buildings-2-bold-duotone',
             image: wave3,
             key: 'soLuongSuDung',
@@ -54,7 +54,7 @@ function useGetCardData() {
           },
           {
             cardKey: 'soLuongMienPhi',
-            color: { end: '#5eead4', start: '#0f766e' },
+            color: { end: '#2dd4bf', start: '#0f766e' },
             icon: 'solar:user-bold-duotone',
             image: wave4,
             key: 'soLuongMienPhi',
@@ -64,7 +64,7 @@ function useGetCardData() {
           },
           {
             cardKey: 'soLuongTraPhi',
-            color: { end: '#a5b4fc', start: '#4338ca' },
+            color: { end: '#818cf8', start: '#4338ca' },
             icon: 'solar:server-2-bold-duotone',
             image: wave2,
             key: 'soLuongTraPhi',
@@ -74,7 +74,7 @@ function useGetCardData() {
           },
           {
             cardKey: 'danhThu',
-            color: { end: '#7dd3fc', start: '#0369a1' },
+            color: { end: '#38bdf8', start: '#0369a1' },
             icon: 'streamline:web-solid',
             image: wave5,
             key: 'danhThu',

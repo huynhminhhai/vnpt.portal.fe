@@ -286,7 +286,7 @@ const SystemManagePage = () => {
     <div className="h-full min-h-500px flex-col-stretch gap-2px md:gap-12px overflow-hidden lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
-        className="card-wrapper"
+        className="card-wrapper mt-2 mx-1 md:mx-0 md:mt-0"
         defaultActiveKey={isMobile ? undefined : []}
         items={[
           {
@@ -304,7 +304,7 @@ const SystemManagePage = () => {
         ]}
       />
       <ACard
-        className="flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
+        className="mt-1 mx-1 md:mx-0 md:mt-0 flex-col-stretch sm:flex-1-hidden card-wrapper table-custom"
         ref={tableWrapperRef}
         title="Danh sách hệ thống"
         variant="borderless"
@@ -371,16 +371,19 @@ const SystemManagePage = () => {
                         <Collapse.Panel
                           key="panel"
                           header={
-                            <h3 className="text-[17px] leading-[24px] font-semibold mb-2">
-                              {item.systemName}
-                            </h3>
+                            <div className='flex items-center gap-3 mb-2'>
+                              <AImage className='rounded-md' width={24} src={item?.iconUrl || vnpt} />
+                              <h3 className="text-[17px] leading-[24px] font-semibold">
+                                {item.systemName}
+                              </h3>
+                            </div>
                           }
                         >
                           {/* Description */}
                           {
                             item.systemDescription && (
-                              <div className="mb-3">
-                                <p className="text-gray-600 text-sm leading-relaxed md:min-h-[44px] md:line-clamp-2">
+                              <div className="mb-3 mt-1">
+                                <p className="text-sm leading-relaxed md:min-h-[44px] md:line-clamp-2">
                                   {item.systemDescription}
                                 </p>
                               </div>
@@ -390,14 +393,8 @@ const SystemManagePage = () => {
                           {/* Dates */}
                           <div className="space-y-2 pt-3 border-t">
                             <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">Logo: </span>
-                              <p className="text-sm font-medium">
-                                <AImage className='rounded-md' width={24} src={item?.iconUrl || vnpt} />
-                              </p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">Đường dẫn: </span>
-                              <p className="text-sm font-medium">
+                              <span className="text-sm text-gray-600 whitespace-nowrap">Đường dẫn: </span>
+                              <p className="text-sm font-medium line-clamp-1">
                                 {item?.systemUrl || "-"}
                               </p>
                             </div>
@@ -405,12 +402,6 @@ const SystemManagePage = () => {
                               <span className="text-sm text-gray-600">Nhóm dịch vụ: </span>
                               <p className="text-sm font-medium">
                                 {item?.groupSystemFk?.displayName || "-"}
-                              </p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">Ngày tạo: </span>
-                              <p className="text-sm font-medium">
-                                {item?.createdDate ? formatDate(item.createdDate) : "-"}
                               </p>
                             </div>
                           </div>
