@@ -14,6 +14,13 @@ export const formatDate = (dateString: string): string => {
 export const getHourFromDate = (dateString: string): string => {
   if (!dateString) return '';
 
-  const date = new Date(dateString.replace(' ', 'T'));
-  return date.toLocaleTimeString('vi-VN', { hour: '2-digit', hour12: false, minute: '2-digit' });
+  // ép chuỗi thành UTC
+  const date = new Date(dateString.replace(' ', 'T') + 'Z');
+
+  return new Intl.DateTimeFormat('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'Asia/Ho_Chi_Minh',
+  }).format(date);
 };

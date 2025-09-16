@@ -1,13 +1,11 @@
-import wave2 from '@/assets/imgs/wave-2.webp';
-import wave3 from '@/assets/imgs/wave-3.png';
-import wave4 from '@/assets/imgs/wave-4.webp';
-import wave5 from '@/assets/imgs/wave-5.avif';
 import NumberTicker from '@/components/NumberTicker';
 import CardSkeleton from '@/components/Skeleton/CardSkeleton';
 import { ThemeContext } from '@/features/theme';
 import { Icon } from '@iconify/react';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import WeatherBox from './WeatherBox';
+import { GetStatistics } from '@/service/api/dashboard';
 
 interface CardDataProps {
   cardKey: string;
@@ -23,10 +21,6 @@ interface CardDataProps {
   value: number;
 }
 
-// function getGradientColor(color: CardDataProps['color']) {
-//   return `linear-gradient(135deg, ${color.start}, ${color.end})`;
-// }
-
 function useGetCardData() {
   const { t } = useTranslation();
   const [cardData, setCardData] = useState<CardDataProps[]>([]);
@@ -37,56 +31,45 @@ function useGetCardData() {
       setIsLoading(true);
 
       try {
-        // const response = await GetThongTinTongQuat();
-        // const data = response?.data?.result;
+        const response = await GetStatistics();
+
+        const data = response?.data?.result;
+
+        if (!data) return;
 
         // Map API data vào card
         const mappedData: CardDataProps[] = [
           {
             cardKey: 'soLuongSuDung',
-            color: { end: '#60a5fa', start: '#1d4ed8' },
+            color: { end: '#60a5fa', start: '#2563eb' },
             icon: 'solar:buildings-2-bold-duotone',
-            image: wave3,
             key: 'soLuongSuDung',
             title: 'Đơn vị',
             unit: '',
-            value: 100
-          },
-          {
-            cardKey: 'soLuongMienPhi',
-            color: { end: '#2dd4bf', start: '#0f766e' },
-            icon: 'solar:user-bold-duotone',
-            image: wave4,
-            key: 'soLuongMienPhi',
-            title: 'Người dùng',
-            unit: '',
-            value: 100
-          },
-          {
-            cardKey: 'soLuongTraPhi',
-            color: { end: '#818cf8', start: '#4338ca' },
-            icon: 'solar:server-2-bold-duotone',
-            image: wave2,
-            key: 'soLuongTraPhi',
-            title: 'Nhóm dịch vụ',
-            unit: '',
-            value: 100
+            value: data.totalTenants ?? 0
           },
           {
             cardKey: 'danhThu',
             color: { end: '#38bdf8', start: '#0369a1' },
             icon: 'streamline:web-solid',
-            image: wave5,
             key: 'danhThu',
             title: 'Dịch vụ',
             unit: '',
-            value: 100
-          }
+            value: data.totalSystemWebs ?? 0
+          },
+          {
+            cardKey: 'soLuongMienPhi',
+            color: { end: '#2dd4bf', start: '#0f766e' },
+            icon: 'solar:user-bold-duotone',
+            key: 'soLuongMienPhi',
+            title: 'Người dùng',
+            unit: '',
+            value: data.totalUsers ?? 0
+          },
         ];
 
         setCardData(mappedData);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error('Error fetching card data:', error);
       } finally {
         setIsLoading(false);
@@ -159,7 +142,7 @@ const CardData = () => {
   return (
     <div
     >
-      <ARow gutter={[24, 16]}>
+      <ARow gutter={[16, 16]}>
         {isLoading ? (
           <>
             <CardSkeleton darkMode={darkMode} />
@@ -168,13 +151,26 @@ const CardData = () => {
             <CardSkeleton darkMode={darkMode} />
           </>
         ) : (
-          data.map(({ key: cardKey, ...rest }, index) => (
-            <CardItem
-              index={index}
-              key={cardKey}
-              {...rest}
-            />
-          ))
+          <>
+            {
+              data.map(({ key: cardKey, ...rest }, index) => (
+                <CardItem
+                  index={index}
+                  key={cardKey}
+                  {...rest}
+                />
+              ))
+            }
+            <ACol
+              lg={6}
+              md={12}
+              span={24}
+              data-aos="fade-up"
+              data-aos-delay={data.length * 100}
+            >
+              <WeatherBox />
+            </ACol>
+          </>
         )}
       </ARow>
     </div>

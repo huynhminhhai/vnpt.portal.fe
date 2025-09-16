@@ -1,4 +1,5 @@
 import { useLang } from '@/features/lang';
+import { GetGroupSystemCharts } from '@/service/api/dashboard';
 
 const PieChart = () => {
   const { t } = useTranslation();
@@ -6,8 +7,12 @@ const PieChart = () => {
   const { locale } = useLang();
 
   const { domRef, updateOptions } = useEcharts(() => ({
+    title: {
+      subtext: 'Biểu đồ nhóm dịch vụ',
+      left: 'center'
+    },
     legend: {
-      bottom: '1%',
+      bottom: '0%',
       itemStyle: {
         borderWidth: 0
       },
@@ -27,7 +32,7 @@ const PieChart = () => {
         itemStyle: {
           borderColor: '#fff',
           borderRadius: 10,
-          borderWidth: 1
+          borderWidth: 5
         },
         label: {
           position: 'center',
@@ -36,8 +41,8 @@ const PieChart = () => {
         labelLine: {
           show: false
         },
-        name: t('page.home.schedule'),
-        radius: ['45%', '75%'],
+        name: 'Nhóm dịch vụ',
+        radius: ['45%', '70%'],
         type: 'pie'
       }
     ],
@@ -47,20 +52,27 @@ const PieChart = () => {
   }));
 
   async function mockData() {
-    await new Promise(resolve => {
-      setTimeout(resolve, 1000);
-    });
 
-    updateOptions(opts => {
-      opts.series[0].data = [
-        { name: t('page.home.study'), value: 20 },
-        { name: t('page.home.entertainment'), value: 10 },
-        { name: t('page.home.work'), value: 40 },
-        { name: t('page.home.rest'), value: 30 }
-      ];
+    try {
 
-      return opts;
-    });
+      const res = await GetGroupSystemCharts();
+      const data = res?.data?.result;
+
+      if (!data) return;
+
+      const chartData = data.map((item: any) => ({
+        name: item.displayName,
+        value: item.totalSystemWeb
+      }));
+
+      updateOptions((opts) => {
+        opts.series[0].data = chartData;
+        return opts;
+      });
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function updateLocale() {

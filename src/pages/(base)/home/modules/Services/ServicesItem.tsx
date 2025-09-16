@@ -39,6 +39,41 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
     generateParticles();
   }, []);
 
+  // const newTabRef = useRef<Window | null>(null);
+
+  // useEffect(() => {
+  //   const windowMessageButton = document.querySelector("#window-message");
+
+  //   const handleClick = () => {
+  //     // Mở tab mới nếu chưa mở
+  //     if (!newTabRef.current || newTabRef.current.closed) {
+  //       newTabRef.current = window.open("http://localhost:9528", "_blank");
+  //     }
+
+  //     // Gửi message sau khi tab mở
+  //     setTimeout(() => {
+  //       if (newTabRef.current) {
+  //         newTabRef.current.postMessage("Trong map djt da den day", "http://localhost:9528");
+  //         console.log("✅ Sent message to new tab");
+  //       } else {
+  //         console.warn("❌ Tab not ready");
+  //       }
+  //     }, 1000); // delay để tab kịp load
+  //   };
+
+  //   if (windowMessageButton) {
+  //     windowMessageButton.addEventListener("click", handleClick);
+  //   }
+
+  //   return () => {
+  //     if (windowMessageButton) {
+  //       windowMessageButton.removeEventListener("click", handleClick);
+  //     }
+  //   };
+  // }, []);
+
+  // <button id="window-message">Open & Send Message</button>
+
   return (
     <ACol
       key={dataItem?.id}
@@ -119,7 +154,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
             {/* Digital animated background particles */}
             <div className="absolute top-0px inset-0 overflow-hidden pointer-events-none">
               {/* Circuit-like lines */}
-              <svg className="absolute top-34px inset-0 w-full h-full" style={{ opacity: isHovered ? 0.4 : 0.6 }}>
+              <svg className="absolute top-30px inset-0 w-full h-full" style={{ opacity: isHovered ? 0.4 : 0.6 }}>
                 <defs>
                   <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.8" />
@@ -148,7 +183,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                 <div
                   key={particle.id}
                   className={`
-                      absolute rounded-full bg-gradient-to-r from-${color}-600 to-${color}-400
+                      absolute rounded-full bg-gradient-to-r from-${color}-400 to-${color}-200
                       transition-all duration-1000
                       ${isHovered ? 'scale-150 opacity-60' : 'scale-100 opacity-30'}
                     `}
