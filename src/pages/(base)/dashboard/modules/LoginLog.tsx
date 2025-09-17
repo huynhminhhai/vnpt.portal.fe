@@ -1,43 +1,50 @@
 import { Icon } from '@iconify/react';
-import { List, Spin } from 'antd';
+import { InputNumber, List, Spin } from 'antd';
 import { formatDate, getHourFromDate } from '@/utils/date';
 import { GetAllLoginLog } from '@/service/api/dashboard';
 
 const LoginLog = () => {
+
+  const defaultParams = {
+    SkipCount: 0,
+    MaxResultCount: 20,
+  }
+
   const [dataList, setDataList] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useState(defaultParams);
+
+  const fetchData = async (params: any) => {
+    setLoading(true);
+    try {
+      const res = await GetAllLoginLog(params);
+
+      const data = res?.data?.result?.items;
+
+      if (data) {
+        setDataList(data);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Lỗi gọi API:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const res = await GetAllLoginLog({
-          SkipCount: 0,
-          MaxResultCount: 20,
-        });
-
-        const data = res?.data?.result?.items;
-
-        if (data) {
-          setDataList(data);
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Lỗi gọi API:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+    fetchData(searchParams);
+  }, [searchParams]);
 
   return (
     <ACard
       className="card-wrapper"
       size="small"
     >
-      <h5 className="mb-3">Lịch sử đăng nhập</h5>
+      <div className='flex items-center justify-between mb-3'>
+        <h5>Lịch sử đăng nhập</h5>
+        <InputNumber type='number' min={1} defaultValue={20} onChange={(value) => setSearchParams({ ...searchParams, MaxResultCount: Number(value) })} />
+      </div>
       <Spin spinning={loading}>
         <div className="h-[450px] overflow-y-auto">
           <List
@@ -54,7 +61,7 @@ const LoginLog = () => {
                   <div className="flex items-center space-x-2">
                     <Icon
                       className="h-4 w-4"
-                      icon="solar:calendar-outline"
+                      icon="solar:clock-circle-linear"
                     />
                     <span className="font-medium">
                       {getHourFromDate(item.creationTime)} {formatDate(item.creationTime)}
@@ -75,7 +82,7 @@ const LoginLog = () => {
                     <div className="flex items-center text-primary space-x-1">
                       <Icon
                         className="h-4 w-4"
-                        icon="solar:hashtag-circle-linear"
+                        icon="solar:hashtag-linear"
                       />
                       <span>{item.userId}</span>
                     </div>

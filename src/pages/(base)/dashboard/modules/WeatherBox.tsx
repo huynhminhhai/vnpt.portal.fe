@@ -218,7 +218,7 @@ const WeatherBox: React.FC = () => {
           </div>
           :
           <>
-            <div className={`relative border-4 border-white text-white flex items-center justify-end gap-3 h-full w-full md:w-[100%] rounded-lg py-3 px-8 ${getThemeClasses()}`}>
+            <div className={`relative border-4 border-white text-white flex items-center justify-end gap-3 h-full w-full md:w-[100%] rounded-xl py-3 px-8 ${getThemeClasses()}`}>
               {/* Weather Icon */}
               <div className="w-20 h-10 flex items-center justify-center">
                 {weatherType === "clear" && isDay && (

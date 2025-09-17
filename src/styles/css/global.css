@@ -259,6 +259,10 @@ textarea.ant-input[disabled],
   background-color: #013368 !important;
 }
 
+.ant-select-item-option-selected {
+  background-color: #e6ebf0 !important;
+}
+
 .table-custom .ant-spin-nested-loading,
 .table-custom .ant-spin-container {
   height: 100%;

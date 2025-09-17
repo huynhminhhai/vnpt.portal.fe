@@ -7,10 +7,6 @@ const PieChart = () => {
   const { locale } = useLang();
 
   const { domRef, updateOptions } = useEcharts(() => ({
-    title: {
-      subtext: 'Biểu đồ nhóm dịch vụ',
-      left: 'center'
-    },
     legend: {
       bottom: '0%',
       itemStyle: {
@@ -25,13 +21,18 @@ const PieChart = () => {
         data: [] as { name: string; value: number }[],
         emphasis: {
           label: {
-            fontSize: '12',
-            show: true
+            show: true,
+            fontSize: 16,
+            fontWeight: 'normal',
+            color: '#4b5563',
+            formatter: (params: any) => {
+              return `${params.name}\n \n${params.value}`;
+            }
           }
         },
         itemStyle: {
           borderColor: '#fff',
-          borderRadius: 10,
+          borderRadius: 5,
           borderWidth: 5
         },
         label: {
@@ -42,7 +43,7 @@ const PieChart = () => {
           show: false
         },
         name: 'Nhóm dịch vụ',
-        radius: ['45%', '70%'],
+        radius: ['55%', '75%'],
         type: 'pie'
       }
     ],
@@ -108,8 +109,9 @@ const PieChart = () => {
       className="card-wrapper"
       variant="borderless"
     >
+      <h5 className="mb-3 text-center">Lượt truy cập dịch vụ</h5>
       <div
-        className="h-360px overflow-hidden"
+        className="h-390px overflow-hidden"
         ref={domRef}
       />
     </ACard>

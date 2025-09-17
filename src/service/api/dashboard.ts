@@ -42,3 +42,20 @@ export const GetAllLoginLog = async (params: GetAllLoginLogType) => {
 
   return res;
 };
+
+interface GetSystemTrafficChartDataType {
+  StartDate?: string;
+  EndDate?: string;
+  GroupBy: number;
+  SystemIds?: number[];
+}
+
+export const GetSystemTrafficChartData = async (params: GetSystemTrafficChartDataType) => {
+  const res = await newRequest<any>({
+    method: 'get',
+    params,
+    url: '/api/services/app/Dashboard/GetSystemTrafficChartData'
+  });
+
+  return res;
+};

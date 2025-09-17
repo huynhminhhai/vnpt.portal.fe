@@ -1,9 +1,26 @@
 import { useLang } from '@/features/lang';
+import { GetAllSystemWeb } from '@/service/api';
+import { GetSystemTrafficChartData } from '@/service/api/dashboard';
+import { DatePicker, Select } from 'antd';
+import dayjs from 'dayjs';
+
+const { RangePicker } = DatePicker;
 
 const LineChart = () => {
   const { t } = useTranslation();
 
   const { locale } = useLang();
+
+  const defaultParams = {
+    GroupBy: 1,
+    StartDate: dayjs().subtract(7, "day").format("YYYY-MM-DD"),
+    EndDate: dayjs().format("YYYY-MM-DD"),
+    SystemIds: [] as number[]
+  };
+
+  const [searchParams, setSearchParams] = useState(defaultParams);
+  const [loading, setLoading] = useState(false);
+  const [systemWebs, setSystemWebs] = useState<any>([]);
 
   const { domRef, updateOptions } = useEcharts(() => ({
     grid: {
@@ -78,13 +95,22 @@ const LineChart = () => {
       }
     ],
     tooltip: {
+      trigger: 'axis',
       axisPointer: {
+        type: 'cross',
         label: {
           backgroundColor: '#6a7985'
-        },
-        type: 'cross'
+        }
       },
-      trigger: 'axis'
+      formatter: (params: any) => {
+        if (!params || params.length === 0) return '';
+
+        const validItems = params.filter((p: any) => p.value !== null && p.value !== undefined && p.value !== 0);
+
+        if (validItems.length === 0) return '';
+
+        return validItems.map((p: any) => `${p.marker} ${p.seriesName}: ${p.value}`).join('<br/>');
+      }
     },
     xAxis: {
       boundaryGap: false,
@@ -96,30 +122,78 @@ const LineChart = () => {
     }
   }));
 
-  async function mockData() {
-    await new Promise(resolve => {
-      setTimeout(resolve, 1000);
-    });
+  async function mockData(params: any) {
+    try {
 
-    updateOptions(opts => {
-      opts.xAxis.data = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
-      opts.series[0].data = [4623, 6145, 6268, 6411, 1890, 4251, 2978, 3880, 3606, 4311, 4668, 4985];
-      opts.series[1].data = [2208, 2016, 2916, 4512, 8281, 2008, 1963, 2367, 2956, 678, 345, 345];
+      const res = await GetSystemTrafficChartData(params);
+      const data = res?.data?.result;
 
-      return opts;
-    });
+      if (!data) return;
+
+      updateOptions(opts => {
+        opts.xAxis.data = data?.labels;
+
+        opts.series = data.datasets.map((ds: any) => ({
+          name: ds.label,
+          type: "line",
+          data: ds.data,
+          smooth: true,
+          stack: "Total",
+          emphasis: {
+            focus: "series"
+          },
+          showSymbol: false,
+          color: ds.backgroundColor, // line màu chính
+          areaStyle: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                {
+                  offset: 0.25,
+                  color: ds.backgroundColor // màu đậm hơn ở trên
+                },
+                {
+                  offset: 1,
+                  color: "#fff" // màu nhạt dần xuống
+                }
+              ]
+            }
+          },
+          itemStyle: {
+            color: ds.backgroundColor
+          }
+        }));
+
+        return opts;
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   function init() {
-    mockData();
+    mockData(searchParams);
   }
 
   function updateLocale() {
     updateOptions((opts, factory) => {
       const originOpts = factory();
+
+      // cập nhật lại legend
       opts.legend.data = originOpts.legend.data;
-      opts.series[0].name = originOpts.series[0].name;
-      opts.series[1].name = originOpts.series[1].name;
+
+      // cập nhật lại name cho tất cả series thay vì hardcode
+      opts.series.forEach((s, idx) => {
+        if (originOpts.series[idx]) {
+          s.name = originOpts.series[idx].name;
+        }
+      });
 
       return opts;
     });
@@ -133,11 +207,143 @@ const LineChart = () => {
   useUpdateEffect(() => {
     updateLocale();
   }, [locale]);
+
+  useEffect(() => {
+    mockData(searchParams);
+  }, [searchParams]);
+
+  const getPickerType = (groupBy: number) => {
+    switch (groupBy) {
+      case 1:
+        return "date";
+      case 2:
+        return "week";
+      case 3:
+        return "month";
+      case 4:
+        return "year";
+      default:
+        return "date";
+    }
+  };
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      setLoading(true);
+      const apiParams = {
+        MaxResultCount: 9999,
+        SkipCount: 0,
+        IsActive: true,
+        Keyword: "",
+      };
+
+      try {
+        const res = await GetAllSystemWeb(apiParams);
+
+        const resData = res.data as any;
+
+        if (resData && resData.result && resData.result.items) {
+          setSystemWebs(resData.result.items);
+        }
+      } catch (err) {
+        console.error("Fetch groups error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGroups();
+  }, []);
+
+  const allValues = systemWebs.map((item: any) => item.id);
+
+  useEffect(() => {
+    if (systemWebs.length > 0 && searchParams.SystemIds.length === 0) {
+      setSearchParams({
+        ...searchParams,
+        SystemIds: allValues,
+      });
+    }
+  }, [systemWebs]);
+
+  const handleChange = (values: number[]) => {
+    // Nếu user chọn option "Tất cả"
+    if (values.includes(-1)) {
+      // Nếu đang chọn đủ tất cả rồi thì bỏ hết
+      if (searchParams.SystemIds.length === allValues.length) {
+        setSearchParams({ ...searchParams, SystemIds: [] });
+      } else {
+        // Nếu chưa chọn hết thì set tất cả
+        setSearchParams({ ...searchParams, SystemIds: allValues });
+      }
+    } else {
+      setSearchParams({ ...searchParams, SystemIds: values });
+    }
+  };
+
   return (
     <ACard
       className="card-wrapper"
       variant="borderless"
     >
+      <h5 className="mb-3 text-center">Lưu lượng truy cập</h5>
+      <div className='flex items-end justify-end gap-3'>
+        <Select<number[]>
+          style={{ width: "100%", flex: 1 }}
+          loading={loading}
+          mode="multiple"
+          allowClear
+          placeholder="Chọn dịch vụ"
+          value={searchParams.SystemIds}
+          onChange={handleChange}
+          options={[
+            { value: -1, label: "Tất cả" }, // option "Tất cả"
+            ...systemWebs.map((item: any) => ({
+              value: item.id,
+              label: item.systemName,
+            })),
+          ]}
+          // Nếu chọn hết thì chỉ hiển thị "Tất cả"
+          maxTagCount={
+            searchParams.SystemIds.length === allValues.length ? 0 : undefined
+          }
+          maxTagPlaceholder={() =>
+            searchParams.SystemIds.length === allValues.length ? "Tất cả" : null
+          }
+        />
+        <style>{`
+          .ant-select-selector {
+            max-height: 32px !important;
+            overflow-y: auto !important;
+          }
+        `}</style>
+        <Select
+          defaultValue={1}
+          style={{ width: 120 }}
+          onChange={(value: number) => setSearchParams({
+            ...searchParams,
+            GroupBy: value
+          })}
+          placeholder="Chọn phạm vi"
+          options={[
+            { value: 1, label: 'Ngày' },
+            { value: 2, label: 'Tuần' },
+            { value: 3, label: 'Tháng' },
+            { value: 4, label: 'Năm' },
+          ]}
+        />
+        <RangePicker
+          defaultValue={[dayjs().subtract(7, "day"), dayjs()]}
+          picker={getPickerType(searchParams.GroupBy)}
+          onChange={(_, dateStrings) => {
+            setSearchParams({
+              ...searchParams,
+              StartDate: dateStrings[0],
+              EndDate: dateStrings[1],
+            });
+          }}
+        />
+      </div>
       <div
         className="h-360px overflow-hidden"
         ref={domRef}

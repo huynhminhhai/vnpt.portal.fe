@@ -7,3 +7,4 @@ export * from './system-group';
 export * from './tenant';
 export * from './user';
 export * from './user-system-permission';
+export * from './sso';
