@@ -34,25 +34,7 @@ const LineChart = () => {
     },
     series: [
       {
-        areaStyle: {
-          color: {
-            colorStops: [
-              {
-                color: '#0071fe',
-                offset: 0.25
-              },
-              {
-                color: '#fff',
-                offset: 1
-              }
-            ],
-            type: 'linear',
-            x: 0,
-            x2: 0,
-            y: 0,
-            y2: 1
-          }
-        },
+
         color: '#0071fe',
         data: [] as number[],
         emphasis: {
@@ -64,25 +46,6 @@ const LineChart = () => {
         type: 'line'
       },
       {
-        areaStyle: {
-          color: {
-            colorStops: [
-              {
-                color: '#05d5c7',
-                offset: 0.25
-              },
-              {
-                color: '#fff',
-                offset: 1
-              }
-            ],
-            type: 'linear',
-            x: 0,
-            x2: 0,
-            y: 0,
-            y2: 1
-          }
-        },
         color: '#05d5c7',
         data: [],
         emphasis: {
@@ -102,6 +65,10 @@ const LineChart = () => {
           backgroundColor: '#6a7985'
         }
       },
+      textStyle: {
+        fontSize: 14,
+        fontFamily: 'Mulish, sans-serif'
+      },
       formatter: (params: any) => {
         if (!params || params.length === 0) return '';
 
@@ -109,7 +76,13 @@ const LineChart = () => {
 
         if (validItems.length === 0) return '';
 
-        return validItems.map((p: any) => `${p.marker} ${p.seriesName}: ${p.value}`).join('<br/>');
+        const title = `Dịch vụ`;
+
+        const seriesContent = validItems
+          .map((p: any) => `${p.marker} ${p.seriesName} &nbsp; <span style="font-weight: 900;">${p.value}</span>`)
+          .join('<br/>');
+
+        return `${title}<br/>${seriesContent}`;
       }
     },
     xAxis: {
@@ -118,7 +91,14 @@ const LineChart = () => {
       type: 'category'
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
+      splitLine: {
+        lineStyle: {
+          color: '#f5f5f5',
+          type: 'dashed',
+          width: 1
+        }
+      }
     }
   }));
 
@@ -131,7 +111,10 @@ const LineChart = () => {
       if (!data) return;
 
       updateOptions(opts => {
-        opts.xAxis.data = data?.labels;
+        opts.xAxis.data = data?.labels.map((d: string) => {
+          const [year, month, day] = d.split("-");
+          return `${day}-${month}-${year}`;
+        });
 
         opts.series = data.datasets.map((ds: any) => ({
           name: ds.label,

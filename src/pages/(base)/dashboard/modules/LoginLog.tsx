@@ -63,7 +63,7 @@ const LoginLog = () => {
                       className="h-4 w-4"
                       icon="solar:clock-circle-linear"
                     />
-                    <span className="font-medium">
+                    <span className="font-semibold">
                       {getHourFromDate(item.creationTime)} {formatDate(item.creationTime)}
                     </span>
                   </div>
@@ -74,7 +74,7 @@ const LoginLog = () => {
                         className="h-4 w-4"
                         icon="solar:user-rounded-linear"
                       />
-                      <span>{item.userNameOrEmailAddress}</span>
+                      <span className="font-semibold">{item.userNameOrEmailAddress}</span>
                     </div>
                   )}
 
@@ -84,7 +84,7 @@ const LoginLog = () => {
                         className="h-4 w-4"
                         icon="solar:hashtag-linear"
                       />
-                      <span>{item.userId}</span>
+                      <span className="font-semibold">{item.userId}</span>
                     </div>
                   )}
                 </div>

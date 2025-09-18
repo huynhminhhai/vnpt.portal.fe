@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react"
 import React from "react"
 import vnpt from '@/assets/imgs/vnpt.png';
 import { Image, Tooltip } from "antd";
+import { PortalRedirect } from "@/service/api";
 
 export interface ServicesItemProps {
   dataItem: any,
@@ -18,6 +19,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
   const { darkMode } = useContext(ThemeContext);
   const [particles, setParticles] = useState<any>([]);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoadingRedirect, setIsLoadingRedirect] = useState(false);
 
   useEffect(() => {
     const generateParticles = () => {
@@ -39,40 +41,44 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
     generateParticles();
   }, []);
 
-  // const newTabRef = useRef<Window | null>(null);
+  const newTabRef = useRef<Window | null>(null);
 
-  // useEffect(() => {
-  //   const windowMessageButton = document.querySelector("#window-message");
+  const openNewTab = (url: string): Window | null => {
+    if (!newTabRef.current || newTabRef.current.closed) {
+      newTabRef.current = window.open(url, "_blank");
+    }
+    return newTabRef.current;
+  };
 
-  //   const handleClick = () => {
-  //     // Mở tab mới nếu chưa mở
-  //     if (!newTabRef.current || newTabRef.current.closed) {
-  //       newTabRef.current = window.open("http://localhost:9528", "_blank");
-  //     }
+  const postMessageToTab = (tab: Window | null, message: any, targetOrigin: string) => {
+    if (!tab) return console.warn("Tab not ready");
 
-  //     // Gửi message sau khi tab mở
-  //     setTimeout(() => {
-  //       if (newTabRef.current) {
-  //         newTabRef.current.postMessage("Trong map djt da den day", "http://localhost:9528");
-  //         console.log("✅ Sent message to new tab");
-  //       } else {
-  //         console.warn("❌ Tab not ready");
-  //       }
-  //     }, 1000); // delay để tab kịp load
-  //   };
+    setTimeout(() => {
+      tab.postMessage(message, targetOrigin);
+      console.log("Sent message to new tab", message);
+    }, 1000); // đợi tab kịp load
+  };
 
-  //   if (windowMessageButton) {
-  //     windowMessageButton.addEventListener("click", handleClick);
-  //   }
+  const handleRedirectUrl = async ({ url, systemWebId, isCallApi = true }: { url: string, systemWebId: number, isCallApi: boolean }) => {
+    setIsLoadingRedirect(true);
 
-  //   return () => {
-  //     if (windowMessageButton) {
-  //       windowMessageButton.removeEventListener("click", handleClick);
-  //     }
-  //   };
-  // }, []);
+    try {
+      if (!isCallApi) {
+        openNewTab(url);
+        return;
+      }
 
-  // <button id="window-message">Open & Send Message</button>
+      const res = await PortalRedirect(systemWebId);
+      const portalToken = res?.data?.result?.portalToken;
+
+      const tab = openNewTab(url);
+      postMessageToTab(tab, portalToken, url);
+    } catch (error) {
+      console.error("Redirect error:", error);
+    } finally {
+      setIsLoadingRedirect(false);
+    }
+  }
 
   return (
     <ACol
@@ -87,12 +93,19 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
       <div className="w-full h-full fade-up-css"
         style={{ animationDelay: `${index * 0.1}s` }}
       >
-        <a
-          href={dataItem?.systemUrl}
-          target="_blank"
+        <div
+          onClick={() => {
+            if (!isLoadingRedirect) {
+              handleRedirectUrl({
+                url: dataItem?.systemUrl,
+                systemWebId: dataItem?.id,
+                isCallApi: dataItem?.secretKey ? true : false
+              })
+            }
+          }}
           rel="noreferrer"
           className={`
-              group block h-full relative transition-all duration-700 ease-out transform
+              group block h-full relative transition-all duration-700 ease-out transform cursor-pointer
               ${isHovered ? 'z-10 -translate-y-2' : 'z-0'}
             `}
           style={{
@@ -334,7 +347,8 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                     <div
                       className={`
                         w-2 h-2 rounded-full transition-all duration-500
-                        ${isHovered ? 'bg-white animate-pulse scale-125' : darkMode ? `bg-${color}-400` : 'bg-white'}
+                        ${dataItem?.secretKey ? "bg-green-600" : "bg-white"}
+                        ${isHovered ? "animate-pulse scale-125" : ""}
                       `}
                     />
                     <span
@@ -360,14 +374,14 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                     {
                       dataItem?.platformTypes?.length > 0 ?
                         <div className={`text-[10px] leading-[1] font-bold
-                          ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-800`}
+                          ${isHovered ? 'text-white' : darkMode ? `text-white` : `text-${color}-800`}
                         `}>
                           {
                             dataItem.platformTypes[0] === 'Web App' ?
                               <div
                                 className={`
                                   flex items-center justify-center w-4 h-3 transition-all duration-500
-                                  ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-800`}
+                                  ${isHovered ? 'text-white' : darkMode ? `text-white` : `text-${color}-800`}
                                 `}
                               >
                                 <Icon icon={'streamline-plump:web'} fontSize={16} />
@@ -378,18 +392,23 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                         <div
                           className={`
                         flex items-center justify-center w-4 h-3 transition-all duration-500
-                        ${isHovered ? 'text-white' : darkMode ? `text-${color}-400` : `text-${color}-800`}
+                        ${isHovered ? 'text-white' : darkMode ? `text-white` : `text-${color}-800`}
                       `}
                         >
                           <Icon icon={'streamline-plump:web'} fontSize={16} />
                         </div>
+                    }
+                    {
+                      isLoadingRedirect && (
+                        <Icon icon={'eos-icons:loading'} fontSize={16} />
+                      )
                     }
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </a>
+        </div>
       </div>
     </ACol>
   )

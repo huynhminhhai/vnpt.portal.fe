@@ -109,7 +109,7 @@ const PieChart = () => {
       className="card-wrapper"
       variant="borderless"
     >
-      <h5 className="mb-3 text-center">Lượt truy cập dịch vụ</h5>
+      <h5 className="mb-3 text-center">Tổng quan nhóm dịch vụ</h5>
       <div
         className="h-390px overflow-hidden"
         ref={domRef}
