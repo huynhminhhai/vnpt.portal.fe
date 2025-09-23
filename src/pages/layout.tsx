@@ -95,10 +95,32 @@ const RootLayout = () => {
   const isSuper = useAppSelector(isStaticSuper);
 
   useEffect(() => {
-  if (!isSuper && isLogin) {
-    replace("/home");
-  }
-}, [isSuper]);
+    if (!isSuper && isLogin) {
+      replace("/home");
+    }
+  }, [isSuper]);
+
+  const locationWeb = useLocation();
+  const params = new URLSearchParams(locationWeb.search);
+
+  const service = params.get("service");
+
+  useEffect(() => {
+    if (service) {
+      localStorage.setItem('serviceUrl', service);
+
+      // remove service from url
+      const params = new URLSearchParams(window.location.search);
+      params.delete("service");
+
+      const newUrl =
+        window.location.pathname + (params.toString() ? `?${params.toString()}` : "");
+
+      window.history.replaceState({}, "", newUrl);
+    } else {
+      localStorage.removeItem('serviceUrl');
+    }
+  }, []);
 
   const { t } = useTranslation();
 
