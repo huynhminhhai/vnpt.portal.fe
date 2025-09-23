@@ -30,16 +30,6 @@ const BaseLayout = () => {
 
   const { pathname } = useLocation();
 
-  const [searchParams] = useSearchParams();
-
-  const serviceUrl = searchParams.get('service');
-
-  useEffect(() => {
-    if (serviceUrl) {
-      localStorage.setItem('serviceUrl', serviceUrl);
-    }
-  }, [serviceUrl]);
-
   const themeSettings = useAppSelector(getThemeSettings);
 
   const siderCollapse = useAppSelector(getSiderCollapse);

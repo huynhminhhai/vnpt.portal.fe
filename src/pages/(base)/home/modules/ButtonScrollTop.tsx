@@ -35,7 +35,7 @@ const ButtonScrollTop = () => {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed z-[99] bottom-4 right-1 md:right-4 p-3 rounded-full bg-gradient-to-r from-primary to-blue-800 text-white shadow-md hover:shadow-2xl hover:scale-[1.04] transition-all duration-300 hover:!opacity-95"
+      className="fixed z-[99] bottom-12 right-1 md:right-4 p-3 rounded-full bg-white dark:bg-[#292929] text-primary dark:text-white shadow-md hover:shadow-2xl hover:scale-[1.04] transition-all duration-300 hover:!opacity-95"
       style={{ opacity: visible ? 0.6 : 0, visibility: visible ? 'visible' : 'hidden' }}
     >
       <Icon icon="solar:arrow-up-broken" fontSize={22} />

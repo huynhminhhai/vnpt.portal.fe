@@ -73,6 +73,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
 
       const tab = openNewTab(url);
       postMessageToTab(tab, portalToken, url);
+      localStorage.removeItem('serviceUrl');
     } catch (error) {
       console.error("Redirect error:", error);
     } finally {
@@ -113,7 +114,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
 
           {/* Tag */}
           <Tooltip
-            title="Thêm vào mục yêu thích"
+            title={dataItem?.isFavorite ? "Xóa khỏi mục yêu thích" : "Thêm vào mục yêu thích"}
             placement="topLeft"
             className={`absolute -top-0 -right-0 z-20 transition-all duration-300 border-1 border-primary/10
                 ${dataItem?.isFavorite ? "opacity-100" : "opacity-45 hover:opacity-100"}
