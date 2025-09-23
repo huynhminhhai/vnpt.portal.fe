@@ -13,9 +13,26 @@ const LineChart = () => {
 
   const defaultParams = {
     GroupBy: 1,
-    StartDate: dayjs().subtract(7, "day").format("YYYY-MM-DD"),
+    StartDate: dayjs().subtract(30, "day").format("YYYY-MM-DD"),
     EndDate: dayjs().format("YYYY-MM-DD"),
     SystemIds: [] as number[]
+  };
+
+  const generateUniqueBlueColors = (numColors: number): string[] => {
+    const colors: string[] = [];
+    const baseHue = 210; // xanh lam
+    const saturation = 80; // độ bão hòa cao để màu rõ nét
+    const startLightness = 30; // bắt đầu từ màu đậm
+    const endLightness = 80;   // đến màu nhạt
+
+    const step = (endLightness - startLightness) / Math.max(numColors - 1, 1);
+
+    for (let i = 0; i < numColors; i++) {
+      const lightness = startLightness + i * step;
+      colors.push(`hsl(${baseHue}, ${saturation}%, ${lightness}%)`);
+    }
+
+    return colors;
   };
 
   const [searchParams, setSearchParams] = useState(defaultParams);
@@ -110,46 +127,51 @@ const LineChart = () => {
 
       if (!data) return;
 
+      const colors = generateUniqueBlueColors(data.datasets.length);
+
       updateOptions(opts => {
         opts.xAxis.data = data?.labels.map((d: string) => {
           const [year, month, day] = d.split("-");
           return `${day}-${month}-${year}`;
         });
 
-        opts.series = data.datasets.map((ds: any) => ({
-          name: ds.label,
-          type: "line",
-          data: ds.data,
-          smooth: true,
-          stack: "Total",
-          emphasis: {
-            focus: "series"
-          },
-          showSymbol: false,
-          color: ds.backgroundColor, // line màu chính
-          areaStyle: {
-            color: {
-              type: "linear",
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0.25,
-                  color: ds.backgroundColor // màu đậm hơn ở trên
-                },
-                {
-                  offset: 1,
-                  color: "#fff" // màu nhạt dần xuống
-                }
-              ]
+        opts.series = data.datasets.map((ds: any, index: number) => {
+
+          return ({
+            name: ds.label,
+            type: "line",
+            data: ds.data,
+            smooth: true,
+            stack: "Total",
+            emphasis: {
+              focus: "series"
+            },
+            showSymbol: false,
+            color: colors[index], // line màu chính
+            areaStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0.25,
+                    color: colors[index] // màu đậm hơn ở trên
+                  },
+                  {
+                    offset: 1,
+                    color: "#fff" // màu nhạt dần xuống
+                  }
+                ]
+              }
+            },
+            itemStyle: {
+              color: colors[index]
             }
-          },
-          itemStyle: {
-            color: ds.backgroundColor
-          }
-        }));
+          })
+        });
 
         return opts;
       });

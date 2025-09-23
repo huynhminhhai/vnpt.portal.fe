@@ -55,7 +55,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
 
     setTimeout(() => {
       tab.postMessage(message, targetOrigin);
-      console.log("Sent message to new tab", message);
+      console.log("Sent message to new tab");
     }, 1000); // đợi tab kịp load
   };
 
@@ -94,15 +94,6 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
         style={{ animationDelay: `${index * 0.1}s` }}
       >
         <div
-          onClick={() => {
-            if (!isLoadingRedirect) {
-              handleRedirectUrl({
-                url: dataItem?.systemUrl,
-                systemWebId: dataItem?.id,
-                isCallApi: dataItem?.secretKey ? true : false
-              })
-            }
-          }}
           rel="noreferrer"
           className={`
               group block h-full relative transition-all duration-700 ease-out transform cursor-pointer
@@ -138,7 +129,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
               <Icon
                 icon={dataItem?.isFavorite ? "bi:bookmark-star-fill" : "bi:bookmark-star"}
                 className="text-primary/90"
-                fontSize={16}
+                fontSize={18}
               />
             </div>
           </Tooltip>
@@ -162,6 +153,15 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
                   ? 'linear-gradient(145deg, rgba(17,24,39,0.98), rgba(31,41,55,0.98))'
                   : 'linear-gradient(145deg, rgba(255,255,255,0.98), rgba(248,250,252,0.98))'
                 : undefined,
+            }}
+            onClick={() => {
+              if (!isLoadingRedirect) {
+                handleRedirectUrl({
+                  url: dataItem?.systemUrl,
+                  systemWebId: dataItem?.id,
+                  isCallApi: dataItem?.secretKey ? true : false
+                })
+              }
             }}
           >
             {/* Digital animated background particles */}
