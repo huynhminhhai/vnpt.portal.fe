@@ -158,7 +158,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({ dataItem, index, color = 'b
             onClick={() => {
               if (!isLoadingRedirect) {
                 handleRedirectUrl({
-                  url: dataItem?.systemUrl,
+                  url: dataItem?.callbackUrl || dataItem?.systemUrl,
                   systemWebId: dataItem?.id,
                   isCallApi: dataItem?.secretKey ? true : false
                 })

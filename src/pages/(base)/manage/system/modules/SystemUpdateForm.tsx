@@ -224,7 +224,7 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                 {
                   !isEdit
                     ?
-                    <div className='font-medium'>{detailData?.secretKey || '-'}</div>
+                    <div className='font-medium text-ellipsis overflow-hidden'>{detailData?.secretKey || '-'}</div>
                     :
                     <Input placeholder="Nhập secret key" size="middle" disabled={!isEdit} />
                 }
@@ -240,7 +240,7 @@ const SystemUpdateForm: React.FC<Props> = ({ id, onSuccess, groupData }) => {
                 {
                   !isEdit
                     ?
-                    <div className='font-medium'>{detailData?.callbackUrl || '-'}</div>
+                    <div className='font-medium text-ellipsis overflow-hidden'>{detailData?.callbackUrl || '-'}</div>
                     :
                     <Input placeholder="Nhập callback URL" size="middle" disabled={!isEdit} />
                 }
